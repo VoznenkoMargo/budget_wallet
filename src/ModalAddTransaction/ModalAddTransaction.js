@@ -1,15 +1,27 @@
+import { useState } from 'react';
 import ReactDOM from 'react-dom';
 import classes from './ModalAddTransaction.module.css';
-import StyledSwitch from './StyledSwitch';
+import { Switch } from './Switch';
 
 const Backdrop = () => {
   return <div className={classes.backdrop}></div>;
 };
 
 const ModalOverlay = () => {
+  const [isExpenseMode, setIsExpenseMode] = useState(false);
+  const onSwitchChangeHandler = (e) => {
+    setIsExpenseMode(e.target.checked);
+    console.log(e.target.checked);
+  };
+
   return (
     <div className={classes.modal}>
-      <StyledSwitch />
+      <Switch
+        labelDefault="Income"
+        labelChecked="Expenses"
+        checked={isExpenseMode}
+        onChange={onSwitchChangeHandler}
+      />
     </div>
   );
 };
