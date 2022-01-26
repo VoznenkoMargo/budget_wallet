@@ -3,20 +3,26 @@ import { TextField } from '@mui/material';
 
 const AmountInput = styled(TextField)(() => {
   return {
+    width: '100%',
     '& .MuiInput-input': {
       textAlign: 'center',
       paddingBottom: '10px',
       fontFamily: 'inherit',
       fontSize: '18px',
       lineHeight: '22.94px',
-      '&::-webkit-outer-spin-button': {
-        WebkitAppearance: 'none',
-        margin: 0,
-      },
-      '&::-webkit-inner-spin-button': {
-        WebkitAppearance: 'none',
-        margin: 0,
-      },
+    },
+    '& .MuiInput-root::before': {
+      borderColor: 'transparent',
+      border: 'none',
+    },
+    '& .MuiInput-root:hover::before': {
+      border: 'none',
+    },
+    '& .MuiInput-root.Mui-focused::after': {
+      borderBottom: 'none',
+    },
+    '& .MuiInput-root::after': {
+      borderColor: 'transparent',
     },
   };
 });

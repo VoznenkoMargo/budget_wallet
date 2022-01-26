@@ -1,24 +1,16 @@
-import classes from './Switch.module.css';
+import { Box } from '@mui/system';
+import { Label, SwitchButton } from './Switch.style';
 
 const Switch = ({ labelDefault, labelChecked, onChange, checked }) => {
-  const defaultLabelClasses = `${classes['label-default']} ${
-    !checked ? classes.active : ''
-  }`;
-  const checkedLabelClasses = `${classes['label-checked']} ${
-    checked ? classes.active : ''
-  }`;
+  const defaultLabelClasses = `${'label-default'} ${!checked ? 'active' : ''}`;
+  const checkedLabelClasses = `${'label-checked'} ${checked ? 'active' : ''}`;
 
   return (
-    <div className={classes['switch-root']}>
-      <p className={defaultLabelClasses}>{labelDefault}</p>
-      <input
-        type="checkbox"
-        checked={checked}
-        onChange={onChange}
-        className={classes['switch-input']}
-      />
-      <p className={checkedLabelClasses}>{labelChecked}</p>
-    </div>
+    <Box sx={{ display: 'flex', alignItems: 'center', columnGap: '24px' }}>
+      <Label className={defaultLabelClasses}>{labelDefault}</Label>
+      <SwitchButton checked={checked} onChange={onChange} />
+      <Label className={checkedLabelClasses}>{labelChecked}</Label>
+    </Box>
   );
 };
 
