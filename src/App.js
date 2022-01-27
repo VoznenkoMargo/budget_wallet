@@ -1,7 +1,7 @@
 import { Button } from '@mui/material';
 import { useState } from 'react';
 import './App.css';
-import ModalAddTransaction from './ModalAddTransaction/ModalAddTransaction';
+import { ModalAddTransaction } from './ModalAddTransaction';
 import ThemeConfig from './theme';
 import GlobalStyles from './theme/globalStyles';
 

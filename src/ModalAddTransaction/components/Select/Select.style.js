@@ -31,19 +31,17 @@ export const StyledSelect = styled((props) => (
     width: '100%',
     fontSize: '18px',
     '& .MuiSelect-select': {
-      paddingBottom: '10px',
+      padding: '10px 20px 10px 20px',
       lineHeight: '23px',
     },
-    '& .MuiOutlinedInput-notchedOutline': {
-      border: 'none',
-      borderBottom: '1px solid #E0E0E0',
+    '& .MuiSelect-select:focus': {
+      backgroundColor: 'transparent',
     },
-    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-      borderWidth: '1px',
-      borderColor: '#E0E0E0',
+    '&.MuiInput-underline:before': {
+      borderBottom: `2px solid ${theme.palette.grey[100]}`,
     },
-    '&.Mui-hover': {
-      borderColor: 'transparent',
+    '&&.MuiInput-underline:hover:before': {
+      borderBottom: `2px solid ${theme.palette.secondary.light}`,
     },
     '& .placeholder': {
       color: '#BDBDBD',
