@@ -1,4 +1,5 @@
 import { alpha } from '@mui/material/styles';
+
 const COMMON = {
   white: '#ffffff',
   black: '#000000',
@@ -43,7 +44,7 @@ const GREY = {
   200: '#BDBDBD',
 };
 
-const pallete = {
+const palette = {
   common: { ...COMMON },
   primary: { ...PRIMARY },
   secondary: { ...SECONDARY },
@@ -53,4 +54,4 @@ const pallete = {
   grey: { ...GREY },
 };
 
-export default pallete;
+export default palette;

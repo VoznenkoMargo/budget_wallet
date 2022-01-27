@@ -1,6 +1,6 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useMemo } from 'react';
-import palette from './pallete';
+import palette from './palette';
 import typography from './typography';
 
 const ThemeConfig = ({ children }) => {

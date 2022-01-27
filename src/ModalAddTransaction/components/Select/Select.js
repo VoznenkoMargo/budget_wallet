@@ -1,15 +1,7 @@
 import { FormControl } from '@mui/material';
-// import { useState } from 'react';
 import { StyledSelect, SelectItem } from './Select.style';
 
 const Select = ({ options, value, onChange }) => {
-  // const [value, setValue] = useState('');
-
-  // const handleChange = (event) => {
-  //   setValue(event.target.value);
-  //   console.log(event.target.value);
-  // };
-
   return (
     <FormControl variant="standard" sx={{ width: '100%' }} color="secondary">
       <StyledSelect

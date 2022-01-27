@@ -12,7 +12,7 @@ export const StyledDatePicker = styled((props) => (
             mr: '13px',
           },
           '& .MuiSvgIcon-root': {
-            color: 'secondary.main',
+            color: ({ palette }) => palette.secondary.main,
           },
         }}
         variant="standard"

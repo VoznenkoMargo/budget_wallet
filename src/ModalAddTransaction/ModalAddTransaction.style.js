@@ -1,21 +1,22 @@
 import { Close } from '@mui/icons-material';
 import { Button, Typography } from '@mui/material';
-import { styled } from '@mui/system';
-import { alpha } from '@mui/system';
+import { styled, alpha } from '@mui/system';
 
 export const FilledButton = styled((props) => (
   <Button variant="contained" disableElevation {...props} />
 ))(({ theme }) => {
+  const { palette } = theme;
+
   return {
     width: '300px',
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: palette.primary.main,
     borderRadius: '20px',
     fontSize: '18px',
     padding: '13px 0',
     fontWeight: 400,
     fontFamily: 'inherit',
     '&:hover': {
-      backgroundColor: alpha(theme.palette.primary.main, 0.5),
+      backgroundColor: alpha(palette.primary.main, 0.5),
     },
   };
 });
@@ -23,6 +24,7 @@ export const FilledButton = styled((props) => (
 export const OutlinedButton = styled((props) => (
   <Button variant="outlined" color="secondary" disableElevation {...props} />
 ))(({ theme }) => {
+  const { palette } = theme;
   return {
     width: '300px',
     borderRadius: '20px',
@@ -31,12 +33,13 @@ export const OutlinedButton = styled((props) => (
     fontWeight: 400,
     padding: '12px 0',
     border: '1px solid',
-    borderColor: theme.palette.secondary.main,
-    color: theme.palette.secondary.main,
+    borderColor: palette.secondary.main,
+    color: palette.secondary.main,
   };
 });
 
 export const Form = styled('form')(({ theme }) => {
+  const { palette } = theme;
   return {
     padding: '60px',
     paddingTop: '40px',
@@ -46,7 +49,7 @@ export const Form = styled('form')(({ theme }) => {
     transform: 'translate(-50%, -50%)',
     width: '540px',
     zIndex: '100',
-    backgroundColor: theme.palette.common.white,
+    backgroundColor: palette.common.white,
     borderRadius: '20px',
     display: 'flex',
     flexDirection: 'column',
@@ -64,8 +67,9 @@ export const Form = styled('form')(({ theme }) => {
 });
 
 export const Title = styled(Typography)(({ theme }) => {
+  const { typography } = theme;
   return {
-    fontFamily: theme.typography.fontFamily.primary,
+    fontFamily: typography.fontFamily.primary,
     fontSize: '30px',
     lineHeight: '45px',
   };
@@ -77,5 +81,9 @@ export const CloseIcon = styled(Close)(() => {
     right: '20px',
     top: '20px',
     cursor: 'pointer',
+    transition: 'transform 0.2s ease',
+    '&:hover': {
+      transform: 'rotate(90deg)',
+    },
   };
 });
