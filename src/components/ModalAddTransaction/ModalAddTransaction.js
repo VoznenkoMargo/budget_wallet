@@ -1,6 +1,11 @@
-import { useState } from 'react';
+import { useTheme, alpha } from '@mui/system';
 import { Box, Modal, Fade } from '@mui/material';
-import { DatePicker, Select, BaseInput, Switch } from './components';
+import { DatePicker } from './DatePicker';
+import { BaseInput } from 'components/common/BaseInput';
+import { useState } from 'react';
+import { Select } from './Select';
+import { Switch } from './Switch';
+import moment from 'moment';
 import {
   FilledButton,
   Form,
@@ -21,8 +26,9 @@ const categories = [
 ];
 
 const ModalAddTransaction = ({ open, onClose }) => {
+  const { breakpoints, palette } = useTheme();
   const [isExpenseMode, setIsExpenseMode] = useState(false);
-  const [dateValue, setDateValue] = useState(null);
+  const [dateValue, setDateValue] = useState(moment(new Date()));
   const [amountValue, setAmountValue] = useState('');
   const [commentValue, setCommentValue] = useState('');
   const [categoryValue, setCategoryValue] = useState('');
@@ -36,7 +42,7 @@ const ModalAddTransaction = ({ open, onClose }) => {
   const onSubmitHandler = (e) => {
     e.preventDefault();
     console.log({
-      dateValue: dateValue.format('dddd, MMMM Do YYYY, h:mm:ss a'),
+      dateValue,
       amountValue,
       commentValue,
       categoryValue,
@@ -50,12 +56,12 @@ const ModalAddTransaction = ({ open, onClose }) => {
       onClose={onCloseHandler}
       sx={{
         '& .MuiBackdrop-root': {
-          backgroundColor: 'rgba(0,0,0, 0.25)',
+          backgroundColor: alpha(palette.common.black, 0.25),
         },
       }}
     >
       <Fade in={open}>
-        <Form onSubmit={onSubmitHandler}>
+        <Form onSubmit={onSubmitHandler} autoComplete="off">
           <Title>Add transaction</Title>
           <CloseIcon onClick={onCloseHandler} />
           <Switch
@@ -76,6 +82,10 @@ const ModalAddTransaction = ({ open, onClose }) => {
               display: 'flex',
               columnGap: '30px',
               width: '100%',
+              [breakpoints.down('mobile')]: {
+                flexDirection: 'column',
+                rowGap: '40px',
+              },
             }}
           >
             <BaseInput
@@ -91,7 +101,6 @@ const ModalAddTransaction = ({ open, onClose }) => {
               onChange={(newValue) => {
                 setDateValue(newValue);
               }}
-              placeholder="date"
             />
           </Box>
           <BaseInput
@@ -113,7 +122,7 @@ const ModalAddTransaction = ({ open, onClose }) => {
               display: 'flex',
               flexDirection: 'column',
               rowGap: '20px',
-              '@media (max-width:600px)': {
+              [breakpoints.down('tablet')]: {
                 width: '100%',
                 alignItems: 'center',
               },

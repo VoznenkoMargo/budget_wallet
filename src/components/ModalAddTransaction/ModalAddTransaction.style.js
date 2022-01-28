@@ -6,7 +6,6 @@ export const FilledButton = styled((props) => (
   <Button variant="contained" disableElevation {...props} />
 ))(({ theme }) => {
   const { palette } = theme;
-
   return {
     width: '300px',
     backgroundColor: palette.primary.main,
@@ -39,7 +38,7 @@ export const OutlinedButton = styled((props) => (
 });
 
 export const Form = styled('form')(({ theme }) => {
-  const { palette } = theme;
+  const { palette, breakpoints } = theme;
   return {
     padding: '60px',
     paddingTop: '40px',
@@ -55,8 +54,8 @@ export const Form = styled('form')(({ theme }) => {
     flexDirection: 'column',
     rowGap: '40px',
     alignItems: 'center',
-    //How media queries are written
-    '@media (max-width:600px)': {
+    outline: 'none',
+    [breakpoints.down('tablet')]: {
       width: '100%',
       height: '100%',
       borderRadius: 0,

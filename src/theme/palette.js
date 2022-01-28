@@ -3,7 +3,6 @@ import { alpha } from '@mui/material/styles';
 const COMMON = {
   white: '#ffffff',
   black: '#000000',
-  transparentWhite: alpha('#ffffff', 0.2),
 };
 
 const PRIMARY = {

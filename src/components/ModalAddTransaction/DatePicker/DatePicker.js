@@ -5,7 +5,12 @@ import AdapterDateFns from '@mui/lab/AdapterMoment';
 const DatePicker = ({ value, onChange }) => {
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <StyledDatePicker value={value} onChange={onChange} />
+      <StyledDatePicker
+        value={value}
+        onChange={onChange}
+        inputFormat="DD.MM.YYYY"
+        mask={'__.__.____'}
+      />
     </LocalizationProvider>
   );
 };

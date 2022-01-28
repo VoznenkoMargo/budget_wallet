@@ -10,6 +10,10 @@ const selectMenuProps = {
       `0px 6px 15px ${alpha(theme.palette.common.black, 0.1)}`,
     borderRadius: '20px',
     marginTop: '5px',
+    '@media (max-width: 600px)': {
+      left: '50% !important',
+      transform: 'translate(-50%) !important',
+    },
   },
 };
 
@@ -58,7 +62,7 @@ export const StyledSelect = styled((props) => (
 
 export const SelectItem = styled((props) => <MenuItem {...props} />)(
   ({ theme }) => {
-    const { palette } = theme;
+    const { palette, breakpoints } = theme;
 
     return {
       fontSize: '18px',
@@ -78,6 +82,9 @@ export const SelectItem = styled((props) => <MenuItem {...props} />)(
       },
       '&:focus': {
         backgroundColor: 'transparent',
+      },
+      [breakpoints.up('mobile')]: {
+        minHeight: 'auto',
       },
     };
   }

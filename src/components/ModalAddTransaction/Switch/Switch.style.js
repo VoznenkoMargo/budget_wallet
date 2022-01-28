@@ -43,7 +43,7 @@ export const SwitchButton = styled((props) => (
   };
 });
 
-export const Label = styled('p')(({ checked, theme }) => {
+export const Label = styled('span')(({ checked, theme }) => {
   const { palette } = theme;
 
   return {

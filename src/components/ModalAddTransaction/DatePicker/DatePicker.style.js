@@ -1,6 +1,6 @@
 import { DatePicker } from '@mui/lab';
 import { styled } from '@mui/system';
-import BaseInput from '../BaseInput/BaseInput';
+import { BaseInput } from 'components/common/BaseInput';
 
 export const StyledDatePicker = styled((props) => (
   <DatePicker
