@@ -1,0 +1,31 @@
+.StatisticsTitle {
+  font-family: 'Poppins', sans-serif;
+  font-weight: normal;
+  font-size: 30px;
+  line-height: 1.5;
+  color: #000000;
+  margin-top: 30px;
+  margin-left: 45px; //popravit kogda budet cojntainer
+  margin-bottom: 20px;
+  text-align: start;
+
+  @media (min-width: 340px) and (max-width: 767px) {
+    margin-top: 40px;
+    margin-left: 20px;
+    margin-bottom: 10px;
+  }
+}
+
+.ContainerStats {
+  margin-top: 10px;
+  // display: flex;
+  display: flex;
+  flex-direction: column;
+  @media screen and (min-width: 768px) {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    padding-right: 30px;
+    flex-direction: row;
+  }
+}
