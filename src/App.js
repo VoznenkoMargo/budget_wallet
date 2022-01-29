@@ -1,7 +1,12 @@
 import "./App.css";
+import RegistrationPage from "./components/Registration/RegistrationPage";
 
-function App() {
-  return <div className="App"></div>;
+const App = () => {
+  return (
+    <div>
+      <RegistrationPage />
+    </div>
+  );
 }
 
 export default App;
