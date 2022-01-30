@@ -5,6 +5,9 @@ export const StyledFab = styled((props) => <Fab color="primary" {...props} />)(
   ({ theme }) => {
     const { palette } = theme;
     return {
+      position: 'absolute',
+      bottom: '40px',
+      right: '0',
       width: '44px',
       height: '44px',
       boxShadow: `0px 6px 15px ${alpha(palette.primary.main, 0.5)}`,
@@ -18,6 +21,9 @@ export const StyledFab = styled((props) => <Fab color="primary" {...props} />)(
         boxShadow: `0px 6px 15px ${alpha(palette.common.black, 0.2)}`,
         transform: 'translateY(2px)',
         transition: 'transform 0.2s ease',
+      },
+      '@media (max-width: 1160px)': {
+        right: '40px',
       },
     };
   }

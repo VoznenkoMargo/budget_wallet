@@ -2,20 +2,27 @@ import { Toolbar, AppBar, Button } from '@mui/material';
 import { styled } from '@mui/system';
 import LogoutIcon from '@mui/icons-material/Logout';
 
-export const StyledToolbar = styled(Toolbar)(({ theme }) => {
+export const StyledToolbar = styled(Toolbar)(() => {
   return {
     padding: '16px 0',
     justifyContent: 'space-between',
+    '@media (max-width: 1160px)': {
+      padding: '16px 20px',
+    },
   };
 });
 
 export const Header = styled((props) => (
-  <AppBar position="static" {...props} />
+  <AppBar position="sticky" {...props} />
 ))(({ theme }) => {
   const { palette } = theme;
   return {
     boxShadow: 'none',
     backgroundColor: palette.common.white,
+    zIndex: 2000,
+    '@media (max-width: 600px)': {
+      zIndex: 2000,
+    },
   };
 });
 
