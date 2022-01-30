@@ -2,7 +2,8 @@ import './App.css';
 import { CssBaseline } from '@mui/material';
 import ThemeConfig from 'theme';
 import GlobalStyles from 'theme/globalStyles';
-import StatisticsPage from 'pages/StatisticsPage/StatisticsPage'
+import StatisticsPage from 'pages/StatisticsPage/StatisticsPage';
+import { AppBar } from 'components/AppBar';
 
 function App() {
   return (
@@ -10,7 +11,8 @@ function App() {
       <CssBaseline />
       <GlobalStyles />
       <div className="App">
-      <StatisticsPage/>
+        <AppBar />
+        <StatisticsPage />
       </div>
     </ThemeConfig>
   );
