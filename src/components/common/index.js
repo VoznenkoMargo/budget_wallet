@@ -1,1 +1,3 @@
-export { default as BaseInput } from './BaseInput';
+export { BaseInput } from './BaseInput';
+export { Container } from './Container';
+export { ButtonAddTransaction } from './ButtonAddTransaction';

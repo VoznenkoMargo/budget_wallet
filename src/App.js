@@ -4,6 +4,7 @@ import ThemeConfig from 'theme';
 import GlobalStyles from 'theme/globalStyles';
 import StatisticsPage from 'pages/StatisticsPage/StatisticsPage';
 import { AppBar } from 'components/AppBar';
+import { Container, ButtonAddTransaction } from 'components/common';
 
 function App() {
   return (
@@ -12,7 +13,10 @@ function App() {
       <GlobalStyles />
       <div className="App">
         <AppBar />
-        <StatisticsPage />
+        <Container>
+          <StatisticsPage />
+          <ButtonAddTransaction />
+        </Container>
       </div>
     </ThemeConfig>
   );
