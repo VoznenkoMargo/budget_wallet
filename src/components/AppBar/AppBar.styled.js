@@ -19,9 +19,8 @@ export const Header = styled((props) => (
   return {
     boxShadow: 'none',
     backgroundColor: palette.common.white,
-    zIndex: 2000,
     '@media (max-width: 600px)': {
-      zIndex: 2000,
+      zIndex: '2000',
     },
   };
 });

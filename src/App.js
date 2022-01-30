@@ -24,6 +24,7 @@ const App = () => {
             '@media (max-width: 1160px)': {
               padding: '40px',
             },
+            zIndex: 20,
           }}
         >
           <StatisticsPage />
@@ -32,8 +33,8 @@ const App = () => {
               setOpen(true);
             }}
           />
-          <AppBackground />
         </Container>
+        <AppBackground />
         <ModalAddTransaction
           open={open}
           onClose={() => {

@@ -47,7 +47,6 @@ export const Form = styled('form')(({ theme }) => {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: '540px',
-    zIndex: '100',
     backgroundColor: palette.common.white,
     borderRadius: '20px',
     display: 'flex',

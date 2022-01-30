@@ -2,12 +2,11 @@ import { styled } from '@mui/system';
 
 export const Background = styled('div')(() => {
   return {
-    position: 'fixed',
+    position: 'absolute',
     height: '100%',
     width: '100%',
     top: 0,
     left: 0,
-    zIndex: '-100',
     filter: 'blur(50px)',
     overflow: 'hidden',
     img: {
