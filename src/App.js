@@ -1,8 +1,10 @@
+
 import './App.css';
 import { CssBaseline } from '@mui/material';
 import ThemeConfig from 'theme';
 import GlobalStyles from 'theme/globalStyles';
 import StatisticsPage from 'pages/StatisticsPage/StatisticsPage';
+import RegistrationPage from "./components/Registration/RegistrationPage";
 import { Container, ButtonAddTransaction } from 'components/common';
 import { useState } from 'react';
 import { AppBackground, ModalAddTransaction, AppBar } from 'components';
@@ -27,6 +29,7 @@ const App = () => {
             zIndex: 20,
           }}
         >
+           <RegistrationPage />
           <StatisticsPage />
           <ButtonAddTransaction
             onClick={() => {
@@ -46,5 +49,6 @@ const App = () => {
     </ThemeConfig>
   );
 };
+
 
 export default App;
