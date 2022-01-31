@@ -3,6 +3,7 @@ import { useMemo } from 'react';
 import palette from './palette';
 import typography from './typography';
 import breakpoints from './breakpoints';
+import overrides from './overrides';
 
 const ThemeConfig = ({ children }) => {
   const themeOptions = useMemo(
@@ -10,6 +11,7 @@ const ThemeConfig = ({ children }) => {
       palette,
       typography,
       breakpoints,
+      components: overrides,
     }),
     []
   );
