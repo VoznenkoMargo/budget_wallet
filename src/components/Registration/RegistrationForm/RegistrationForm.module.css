@@ -1,0 +1,31 @@
+.form {
+   background: #ffffff;
+   box-sizing: border-box;
+   border-radius: 20px;
+   padding: 40px 65px;
+}
+.logo__body {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   margin-bottom: 40px;
+}
+.logo__body img {
+   margin-right: 20px;
+}
+.buttons {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+}
+.input input {
+   padding-bottom: 10px;
+}
+
+@media (max-width: 426px) {
+   .form {
+      border-radius: 0;
+      padding: 35px 20px;
+   }
+}
