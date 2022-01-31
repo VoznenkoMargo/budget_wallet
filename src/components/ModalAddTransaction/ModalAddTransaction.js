@@ -1,7 +1,7 @@
 import { useTheme, alpha } from '@mui/system';
 import { Box, Modal, Fade } from '@mui/material';
 import { DatePicker } from './DatePicker';
-import { BaseInput } from 'components/common/BaseInput';
+import { BaseInput } from 'components/common';
 import { useState } from 'react';
 import { Select } from './Select';
 import { Switch } from './Switch';
