@@ -1,10 +1,10 @@
 import s from './RegistrationForm.module.css';
-import logo from 'assets/images/logo_wallet.svg';
-import { Typography, Button, Box, TextField } from '@mui/material';
+import { Button, Box, TextField } from '@mui/material';
 import InputAdornment from '@mui/material/InputAdornment';
 import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import { Logo } from 'components/common';
 
 const RegistrationForm = (props) => {
   return (
@@ -17,20 +17,8 @@ const RegistrationForm = (props) => {
         }}
       >
         <div className={s.logo__body}>
-          <img src={logo} alt="logo wallet" />
-          <Typography
-            component="h1"
-            variant="h2"
-            sx={{
-              fontWeight: 700,
-              fontSize: '30px',
-              lineHeight: '45px',
-            }}
-          >
-            Wallet
-          </Typography>
+          <Logo />
         </div>
-
         <Box component="form">
           <TextField
             variant="standard"
