@@ -23,6 +23,7 @@ export const LogoName = styled('h6')(({ theme }) => {
 
 export const LogoIcon = styled(Icon)(() => {
   return {
+    overflow: 'visible',
     '& path': {
       transition: 'transform 0.3s ease',
     },
