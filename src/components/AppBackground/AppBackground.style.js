@@ -2,7 +2,7 @@ import { styled } from '@mui/system';
 
 export const Background = styled('div')(() => {
   return {
-    position: 'absolute',
+    position: 'fixed',
     height: '100%',
     width: '100%',
     top: 0,
