@@ -1,7 +1,10 @@
 
 import './App.css';
+import DiagramTab from './Components/DiagramTab';
+import './App.css';
 import { CssBaseline } from '@mui/material';
 import ThemeConfig from 'theme';
+import DiagramTab from './Components/DiagramTab';
 import GlobalStyles from 'theme/globalStyles';
 import StatisticsPage from 'pages/StatisticsPage/StatisticsPage';
 import RegistrationPage from "./components/Registration/RegistrationPage";
@@ -31,6 +34,7 @@ const App = () => {
         >
            <RegistrationPage />
           <StatisticsPage />
+            <DiagramTab />
           <ButtonAddTransaction
             onClick={() => {
               setOpen(true);
@@ -49,6 +53,7 @@ const App = () => {
     </ThemeConfig>
   );
 };
+
 
 
 export default App;
