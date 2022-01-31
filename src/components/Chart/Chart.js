@@ -11,6 +11,7 @@ export default function Chart() {
 
         <div className={s.doughnut}>
           <Doughnut
+            className="s.douhnut"
             data={{
               datasets: [
                 {
@@ -44,14 +45,7 @@ export default function Chart() {
             }}
             options={{
               maintainAspectRatio: false,
-              elements: {
-                center: {
-                  text: 'Red is 2/3 of the total numbers',
-                },
-              },
             }}
-            height={270}
-            width={270}
           />
         </div>
       </div>

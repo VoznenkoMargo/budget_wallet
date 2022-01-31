@@ -1,5 +1,5 @@
 .title {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-weight: normal;
   font-size: 30px;
   line-height: 1.5;
@@ -22,4 +22,12 @@
   width: 320px;
   height: 320px;
   margin: 0;
+}
+.doughnut {
+  width: 280px;
+  height: 280px;
+  @media screen and (min-width: 768px) {
+    height: 320px; //280 on mob
+    width: 320px;
+  }
 }
