@@ -7,7 +7,7 @@ import {
   UserName,
   LogoName,
 } from './AppBar.styled';
-import { ReactComponent as LogoIcon } from 'images/logo_wallet.svg';
+import { ReactComponent as LogoIcon } from 'assets/images/logo_wallet.svg';
 
 const StyledAppBar = () => {
   return (

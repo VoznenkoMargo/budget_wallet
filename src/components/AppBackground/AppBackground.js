@@ -1,5 +1,5 @@
-import purpleEllipse from 'images/ellipse-purple.png';
-import peachEllipse from 'images/ellipse-peach.png';
+import purpleEllipse from 'assets/images/ellipse-purple.png';
+import peachEllipse from 'assets/images/ellipse-peach.png';
 import { Background, Shape } from './AppBackground.style';
 
 const AppBackground = () => {
