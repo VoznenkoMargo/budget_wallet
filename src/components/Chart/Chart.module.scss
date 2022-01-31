@@ -1,0 +1,25 @@
+.title {
+  font-family: "Poppins", sans-serif;
+  font-weight: normal;
+  font-size: 30px;
+  line-height: 1.5;
+  color: #000000;
+  margin-bottom: 20px;
+}
+
+.doughnut canvas {
+  min-width: 100px;
+  min-height: 100px;
+}
+
+.chart {
+  max-width: 400px;
+  margin-bottom: 30px;
+}
+
+.containerChart {
+  position: relative;
+  width: 320px;
+  height: 320px;
+  margin: 0;
+}
