@@ -13,11 +13,15 @@ function createData(category, amount) {
 }
 
 const rows = [
-  createData('Food', 159),
-  createData('Children', 237),
-  createData('KOMUNALKA', 262),
-  createData('Fuel', 305),
-  createData('Pets', 356),
+  createData('Main expenses', '8 700.00'),
+  createData('Products', '3 800.74'),
+  createData('Car', '1 500.00'),
+  createData('Self-care', '800.00'),
+  createData('Care of children', '2208.50'),
+  createData('Housewares', '300.00'),
+  createData('Education', '3 400.00'),
+  createData('Leisure', '1 230.00'),
+  createData('Other expenses', '610.00'),
 ];
 
 const colourStyles = {
@@ -232,17 +236,17 @@ function MyTable() {
               </TableRow>
             ))}
             <TableRow className="hiddenBorder">
-              <TableCell align="left" className="tableValue ">
-                Expenses:
+              <TableCell align="left">Expenses:</TableCell>
+              <TableCell align="right" sx={{ color: '#ff6596' }}>
+                22 549.24
               </TableCell>
-              <TableCell align="right">22 549.24</TableCell>
             </TableRow>
 
             <TableRow className="hiddenBorder">
-              <TableCell align="left" className="tableValue">
-                Incomes:
+              <TableCell align="left">Incomes:</TableCell>
+              <TableCell align="right" sx={{ color: '#24CCA7' }}>
+                27 350.00
               </TableCell>
-              <TableCell align="right">27 350.00</TableCell>
             </TableRow>
           </TableBody>
         </Table>

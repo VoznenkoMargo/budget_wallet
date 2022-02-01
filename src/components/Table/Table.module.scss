@@ -14,4 +14,10 @@
 }
 .tableContainer {
   min-width: 280px;
+  @media screen and (min-width: 768px) {
+    min-width: 351px;
+  }
+}
+.expensesColor {
+  color: #ff6596;
 }

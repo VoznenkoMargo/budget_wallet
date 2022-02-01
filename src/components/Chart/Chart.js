@@ -43,9 +43,7 @@ export default function Chart() {
                 },
               ],
             }}
-            options={{
-              maintainAspectRatio: false,
-            }}
+            options={{ cutout: 120, maintainAspectRatio: false }}
           />
         </div>
       </div>
