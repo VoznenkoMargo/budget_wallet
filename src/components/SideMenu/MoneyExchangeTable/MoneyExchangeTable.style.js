@@ -40,7 +40,7 @@ export const StyledTable = styled((props) =>
         },
 
       '& .MuiTableHead-root': {
-          background: alpha(palette.common.white, 0.2),
+          backgroundColor: alpha(palette.common.white, 0.2),
 
         '& .MuiTableCell-head': {
             paddingTop: '17px',
@@ -52,7 +52,14 @@ export const StyledTable = styled((props) =>
               paddingTop: '11px',
               paddingBottom: '16px',
             },
-          }
+          },
+
+          '& .MuiTableCell-head:first-child': {
+            borderTopLeftRadius: '30px',
+          },
+          '& .MuiTableCell-head:last-child': {
+            borderTopRightRadius: '30px',
+          },
         },
 
       '& .MuiTableBody-root': {
