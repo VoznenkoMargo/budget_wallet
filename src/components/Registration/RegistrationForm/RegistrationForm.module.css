@@ -27,5 +27,6 @@
    .form {
       border-radius: 0;
       padding: 35px 20px;
+      width: 100%;
    }
 }
