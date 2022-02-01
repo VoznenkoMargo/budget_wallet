@@ -1,5 +1,5 @@
 import { Toolbar, AppBar, Button } from '@mui/material';
-import { styled } from '@mui/system';
+import { borderTop, styled } from '@mui/system';
 import LogoutIcon from '@mui/icons-material/Logout';
 
 export const StyledToolbar = styled(Toolbar)(() => {
@@ -35,6 +35,22 @@ export const ExitButton = styled((props) => (
     color: palette.grey[200],
     fontSize: '18px',
     padding: '3px 15px',
+    svg: {
+      opacity: 1,
+      transition: 'transform 0.2s ease-in-out, opacity 0.2s ease-in-out',
+    },
+    div: {
+      transition: 'transform 0.2s ease',
+    },
+    '&:hover': {
+      svg: {
+        transform: 'translateX(100%)',
+        opacity: 0,
+      },
+      div: {
+        transform: 'translateX(-50%)',
+      },
+    },
   };
 });
 

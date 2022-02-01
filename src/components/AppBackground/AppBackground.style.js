@@ -1,10 +1,11 @@
 import { styled } from '@mui/system';
 
-export const Background = styled('div')(() => {
+export const Background = styled('div')(({ theme }) => {
   return {
-    position: 'absolute',
+    position: 'fixed',
     height: '100%',
     width: '100%',
+    backgroundColor: theme.palette.grey[0],
     top: 0,
     left: 0,
     filter: 'blur(50px)',
