@@ -48,7 +48,7 @@ const colourStyles = {
   control: styles => ({
     ...styles,
     borderRadius: '30px',
-
+    marginBottom: '20px',
     border: '1px solid #000000',
     padding: '0 15px',
     minHeight: '50px',
@@ -67,6 +67,7 @@ const colourStyles = {
   option: provided => ({
     ...provided,
     backgroundColor: 'rgba(255, 255, 255,0.7)',
+
     color: '#000000',
     padding: 20,
     ':hover': { cursor: 'pointer' },
