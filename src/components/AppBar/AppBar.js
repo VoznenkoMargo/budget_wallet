@@ -13,7 +13,9 @@ const StyledAppBar = () => {
           >
             <UserName>Name</UserName>
             <Divider orientation="vertical" flexItem />
-            <ExitButton>Exit</ExitButton>
+            <ExitButton>
+              <div>Exit</div>
+            </ExitButton>
           </Box>
         </StyledToolbar>
       </Container>
