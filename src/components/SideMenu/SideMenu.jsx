@@ -6,16 +6,6 @@ import {StyledNavBox, StyledSideMenu} from "./SideMenu.style"
 import { Box } from '@mui/material';
 import { useTheme } from '@mui/system';
 
-function createMoneyExchangeData(Currency, Purchase, Sale) {
-  return {Currency, Purchase, Sale};
-}
-
-const moneyExchangeData = [
-  createMoneyExchangeData('USD', 27.55, 27.65),
-  createMoneyExchangeData('EUR', 30.00, 30.10),
-  createMoneyExchangeData('RUB', 0.00, 0.00),
-];
-
 const currentBalance = 24000;
 
 const SideMenu = () => {
@@ -46,9 +36,7 @@ const SideMenu = () => {
           },
         }}
       >
-        <MoneyExchangeTable
-          moneyExchangeData = {moneyExchangeData}
-        />
+        <MoneyExchangeTable/>
       </Box>
     </StyledSideMenu>
   );

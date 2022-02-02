@@ -9,6 +9,7 @@ import RegistrationPage from './components/Registration/RegistrationPage';
 import { Container, ButtonAddTransaction } from 'components/common';
 import { useState } from 'react';
 import { AppBackground, ModalAddTransaction, AppBar } from 'components';
+import {SideMenu} from "./components/SideMenu";
 
 const App = () => {
   const [open, setOpen] = useState(false);
@@ -31,6 +32,7 @@ const App = () => {
           }}
         >
           <RegistrationPage />
+          <SideMenu />
           <StatisticsPage />
           <DiagramTab />
           <ButtonAddTransaction

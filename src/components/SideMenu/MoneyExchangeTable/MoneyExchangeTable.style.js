@@ -81,8 +81,17 @@ export const StyledTable = styled((props) =>
             },
           },
         },
+
+      [breakpoints.down('tablet')] : {
+        background: palette.secondary.main,
+        borderRadius: '30px',
+        backgroundImage: `url(${RateBackgroundImg})`,
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'contain',
+        backgroundPosition: '50% 75px',
       }
-    })
+    }
+  })
 
 export const TableContainer = styled('div')(({theme}) => {
   const { breakpoints, palette } = useTheme();
@@ -108,6 +117,7 @@ export const TableContainer = styled('div')(({theme}) => {
     [breakpoints.down('tablet')]: {
       marginRight: 'auto',
       marginLeft: 'auto',
+      backgroundImage: `none`,
     },
   }
 })

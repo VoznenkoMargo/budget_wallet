@@ -2,8 +2,17 @@ import React from 'react';
 import {TableHead, TableBody, TableRow, TableCell} from "@mui/material";
 import { StyledTable, TableContainer } from './MoneyExchangeTable.style';
 
-const MoneyExchangeTable = (props) => {
-  const {moneyExchangeData} = props;
+function createMoneyExchangeData(Currency, Purchase, Sale) {
+  return {Currency, Purchase, Sale};
+}
+
+const moneyExchangeData = [
+  createMoneyExchangeData('USD', 27.55, 27.65),
+  createMoneyExchangeData('EUR', 30.00, 30.10),
+  createMoneyExchangeData('RUB', 0.00, 0.00),
+];
+
+const MoneyExchangeTable = () => {
 
   return (
     <TableContainer>
