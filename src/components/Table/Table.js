@@ -6,7 +6,6 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import { flexbox } from '@mui/system';
 
 function createData(category, amount) {
   return { category, amount };
@@ -25,27 +24,29 @@ const rows = [
 ];
 
 const colourStyles = {
-  placeholder: base => ({
+  placeholder: (base) => ({
     ...base,
     fontWeight: 400,
     fontSize: '16px',
     lineHeight: '1.5',
     color: '#000000',
   }),
-  menu: provided => ({
+  container: (provided) => ({
+    ...provided,
+    width: '100%',
+  }),
+  menu: (provided) => ({
     ...provided,
     padding: 10,
     background: 'rgba(255, 255, 255, 0.9)',
     boxShadow: '0px 6px 15px rgba(0, 0, 0, 0.1)',
     borderRadius: '20px',
   }),
-
-  indicatorSeparator: provided => ({
+  indicatorSeparator: (provided) => ({
     ...provided,
     display: 'none',
   }),
-
-  control: styles => ({
+  control: (styles) => ({
     ...styles,
     borderRadius: '30px',
     marginBottom: '20px',
@@ -57,14 +58,14 @@ const colourStyles = {
     fontSize: '18px',
     lineHeight: ' 1.5',
     color: '#000000',
-    minWidth: '280px',
+    width: '100%',
     backgroundColor: 'transparent',
     ':hover': { cursor: 'pointer' },
     '@media screen and (min-width: 768px)': {
       minWidth: '166px',
     },
   }),
-  option: provided => ({
+  option: (provided) => ({
     ...provided,
     backgroundColor: 'rgba(255, 255, 255,0.7)',
 
@@ -76,7 +77,12 @@ const colourStyles = {
     fontSize: '16px',
     lineHeight: ' 1.5',
   }),
+  dropdownIndicator: (provided) => ({
+    ...provided,
+    svg: { color: '#000' },
+  }),
 };
+
 const month = [
   {
     value: 'All',
@@ -175,13 +181,13 @@ function MyTable() {
           styles={colourStyles}
           options={month}
           placeholder="Month"
-        ></Select>
+        />
         <Select
           name="year"
           styles={colourStyles}
           options={year}
           placeholder="Year"
-        ></Select>
+        />
       </div>
 
       <TableContainer>
@@ -191,10 +197,11 @@ function MyTable() {
               className={s.TableHead}
               sx={{
                 borderRadius: '0px',
-                backgroundColor: 'red',
+                backgroundColor: '#fff',
                 '& .MuiTableCell-root': {
                   borderRadius: '0px',
                   borderBottom: 'none',
+                  fontSize: '18px',
                 },
                 '& .MuiTableCell-root:first-child': {
                   borderTopLeftRadius: '30px',
@@ -220,7 +227,7 @@ function MyTable() {
                   className={s.cellName}
                   component="th"
                   scope="row"
-                  sx={{ display: 'flex' }}
+                  sx={{ display: 'flex', fontSize: '16px' }}
                 >
                   <div
                     style={{

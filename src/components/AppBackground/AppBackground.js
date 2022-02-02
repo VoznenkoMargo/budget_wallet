@@ -8,6 +8,7 @@ const AppBackground = () => {
       <Shape
         src={purpleEllipse}
         alt="background shape"
+        draggable="false"
         sx={{
           bottom: '-150px',
           left: '-55px',
@@ -16,6 +17,7 @@ const AppBackground = () => {
       <Shape
         src={peachEllipse}
         alt="background shape"
+        draggable="false"
         sx={{
           top: '-150px',
           right: '-55px',

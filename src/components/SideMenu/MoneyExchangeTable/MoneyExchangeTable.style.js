@@ -1,17 +1,14 @@
-import React from "react";
-import {alpha, styled} from "@mui/material/styles";
+import React from 'react';
+import { alpha, styled } from '@mui/material/styles';
 import { Table } from '@mui/material';
-import RateBackgroundImg from "./RateBackgroundImg.png";
-import {useTheme} from "@emotion/react";
+import RateBackgroundImg from './RateBackgroundImg.png';
+import { useTheme } from '@emotion/react';
 
-export const StyledTable = styled((props) =>
-  <Table
-    {...props}
-  />)(({ theme }) => {
+export const StyledTable = styled((props) => <Table {...props} />)(
+  ({ theme }) => {
     const { breakpoints, palette } = useTheme();
 
     return {
-
       '& .MuiTableCell-root': {
         paddingRight: '30px',
         paddingLeft: '30px',
@@ -26,74 +23,71 @@ export const StyledTable = styled((props) =>
       },
 
       '& .MuiTableCell-root:last-child': {
-          textAlign: 'right',
-        },
+        textAlign: 'right',
+      },
 
       '& .MuiTableHead-root': {
-
         '& .MuiTableCell-head': {
-            paddingTop: '17px',
-            paddingBottom: '20px',
-            fontSize: '18px',
-            lineHeight: '1.3',
-            backgroundColor: alpha(palette.common.white, 0.2),
+          paddingTop: '17px',
+          paddingBottom: '20px',
+          fontSize: '18px',
+          lineHeight: '1.3',
+          backgroundColor: alpha(palette.common.white, 0.2),
 
-            [breakpoints.down('desktop')]: {
-              paddingTop: '11px',
-              paddingBottom: '16px',
-            },
-          },
-
-          '& .MuiTableCell-head:first-of-type': {
-            borderTopLeftRadius: '30px',
-          },
-          '& .MuiTableCell-head:last-child': {
-            borderTopRightRadius: '30px',
+          [breakpoints.down('desktop')]: {
+            paddingTop: '11px',
+            paddingBottom: '16px',
           },
         },
+
+        '& .MuiTableCell-head:first-of-type': {
+          borderTopLeftRadius: '30px',
+        },
+        '& .MuiTableCell-head:last-child': {
+          borderTopRightRadius: '30px',
+        },
+      },
 
       '& .MuiTableBody-root': {
-
         '& .MuiTableRow-root:first-of-type': {
           '& .MuiTableCell-body': {
-              paddingTop: '20px',
-
-              [breakpoints.down('desktop')]: {
-                paddingTop: '10px',
-              },
-            },
-          },
-
-        '& .MuiTableRow-root:last-child': {
-
-          '& .MuiTableCell-body': {
-              paddingBottom: '19px',
-            },
-          },
-
-        '& .MuiTableCell-body': {
-            paddingTop: '27px',
-            paddingBottom: '0',
-            fontSize: '16px',
-
+            paddingTop: '20px',
             [breakpoints.down('desktop')]: {
-              paddingTop: '14px',
+              paddingTop: '10px',
             },
           },
         },
 
-      [breakpoints.down('tablet')] : {
+        '& .MuiTableRow-root:last-child': {
+          '& .MuiTableCell-body': {
+            paddingBottom: '19px',
+          },
+        },
+
+        '& .MuiTableCell-body': {
+          paddingTop: '27px',
+          paddingBottom: '0',
+          fontSize: '16px',
+
+          [breakpoints.down('desktop')]: {
+            paddingTop: '14px',
+          },
+        },
+      },
+
+      [breakpoints.down('tablet')]: {
         background: palette.secondary.main,
         borderRadius: '30px',
         backgroundImage: `url(${RateBackgroundImg})`,
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'contain',
         backgroundPosition: '50% 75px',
-      }
-    }
-  })
+      },
+    };
+  }
+);
 
-export const TableContainer = styled('div')(({theme}) => {
+export const TableContainer = styled('div')(({ theme }) => {
   const { breakpoints, palette } = useTheme();
 
   return {
@@ -115,9 +109,7 @@ export const TableContainer = styled('div')(({theme}) => {
     },
 
     [breakpoints.down('tablet')]: {
-      marginRight: 'auto',
-      marginLeft: 'auto',
       backgroundImage: `none`,
     },
-  }
-})
+  };
+});

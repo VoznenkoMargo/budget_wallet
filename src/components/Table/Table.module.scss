@@ -1,23 +1,20 @@
 .tableHead {
   border-radius: 50%;
 }
+
 .selectContainer {
   display: flex;
   justify-content: space-between;
-  // margin-bottom: 20px;
-  @media screen and (max-width: 767px) {
+  column-gap: 20px;
+  @media screen and (max-width: 400px) {
     flex-wrap: wrap;
   }
 }
+
 .cellName {
   display: flex;
 }
-.tableContainer {
-  min-width: 280px;
-  @media screen and (min-width: 768px) {
-    min-width: 351px;
-  }
-}
+
 .expensesColor {
   color: #ff6596;
 }

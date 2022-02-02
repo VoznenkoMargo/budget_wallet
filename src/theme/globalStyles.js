@@ -25,6 +25,13 @@ const GlobalStyles = () => {
           width: '100%',
           height: '100%',
         },
+        'body::-webkit-scrollbar': {
+          width: '4px',
+        },
+        'body::-webkit-scrollbar-thumb': {
+          background: '#c2c2c2',
+          borderRadius: '10px',
+        },
         input: {
           '&[type=number]': {
             MozAppearance: 'textfield',

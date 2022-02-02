@@ -8,7 +8,6 @@ export default function Chart() {
     <div className={s.chart}>
       <div className={s.containerChart}>
         <Balance />
-
         <div className={s.doughnut}>
           <Doughnut
             className="s.douhnut"
@@ -43,7 +42,11 @@ export default function Chart() {
                 },
               ],
             }}
-            options={{ cutout: 120, maintainAspectRatio: false }}
+            options={{
+              cutout: 120,
+              maintainAspectRatio: true,
+              responsive: true,
+            }}
           />
         </div>
       </div>

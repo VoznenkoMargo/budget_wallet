@@ -18,6 +18,9 @@ export const LogoName = styled('h6')(({ theme }) => {
     fontFamily: typography.fontFamily.primary,
     fontWeight: typography.fontWeightBold,
     fontSize: '30px',
+    '@media (max-width:600px)': {
+      fontSize: '20px',
+    },
   };
 });
 
@@ -38,6 +41,10 @@ export const LogoIcon = styled(Icon)(() => {
         transform: 'translateY(-1px) translateX(1px)',
       },
     },
+    '@media (max-width:600px)': {
+      width: '30px',
+      height: '30px',
+    },
   };
 });
 
@@ -46,5 +53,8 @@ export const LogoContainer = styled('div')(() => {
     display: 'flex',
     alignItems: 'center',
     columnGap: '20px',
+    '@media (max-width:600px)': {
+      columnGap: '15px',
+    },
   };
 });

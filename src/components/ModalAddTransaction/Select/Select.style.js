@@ -15,6 +15,7 @@ const selectMenuProps = {
       transform: 'translate(-50%) !important',
     },
   },
+  disableScrollLock: true,
 };
 
 const Icon = (props) => {
@@ -56,6 +57,10 @@ export const StyledSelect = styled((props) => (
     },
     '& .MuiSelect-icon': {
       transition: 'transform 0.2s ease',
+    },
+    '& .MuiOutlinedInput-notchedOutline': {
+      borderRadius: '30px',
+      borderColor: palette.common.black,
     },
   };
 });

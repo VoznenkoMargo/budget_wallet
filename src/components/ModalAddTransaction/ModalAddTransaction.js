@@ -75,6 +75,7 @@ const ModalAddTransaction = ({ open, onClose }) => {
               value={categoryValue}
               onChange={(e) => setCategoryValue(e.target.value)}
               options={categories}
+              placeholder="Select a category"
             />
           )}
           <Box
