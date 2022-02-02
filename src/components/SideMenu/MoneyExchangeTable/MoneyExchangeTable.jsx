@@ -1,11 +1,12 @@
 import React from 'react';
 import {TableHead, TableBody, TableRow, TableCell} from "@mui/material";
-import {StyledTable} from "./MoneyExchangeTable.style";
+import { StyledTable, TableContainer } from './MoneyExchangeTable.style';
 
 const MoneyExchangeTable = (props) => {
   const {moneyExchangeData} = props;
 
   return (
+    <TableContainer>
       <StyledTable>
         <TableHead>
           <TableRow>
@@ -25,6 +26,7 @@ const MoneyExchangeTable = (props) => {
           ))}
         </TableBody>
       </StyledTable>
+    </TableContainer>
   );
 };
 

@@ -1,6 +1,6 @@
 import React from "react";
 import {alpha, styled} from "@mui/material/styles";
-import {Table} from "@mui/material";
+import { Box, Table } from '@mui/material';
 import RateBackgroundImg from "./RateBackgroundImg.png";
 import {useTheme} from "@emotion/react";
 
@@ -11,16 +11,6 @@ export const StyledTable = styled((props) =>
     const { breakpoints, palette } = useTheme();
 
     return {
-      maxWidth: '350px',
-      height: '350px',
-      marginTop: '30px',
-      background: palette.secondary.main,
-      borderRadius: '30px',
-      webkitFilter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))',
-      filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))',
-      backgroundImage: `url(${RateBackgroundImg})`,
-      backgroundRepeat: 'no-repeat',
-      backgroundPosition: 'bottom',
 
       '& .MuiTableCell-root': {
         paddingRight: '30px',
@@ -40,13 +30,13 @@ export const StyledTable = styled((props) =>
         },
 
       '& .MuiTableHead-root': {
-          backgroundColor: alpha(palette.common.white, 0.2),
 
         '& .MuiTableCell-head': {
             paddingTop: '17px',
             paddingBottom: '20px',
             fontSize: '18px',
             lineHeight: '1.3',
+            backgroundColor: alpha(palette.common.white, 0.2),
 
             [breakpoints.down('desktop')]: {
               paddingTop: '11px',
@@ -54,7 +44,7 @@ export const StyledTable = styled((props) =>
             },
           },
 
-          '& .MuiTableCell-head:first-child': {
+          '& .MuiTableCell-head:first-of-type': {
             borderTopLeftRadius: '30px',
           },
           '& .MuiTableCell-head:last-child': {
@@ -91,17 +81,35 @@ export const StyledTable = styled((props) =>
             },
           },
         },
-
-      [breakpoints.down('desktop')]: {
-        height: 'auto',
-        marginLeft: '20px',
-        flex: '1 1 0',
-      },
-
-      [breakpoints.down('tablet')]: {
-        marginRight: 'auto',
-        marginLeft: 'auto',
-        backgroundPosition: '50% 190%',
-      },
       }
     })
+
+export const TableContainer = styled((props) => <Box {...props} />)(({theme}) => {
+  const { breakpoints, palette } = useTheme();
+
+  return {
+    maxWidth: '350px',
+    height: '350px',
+    marginTop: '30px',
+    background: palette.secondary.main,
+    borderRadius: '30px',
+    webkitFilter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))',
+    filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))',
+    backgroundImage: `url(${RateBackgroundImg})`,
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'contain',
+    backgroundPosition: 'bottom',
+
+    [breakpoints.down('desktop')]: {
+      height: 'auto',
+      marginLeft: '20px',
+      marginTop: '0',
+      flex: '1 1 auto',
+    },
+
+    [breakpoints.down('tablet')]: {
+      marginRight: 'auto',
+      marginLeft: 'auto',
+    },
+  }
+})
