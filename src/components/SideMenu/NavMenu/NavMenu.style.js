@@ -12,17 +12,15 @@ export const StyledNavMenu = styled((props) =>
       display: 'inline-flex',
       flexWrap: 'wrap',
       flexDirection: 'column',
-      marginTop: '40px',
-
-      [breakpoints.down('desktop')]: {
-        marginTop: '30px',
-      },
+      paddingTop: '0',
+      paddingBottom: '0',
 
       [breakpoints.down('tablet')]: {
         marginTop: '0',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
+        alignItems: 'center',
         gap: '30px',
       },
     }
@@ -40,7 +38,11 @@ export const StyledListItem = styled((props) =>
       cursor: 'pointer',
 
       ':not(:first-of-type)': {
-        paddingTop: '10px',
+        marginTop: '10px',
+
+        [breakpoints.down('tablet')]: {
+          marginTop: 0,
+        }
       },
 
       ':last-child': {
@@ -89,8 +91,6 @@ export const StyledListItem = styled((props) =>
       },
 
       [breakpoints.down('tablet')]: {
-        paddingTop: '10px',
-
         ':last-child': {
           position: 'relative',
           left: '0',

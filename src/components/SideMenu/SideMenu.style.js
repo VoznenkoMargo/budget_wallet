@@ -13,21 +13,19 @@ export const StyledSideMenu = styled((props) =>
       flexWrap: 'wrap',
       flexDirection: 'column',
       maxWidth: '350px',
-      marginBottom: '20px',
-      paddingBottom: '10px',
-      paddingLeft: '10px',
+
       [breakpoints.between('tablet', 'desktop')]: {
-        maxWidth: '100%',
+        maxWidth: '700px',
         flexDirection: 'row',
         flexWrap: 'nowrap',
         justifyContent: 'center',
-        paddingRight: '10px',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        marginBottom: '40px',
       },
 
       [breakpoints.down('tablet')]: {
         maxWidth: '100%',
-        paddingLeft: '20px',
-        paddingRight: '20px',
       },
     }
   })
@@ -40,10 +38,11 @@ export const StyledNavBox = styled((props) =>
 
     return {
       maxWidth: '350px',
-      flex: '1 1 0',
+      flex: '1 0 auto',
 
       [breakpoints.down('tablet')]: {
-        maxWidth: '100%',
+        width: '280px',
+        margin: '0 auto 30px auto',
       },
     }
 })
