@@ -1,8 +1,6 @@
 import './App.css';
-import { CssBaseline } from '@mui/material';
 import ThemeConfig from 'theme';
 import DiagramTab from './components/DiagramTab/DiagramTab';
-import GlobalStyles from 'theme/globalStyles';
 import StatisticsPage from 'pages/StatisticsPage/StatisticsPage';
 import { Container, ButtonAddTransaction } from 'components/common';
 import { useState } from 'react';
@@ -15,8 +13,6 @@ const App = () => {
 
   return (
     <ThemeConfig>
-      <CssBaseline />
-      <GlobalStyles />
       <div className="App">
         <AppBar />
         <Container
