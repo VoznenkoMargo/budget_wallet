@@ -9,7 +9,14 @@ const StyledAppBar = () => {
         <StyledToolbar>
           <Logo />
           <Box
-            sx={{ display: 'flex', alignItems: 'center', columnGap: '15px' }}
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              columnGap: '15px',
+              '@media (max-width: 600px)': {
+                columnGap: '10px',
+              },
+            }}
           >
             <UserName>Name</UserName>
             <Divider orientation="vertical" flexItem />

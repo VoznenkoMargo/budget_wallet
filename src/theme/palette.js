@@ -38,7 +38,7 @@ const TEXT = {
 };
 
 const GREY = {
-  0: '#e7eaf2',
+  0: '#F1F1F7',
   100: '#E0E0E0',
   200: '#BDBDBD',
 };

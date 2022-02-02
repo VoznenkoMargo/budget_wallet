@@ -1,15 +1,21 @@
 import { FormControl } from '@mui/material';
 import { StyledSelect, SelectItem } from './Select.style';
 
-const Select = ({ options, value, onChange }) => {
+const Select = ({
+  options,
+  value,
+  onChange,
+  variant = 'standard',
+  placeholder,
+}) => {
   return (
-    <FormControl variant="standard" sx={{ width: '100%' }} color="secondary">
+    <FormControl variant={variant} sx={{ width: '100%' }} color="secondary">
       <StyledSelect
         onChange={onChange}
         value={value}
         renderValue={(selected) => {
           if (selected.trim() === '') {
-            return <p className="placeholder">Select a category</p>;
+            return <p className="placeholder">{placeholder}</p>;
           }
           return selected;
         }}

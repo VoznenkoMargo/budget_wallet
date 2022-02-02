@@ -1,11 +1,9 @@
-import React from "react";
-import {styled} from "@mui/material/styles";
-import {useTheme} from "@emotion/react";
+import React from 'react';
+import { styled } from '@mui/material/styles';
+import { useTheme } from '@emotion/react';
 
-export const StyledCurrentBalance = styled((props) =>
-  <div
-    {...props}
-  />)(({ theme }) => {
+export const StyledCurrentBalance = styled((props) => <div {...props} />)(
+  ({ theme }) => {
     const { breakpoints, palette } = useTheme();
 
     return {
@@ -23,14 +21,12 @@ export const StyledCurrentBalance = styled((props) =>
       [breakpoints.down('tablet')]: {
         marginTop: '10px',
       },
-    }
+    };
   }
-)
+);
 
-export const StyledCurrentBalanceText = styled((props) =>
-  <p
-    {...props}
-  />)(({ theme }) => {
+export const StyledCurrentBalanceText = styled((props) => <p {...props} />)(
+  ({ theme }) => {
     return {
       marginTop: '0',
       marginBottom: '10px',
@@ -38,15 +34,13 @@ export const StyledCurrentBalanceText = styled((props) =>
       lineHeight: '1.3',
       textTransform: 'uppercase',
       color: '#A6A6A6',
-    }
+    };
   }
-)
+);
 
-export const StyledCurrentBalanceTotal = styled((props) =>
-  <p
-    {...props}
-  />)(({ theme }) => {
-    const {typography} = theme;
+export const StyledCurrentBalanceTotal = styled((props) => <p {...props} />)(
+  ({ theme }) => {
+    const { typography } = theme;
 
     return {
       marginTop: '0',
@@ -55,6 +49,6 @@ export const StyledCurrentBalanceTotal = styled((props) =>
       fontSize: '30px',
       fontWeight: typography.fontWeightBold,
       lineHeight: '1.5',
-    }
+    };
   }
-)
+);

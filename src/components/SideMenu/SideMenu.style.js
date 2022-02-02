@@ -1,39 +1,36 @@
-import {styled} from "@mui/material/styles";
-import React from "react";
-import {useTheme} from "@emotion/react";
+import { styled } from '@mui/material/styles';
+import React from 'react';
+import { useTheme } from '@emotion/react';
 
-export const StyledSideMenu = styled((props) =>
-  <div
-    {...props}
-  />)(({ theme }) => {
+export const StyledSideMenu = styled((props) => <div {...props} />)(
+  ({ theme }) => {
     const { breakpoints } = useTheme();
 
     return {
       display: 'flex',
-      flexWrap: 'wrap',
       flexDirection: 'column',
-      maxWidth: '350px',
-
+      rowGap: '30px',
       [breakpoints.between('tablet', 'desktop')]: {
-        maxWidth: '700px',
-        flexDirection: 'row',
-        flexWrap: 'nowrap',
         justifyContent: 'center',
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        marginBottom: '40px',
       },
-
       [breakpoints.down('tablet')]: {
         maxWidth: '100%',
       },
-    }
-  })
+      '@media (max-width: 1160px)': {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        columnGap: '20px',
+      },
+      '@media (max-width: 600px)': {
+        flexDirection: 'column',
+        alignItems: 'center',
+      },
+    };
+  }
+);
 
-export const StyledNavBox = styled((props) =>
-  <div
-    {...props}
-  />)(({ theme }) => {
+export const StyledNavBox = styled((props) => <div {...props} />)(
+  ({ theme }) => {
     const { breakpoints } = useTheme();
 
     return {
@@ -42,7 +39,7 @@ export const StyledNavBox = styled((props) =>
 
       [breakpoints.down('tablet')]: {
         width: '280px',
-        margin: '0 auto 30px auto',
       },
-    }
-})
+    };
+  }
+);
