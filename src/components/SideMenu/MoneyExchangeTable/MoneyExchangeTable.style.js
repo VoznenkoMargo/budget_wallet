@@ -1,6 +1,6 @@
 import React from "react";
 import {alpha, styled} from "@mui/material/styles";
-import { Box, Table } from '@mui/material';
+import { Table } from '@mui/material';
 import RateBackgroundImg from "./RateBackgroundImg.png";
 import {useTheme} from "@emotion/react";
 
@@ -84,13 +84,12 @@ export const StyledTable = styled((props) =>
       }
     })
 
-export const TableContainer = styled((props) => <Box {...props} />)(({theme}) => {
+export const TableContainer = styled('div')(({theme}) => {
   const { breakpoints, palette } = useTheme();
 
   return {
     maxWidth: '350px',
     height: '350px',
-    marginTop: '30px',
     background: palette.secondary.main,
     borderRadius: '30px',
     webkitFilter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))',
@@ -102,7 +101,6 @@ export const TableContainer = styled((props) => <Box {...props} />)(({theme}) =>
 
     [breakpoints.down('desktop')]: {
       height: 'auto',
-      marginLeft: '20px',
       marginTop: '0',
       flex: '1 1 auto',
     },

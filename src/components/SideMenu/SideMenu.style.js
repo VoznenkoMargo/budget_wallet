@@ -26,8 +26,6 @@ export const StyledSideMenu = styled((props) =>
 
       [breakpoints.down('tablet')]: {
         maxWidth: '100%',
-        paddingLeft: '20px',
-        paddingRight: '20px',
       },
     }
   })
@@ -43,7 +41,8 @@ export const StyledNavBox = styled((props) =>
       flex: '1 0 auto',
 
       [breakpoints.down('tablet')]: {
-        maxWidth: '100%',
+        width: '280px',
+        margin: '0 auto 30px auto',
       },
     }
 })
