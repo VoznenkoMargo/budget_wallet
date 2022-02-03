@@ -1,7 +1,6 @@
 import { Fade } from '@mui/material';
 import { DatePicker } from './DatePicker';
 import { BaseInput } from 'components/common';
-import { useState } from 'react';
 import { Select } from './Select';
 import { Switch } from './Switch';
 import { useFormik } from 'formik';
@@ -20,17 +19,21 @@ const categories = [
 ];
 
 const validationSchema = yup.object({
+  isExpenseMode: yup.boolean(),
   amount: yup
     .number()
     .positive('Amount should be positive')
     .required("Amount can't be empty"),
-  // categoryId: yup.string().required('Please choose a category'),
+  categoryId: yup.string().when('isExpenseMode', {
+    is: true,
+    then: yup.string().required('Please choose a category'),
+  }),
 });
 
 const ModalAddTransaction = ({ open, onClose }) => {
-  const [isExpenseMode, setIsExpenseMode] = useState(false);
   const formik = useFormik({
     initialValues: {
+      isExpenseMode: false,
       amount: '',
       comment: '',
       transactionDate: new Date(),
@@ -45,9 +48,9 @@ const ModalAddTransaction = ({ open, onClose }) => {
 
   const onTypeChangeHandler = (e) => {
     const value = e.target.checked ? 'EXPENSE' : 'INCOME';
+    formik.setFieldValue('isExpenseMode', e.target.checked);
     formik.setFieldValue('type', value.toString());
     formik.setFieldValue('categoryId', '');
-    setIsExpenseMode(e.target.checked);
   };
 
   const onDateChangeHandler = (date) => {
@@ -57,7 +60,6 @@ const ModalAddTransaction = ({ open, onClose }) => {
   const onCloseHandler = () => {
     onClose();
     formik.resetForm();
-    setIsExpenseMode(false);
   };
 
   return (
@@ -69,10 +71,10 @@ const ModalAddTransaction = ({ open, onClose }) => {
           <Switch
             labelDefault="Income"
             labelChecked="Expenses"
-            checked={isExpenseMode}
+            checked={formik.values.isExpenseMode}
             onChange={onTypeChangeHandler}
           />
-          {isExpenseMode && (
+          {formik.values.isExpenseMode && (
             <Select
               name="categoryId"
               value={formik.values.categoryId}
@@ -81,15 +83,9 @@ const ModalAddTransaction = ({ open, onClose }) => {
               options={categories}
               placeholder="Select a category"
               error={
-                isExpenseMode &&
-                formik.touched.categoryId &&
-                Boolean(formik.errors.categoryId)
+                formik.touched.categoryId && Boolean(formik.errors.categoryId)
               }
-              helperText={
-                isExpenseMode &&
-                formik.touched.categoryId &&
-                formik.errors.categoryId
-              }
+              helperText={formik.touched.categoryId && formik.errors.categoryId}
             />
           )}
           <S.InputsContainer>
