@@ -12,19 +12,20 @@ const shakeAnimation = keyframes`
 `;
 
 export const LogoName = styled('h6')(({ theme }) => {
-  const { palette, typography } = theme;
+  const { palette, typography, breakpoints } = theme;
   return {
     color: palette.common.black,
     fontFamily: typography.fontFamily.primary,
     fontWeight: typography.fontWeightBold,
     fontSize: '30px',
-    '@media (max-width:600px)': {
+    [breakpoints.down('tablet')]: {
       fontSize: '20px',
     },
   };
 });
 
-export const LogoIcon = styled(Icon)(() => {
+export const LogoIcon = styled(Icon)(({ theme }) => {
+  const { breakpoints } = theme;
   return {
     overflow: 'visible',
     '& path': {
@@ -41,19 +42,20 @@ export const LogoIcon = styled(Icon)(() => {
         transform: 'translateY(-1px) translateX(1px)',
       },
     },
-    '@media (max-width:600px)': {
+    [breakpoints.down('tablet')]: {
       width: '30px',
       height: '30px',
     },
   };
 });
 
-export const LogoContainer = styled('div')(() => {
+export const LogoContainer = styled('div')(({ theme }) => {
+  const { breakpoints } = theme;
   return {
     display: 'flex',
     alignItems: 'center',
     columnGap: '20px',
-    '@media (max-width:600px)': {
+    [breakpoints.down('tablet')]: {
       columnGap: '15px',
     },
   };

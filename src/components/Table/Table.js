@@ -37,10 +37,22 @@ const colourStyles = {
   }),
   menu: (provided) => ({
     ...provided,
-    padding: 10,
-    background: 'rgba(255, 255, 255, 0.9)',
+    background: 'rgba(255, 255, 255, 0.2)',
     boxShadow: '0px 6px 15px rgba(0, 0, 0, 0.1)',
     borderRadius: '20px',
+    backdropFilter: 'blur(30px)',
+    overflow: 'hidden',
+  }),
+  menuList: (provided) => ({
+    ...provided,
+    '::-webkit-scrollbar': {
+      width: '4px',
+      height: '10px',
+    },
+    '::-webkit-scrollbar-thumb': {
+      background: '#c2c2c2',
+      borderRadius: '10px',
+    },
   }),
   indicatorSeparator: (provided) => ({
     ...provided,
@@ -49,7 +61,6 @@ const colourStyles = {
   control: (styles) => ({
     ...styles,
     borderRadius: '30px',
-    marginBottom: '20px',
     border: '1px solid #000000',
     padding: '0 15px',
     minHeight: '50px',
@@ -60,26 +71,31 @@ const colourStyles = {
     color: '#000000',
     width: '100%',
     backgroundColor: 'transparent',
-    ':hover': { cursor: 'pointer' },
+    ':hover': {
+      cursor: 'pointer',
+      borderColor: '#4A56E2',
+    },
+    boxShadow: 0,
     '@media screen and (min-width: 768px)': {
       minWidth: '166px',
     },
   }),
   option: (provided) => ({
     ...provided,
-    backgroundColor: 'rgba(255, 255, 255,0.7)',
-
+    backgroundColor: 'transparent',
     color: '#000000',
-    padding: 20,
-    ':hover': { cursor: 'pointer' },
+    ':hover': { cursor: 'pointer', backgroundColor: '#fff', color: '#FF6596' },
     fontStyle: 'normal',
     fontWeight: '400',
-    fontSize: '16px',
+    fontSize: '17px',
     lineHeight: ' 1.5',
+    transition: 'background-color 0.2s ease, color 0.2s ease',
   }),
-  dropdownIndicator: (provided) => ({
+  dropdownIndicator: (provided, state) => ({
     ...provided,
     svg: { color: '#000' },
+    transition: 'all .2s ease',
+    transform: state.isFocused ? 'rotate(180deg)' : null,
   }),
 };
 
@@ -203,11 +219,11 @@ function MyTable() {
                   borderBottom: 'none',
                   fontSize: '18px',
                 },
-                '& .MuiTableCell-root:first-child': {
+                '& .MuiTableCell-root:first-of-type': {
                   borderTopLeftRadius: '30px',
                   borderBottomLeftRadius: '30px',
                 },
-                '& .MuiTableCell-root:last-child': {
+                '& .MuiTableCell-root:last-of-type': {
                   borderTopRightRadius: '30px',
                   borderBottomRightRadius: '30px',
                 },
@@ -221,13 +237,17 @@ function MyTable() {
             {rows.map((row, index) => (
               <TableRow
                 key={row.category}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                sx={{ borderBottom: '1px solid rgba(224, 224, 224, 1)' }}
               >
                 <TableCell
                   className={s.cellName}
                   component="th"
                   scope="row"
-                  sx={{ display: 'flex', fontSize: '16px' }}
+                  sx={{
+                    display: 'flex',
+                    fontSize: '16px',
+                    borderBottom: 'none',
+                  }}
                 >
                   <div
                     style={{
@@ -240,19 +260,34 @@ function MyTable() {
                   ></div>
                   {row.category}
                 </TableCell>
-                <TableCell align="right">{row.amount}</TableCell>
+                <TableCell
+                  align="right"
+                  sx={{ borderBottom: 'none', fontSize: '16px' }}
+                >
+                  {row.amount}
+                </TableCell>
               </TableRow>
             ))}
             <TableRow className="hiddenBorder">
-              <TableCell align="left">Expenses:</TableCell>
-              <TableCell align="right" sx={{ color: '#ff6596' }}>
+              <TableCell align="left" sx={{ fontSize: '16px' }}>
+                Expenses:
+              </TableCell>
+              <TableCell
+                align="right"
+                sx={{ color: '#ff6596', fontSize: '16px' }}
+              >
                 22 549.24
               </TableCell>
             </TableRow>
 
             <TableRow className="hiddenBorder">
-              <TableCell align="left">Incomes:</TableCell>
-              <TableCell align="right" sx={{ color: '#24CCA7' }}>
+              <TableCell align="left" sx={{ fontSize: '16px' }}>
+                Incomes:
+              </TableCell>
+              <TableCell
+                align="right"
+                sx={{ color: '#24CCA7', fontSize: '16px' }}
+              >
                 27 350.00
               </TableCell>
             </TableRow>

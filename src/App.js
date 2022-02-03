@@ -17,50 +17,57 @@ const App = () => {
       <div className="App">
         <AppBar />
         <Container
-          sx={{
-            height: 'calc(100% - 77px)',
-            position: 'relative',
-            zIndex: 20,
-            display: 'flex',
-            justifyContent: 'space-between',
-            '@media (max-width: 1160px)': {
-              padding: '0 30px',
-              flexDirection: 'column',
-              rowGap: '40px',
-              justifyContent: 'initial',
-              height: 'auto',
-            },
-            '@media (max-width: 600px)': {
-              padding: '0 20px',
-            },
-          }}
+          sx={[
+            (theme) => ({
+              height: 'calc(100% - 77px)',
+              position: 'relative',
+              zIndex: 20,
+              display: 'flex',
+              justifyContent: 'space-between',
+              [theme.breakpoints.down('desktop')]: {
+                padding: '0 30px',
+                flexDirection: 'column',
+                rowGap: '40px',
+                justifyContent: 'initial',
+                height: 'auto',
+              },
+              [theme.breakpoints.down('tablet')]: {
+                padding: '0 20px',
+              },
+            }),
+          ]}
         >
           <Box
-            sx={{
-              paddingTop: '40px',
-              paddingRight: '30px',
-              height: '100%',
-              position: 'fixed',
-              '@media (max-width: 1160px)': {
-                padding: '20px 0 0 0',
-                width: '100%',
-                position: 'static',
-              },
-            }}
+            sx={[
+              (theme) => ({
+                paddingTop: '40px',
+                paddingRight: '30px',
+                height: '100%',
+                position: 'fixed',
+                [theme.breakpoints.down('desktop')]: {
+                  padding: '20px 0 0 0',
+                  width: '100%',
+                  position: 'static',
+                },
+              }),
+            ]}
           >
             <SideMenu />
           </Box>
           <Box
-            sx={{
-              paddingLeft: '30px',
-              paddingTop: '30px',
-              width: '100%',
-              marginLeft: '355px',
-              '@media (max-width: 1160px)': {
-                padding: 0,
-                marginLeft: 0,
-              },
-            }}
+            sx={[
+              (theme) => ({
+                paddingLeft: '30px',
+                paddingTop: '30px',
+                paddingBottom: '30px',
+                width: '100%',
+                marginLeft: '355px',
+                [theme.breakpoints.down('desktop')]: {
+                  padding: 0,
+                  marginLeft: 0,
+                },
+              }),
+            ]}
           >
             <DiagramTab />
             <StatisticsPage />

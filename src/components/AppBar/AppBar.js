@@ -1,8 +1,11 @@
 import { Box, Divider } from '@mui/material';
+import { useTheme } from '@mui/system';
 import { Container, Logo } from 'components/common';
 import { StyledToolbar, Header, ExitButton, UserName } from './AppBar.styled';
 
 const StyledAppBar = () => {
+  const { breakpoints } = useTheme();
+
   return (
     <Header>
       <Container>
@@ -13,7 +16,7 @@ const StyledAppBar = () => {
               display: 'flex',
               alignItems: 'center',
               columnGap: '15px',
-              '@media (max-width: 600px)': {
+              [breakpoints.down('tablet')]: {
                 columnGap: '10px',
               },
             }}
