@@ -1,12 +1,9 @@
-import {styled} from "@mui/material/styles";
-import {List, ListItem, ListItemIcon, ListItemText} from "@mui/material";
-import {useTheme} from "@emotion/react";
+import { styled } from '@mui/material/styles';
+import { List, ListItem } from '@mui/material';
 
-export const StyledNavMenu = styled((props) =>
-  <List
-    {...props}
-  />)(({theme}) => {
-    const { breakpoints } = useTheme();
+export const StyledNavMenu = styled((props) => <List {...props} />)(
+  ({ theme }) => {
+    const { breakpoints } = theme;
 
     return {
       display: 'inline-flex',
@@ -23,14 +20,13 @@ export const StyledNavMenu = styled((props) =>
         alignItems: 'center',
         gap: '30px',
       },
-    }
-  })
+    };
+  }
+);
 
-export const StyledListItem = styled((props) =>
-  <ListItem
-    {...props}
-  />)(({theme, checked}) => {
-    const { breakpoints, typography, palette} = useTheme();
+export const StyledListItem = styled((props) => <ListItem {...props} />)(
+  ({ theme, checked }) => {
+    const { breakpoints, typography, palette } = theme;
 
     return {
       width: 'auto',
@@ -42,7 +38,7 @@ export const StyledListItem = styled((props) =>
 
         [breakpoints.down('tablet')]: {
           marginTop: 0,
-        }
+        },
       },
 
       ':last-child': {
@@ -53,25 +49,27 @@ export const StyledListItem = styled((props) =>
       ':hover': {
         '& .MuiTypography-root': {
           color: palette.secondary.main,
-        }
+        },
       },
 
       '.MuiListItemIcon-root': {
         minWidth: 'auto',
         borderRadius: '10px',
-        filter: checked? 'drop-shadow(0px 3px 10px rgba(74, 86, 226, 0.5))': 'none',
-        backgroundColor: checked? palette.common.white : 'none',
+        filter: checked
+          ? 'drop-shadow(0px 3px 10px rgba(74, 86, 226, 0.5))'
+          : 'none',
+        backgroundColor: checked ? palette.common.white : 'none',
 
         '& .MuiSvgIcon-root': {
           width: '24px',
           height: '24px',
-          fill: checked? palette.secondary.main : palette.secondary.light,
+          fill: checked ? palette.secondary.main : palette.secondary.light,
 
           [breakpoints.down('tablet')]: {
             width: '38px',
             height: '38px',
           },
-        }
+        },
       },
 
       '.MuiListItemText-root': {
@@ -80,7 +78,9 @@ export const StyledListItem = styled((props) =>
         '& .MuiTypography-root': {
           fontFamily: typography.fontFamily.primary,
           fontSize: '18px',
-          fontWeight: checked? typography.fontWeightBold : typography.fontWeightRegular,
+          fontWeight: checked
+            ? typography.fontWeightBold
+            : typography.fontWeightRegular,
           lineHeight: '1.5',
         },
 
@@ -96,5 +96,6 @@ export const StyledListItem = styled((props) =>
           left: '0',
         },
       },
-    }
-  })
+    };
+  }
+);

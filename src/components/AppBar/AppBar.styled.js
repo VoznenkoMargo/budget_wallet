@@ -2,14 +2,15 @@ import { Toolbar, AppBar, Button } from '@mui/material';
 import { styled } from '@mui/system';
 import LogoutIcon from '@mui/icons-material/Logout';
 
-export const StyledToolbar = styled(Toolbar)(() => {
+export const StyledToolbar = styled(Toolbar)(({ theme }) => {
+  const { breakpoints } = theme;
   return {
     padding: '16px 0',
     justifyContent: 'space-between',
-    '@media (max-width: 1160px)': {
+    [breakpoints.down('desktop')]: {
       padding: '16px 40px',
     },
-    '@media (max-width: 600px)': {
+    [breakpoints.down('tablet')]: {
       padding: '15px 20px',
     },
   };
@@ -18,11 +19,11 @@ export const StyledToolbar = styled(Toolbar)(() => {
 export const Header = styled((props) => (
   <AppBar position="sticky" {...props} />
 ))(({ theme }) => {
-  const { palette } = theme;
+  const { palette, breakpoints } = theme;
   return {
     boxShadow: 'none',
     backgroundColor: palette.common.white,
-    '@media (max-width: 600px)': {
+    [breakpoints.down('tablet')]: {
       zIndex: '2000',
     },
   };
@@ -31,7 +32,7 @@ export const Header = styled((props) => (
 export const ExitButton = styled((props) => (
   <Button startIcon={<LogoutIcon />} {...props} />
 ))(({ theme }) => {
-  const { palette } = theme;
+  const { palette, breakpoints } = theme;
   return {
     textTransform: 'capitalize',
     fontFamily: 'inherit',
@@ -44,7 +45,7 @@ export const ExitButton = styled((props) => (
     },
     div: {
       transition: 'transform 0.2s ease',
-      '@media (max-width: 600px)': {
+      [breakpoints.down('tablet')]: {
         display: 'none',
       },
     },
@@ -52,19 +53,19 @@ export const ExitButton = styled((props) => (
       svg: {
         transform: 'translateX(100%)',
         opacity: 0,
-        '@media (max-width: 600px)': {
+        [breakpoints.down('tablet')]: {
           transform: 'none',
           opacity: 1,
         },
       },
       div: {
         transform: 'translateX(-50%)',
-        '@media (max-width: 600px)': {
+        [breakpoints.down('tablet')]: {
           transform: 'none',
         },
       },
     },
-    '@media (max-width: 600px)': {
+    [breakpoints.down('tablet')]: {
       minWidth: 'auto',
       padding: '2px',
       span: {

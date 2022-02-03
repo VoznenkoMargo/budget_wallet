@@ -1,18 +1,11 @@
-import { useTheme, alpha } from '@mui/system';
-import { Box, Modal, Fade } from '@mui/material';
+import { Fade } from '@mui/material';
 import { DatePicker } from './DatePicker';
 import { BaseInput } from 'components/common';
 import { useState } from 'react';
 import { Select } from './Select';
 import { Switch } from './Switch';
 import moment from 'moment';
-import {
-  FilledButton,
-  Form,
-  OutlinedButton,
-  Title,
-  CloseIcon,
-} from './ModalAddTransaction.style';
+import * as S from './ModalAddTransaction.style';
 
 const categories = [
   'Main',
@@ -26,7 +19,6 @@ const categories = [
 ];
 
 const ModalAddTransaction = ({ open, onClose }) => {
-  const { breakpoints, palette } = useTheme();
   const [isExpenseMode, setIsExpenseMode] = useState(false);
   const [dateValue, setDateValue] = useState(moment(new Date()));
   const [amountValue, setAmountValue] = useState('');
@@ -50,20 +42,11 @@ const ModalAddTransaction = ({ open, onClose }) => {
   };
 
   return (
-    <Modal
-      open={open}
-      closeAfterTransition
-      onClose={onCloseHandler}
-      sx={{
-        '& .MuiBackdrop-root': {
-          backgroundColor: alpha(palette.common.black, 0.25),
-        },
-      }}
-    >
+    <S.Modal open={open} onClose={onCloseHandler} closeAfterTransition>
       <Fade in={open}>
-        <Form onSubmit={onSubmitHandler} autoComplete="off">
-          <Title>Add transaction</Title>
-          <CloseIcon onClick={onCloseHandler} />
+        <S.Form onSubmit={onSubmitHandler} autoComplete="off">
+          <S.Title>Add transaction</S.Title>
+          <S.CloseIcon onClick={onCloseHandler} />
           <Switch
             labelDefault="Income"
             labelChecked="Expenses"
@@ -78,19 +61,9 @@ const ModalAddTransaction = ({ open, onClose }) => {
               placeholder="Select a category"
             />
           )}
-          <Box
-            sx={{
-              display: 'flex',
-              columnGap: '30px',
-              width: '100%',
-              [breakpoints.down('mobile')]: {
-                flexDirection: 'column',
-                rowGap: '40px',
-              },
-            }}
-          >
+          <S.InputsContainer>
             <BaseInput
-              color={'secondary'}
+              color="secondary"
               variant="standard"
               placeholder="0.00"
               type="number"
@@ -103,7 +76,7 @@ const ModalAddTransaction = ({ open, onClose }) => {
                 setDateValue(newValue);
               }}
             />
-          </Box>
+          </S.InputsContainer>
           <BaseInput
             sx={{
               '& .MuiInput-input': {
@@ -118,23 +91,13 @@ const ModalAddTransaction = ({ open, onClose }) => {
             value={commentValue}
             onChange={(e) => setCommentValue(e.target.value)}
           />
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              rowGap: '20px',
-              [breakpoints.down('tablet')]: {
-                width: '100%',
-                alignItems: 'center',
-              },
-            }}
-          >
-            <FilledButton type="submit">Add</FilledButton>
-            <OutlinedButton onClick={onCloseHandler}>Cancel</OutlinedButton>
-          </Box>
-        </Form>
+          <S.ButtonsContainer>
+            <S.FilledButton type="submit">Add</S.FilledButton>
+            <S.OutlinedButton onClick={onCloseHandler}>Cancel</S.OutlinedButton>
+          </S.ButtonsContainer>
+        </S.Form>
       </Fade>
-    </Modal>
+    </S.Modal>
   );
 };
 

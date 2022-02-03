@@ -17,8 +17,12 @@ export const Background = styled('div')(({ theme }) => {
   };
 });
 
-export const Shape = styled('img')(() => {
+export const Shape = styled('img')(({ theme }) => {
+  const { breakpoints } = theme;
   return {
     maxWidth: '100%',
+    [breakpoints.down('tablet')]: {
+      display: 'none',
+    },
   };
 });

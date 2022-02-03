@@ -1,11 +1,11 @@
 import { Close } from '@mui/icons-material';
-import { Button, Typography } from '@mui/material';
+import { Button, Typography, Modal as MuiModal } from '@mui/material';
 import { styled, alpha } from '@mui/system';
 
 export const FilledButton = styled((props) => (
   <Button variant="contained" disableElevation {...props} />
 ))(({ theme }) => {
-  const { palette } = theme;
+  const { palette, breakpoints } = theme;
   return {
     width: '300px',
     backgroundColor: palette.primary.main,
@@ -17,13 +17,16 @@ export const FilledButton = styled((props) => (
     '&:hover': {
       backgroundColor: alpha(palette.primary.main, 0.5),
     },
+    [breakpoints.down('mobile')]: {
+      width: '100%',
+    },
   };
 });
 
 export const OutlinedButton = styled((props) => (
   <Button variant="outlined" color="secondary" disableElevation {...props} />
 ))(({ theme }) => {
-  const { palette } = theme;
+  const { palette, breakpoints } = theme;
   return {
     width: '300px',
     borderRadius: '20px',
@@ -34,6 +37,9 @@ export const OutlinedButton = styled((props) => (
     border: '1px solid',
     borderColor: palette.secondary.main,
     color: palette.secondary.main,
+    [breakpoints.down('mobile')]: {
+      width: '100%',
+    },
   };
 });
 
@@ -82,6 +88,41 @@ export const CloseIcon = styled(Close)(() => {
     transition: 'transform 0.2s ease',
     '&:hover': {
       transform: 'rotate(90deg)',
+    },
+  };
+});
+
+export const ButtonsContainer = styled('div')(({ theme }) => {
+  const { breakpoints } = theme;
+  return {
+    display: 'flex',
+    flexDirection: 'column',
+    rowGap: '20px',
+    [breakpoints.down('tablet')]: {
+      width: '100%',
+      alignItems: 'center',
+    },
+  };
+});
+
+export const InputsContainer = styled('div')(({ theme }) => {
+  const { breakpoints } = theme;
+  return {
+    display: 'flex',
+    columnGap: '30px',
+    width: '100%',
+    [breakpoints.down('mobile')]: {
+      flexDirection: 'column',
+      rowGap: '40px',
+    },
+  };
+});
+
+export const Modal = styled((props) => <MuiModal {...props} />)(({ theme }) => {
+  const { palette } = theme;
+  return {
+    '& .MuiBackdrop-root': {
+      backgroundColor: alpha(palette.common.black, 0.25),
     },
   };
 });

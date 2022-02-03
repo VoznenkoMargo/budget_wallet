@@ -18,7 +18,7 @@ export const StyledSideMenu = styled((props) => <div {...props} />)(
       },
       '@media (max-width: 1160px)': {
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'space-evenly',
         columnGap: '20px',
       },
       '@media (max-width: 600px)': {

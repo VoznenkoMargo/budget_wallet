@@ -2,11 +2,10 @@ import React from 'react';
 import { alpha, styled } from '@mui/material/styles';
 import { Table } from '@mui/material';
 import RateBackgroundImg from './RateBackgroundImg.png';
-import { useTheme } from '@emotion/react';
 
 export const StyledTable = styled((props) => <Table {...props} />)(
   ({ theme }) => {
-    const { breakpoints, palette } = useTheme();
+    const { breakpoints, palette } = theme;
 
     return {
       '& .MuiTableCell-root': {
@@ -88,7 +87,7 @@ export const StyledTable = styled((props) => <Table {...props} />)(
 );
 
 export const TableContainer = styled('div')(({ theme }) => {
-  const { breakpoints, palette } = useTheme();
+  const { breakpoints, palette } = theme;
 
   return {
     maxWidth: '350px',

@@ -1,10 +1,9 @@
 import React from 'react';
 import { styled } from '@mui/material/styles';
-import { useTheme } from '@emotion/react';
 
 export const StyledCurrentBalance = styled((props) => <div {...props} />)(
   ({ theme }) => {
-    const { breakpoints, palette } = useTheme();
+    const { breakpoints, palette } = theme;
 
     return {
       maxWidth: '350px',
