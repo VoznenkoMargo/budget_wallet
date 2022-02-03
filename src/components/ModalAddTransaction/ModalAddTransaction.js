@@ -4,61 +4,92 @@ import { BaseInput } from 'components/common';
 import { useState } from 'react';
 import { Select } from './Select';
 import { Switch } from './Switch';
-import moment from 'moment';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
 import * as S from './ModalAddTransaction.style';
 
 const categories = [
-  'Main',
-  'Food',
-  'Car',
-  'Development',
-  'Kids',
-  'House',
-  'Education',
-  'Others',
+  { id: 0, name: 'Main' },
+  { id: 1, name: 'Food' },
+  { id: 2, name: 'Car' },
+  { id: 3, name: 'Development' },
+  { id: 4, name: 'Kids' },
+  { id: 5, name: 'House' },
+  { id: 6, name: 'Education' },
+  { id: 7, name: 'Others' },
 ];
+
+const validationSchema = yup.object({
+  amount: yup
+    .number()
+    .positive('Amount should be positive')
+    .required("Amount can't be empty"),
+  // categoryId: yup.string().required('Please choose a category'),
+});
 
 const ModalAddTransaction = ({ open, onClose }) => {
   const [isExpenseMode, setIsExpenseMode] = useState(false);
-  const [dateValue, setDateValue] = useState(moment(new Date()));
-  const [amountValue, setAmountValue] = useState('');
-  const [commentValue, setCommentValue] = useState('');
-  const [categoryValue, setCategoryValue] = useState('');
-  const onSwitchChangeHandler = (e) => {
+  const formik = useFormik({
+    initialValues: {
+      amount: '',
+      comment: '',
+      transactionDate: new Date(),
+      type: 'INCOME',
+      categoryId: '',
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      console.log(values);
+    },
+  });
+
+  const onTypeChangeHandler = (e) => {
+    const value = e.target.checked ? 'EXPENSE' : 'INCOME';
+    formik.setFieldValue('type', value.toString());
+    formik.setFieldValue('categoryId', '');
     setIsExpenseMode(e.target.checked);
   };
-  const onCloseHandler = () => {
-    onClose();
+
+  const onDateChangeHandler = (date) => {
+    formik.setFieldValue('transactionDate', date.toString());
   };
 
-  const onSubmitHandler = (e) => {
-    e.preventDefault();
-    console.log({
-      dateValue,
-      amountValue,
-      commentValue,
-      categoryValue,
-    });
+  const onCloseHandler = () => {
+    onClose();
+    formik.resetForm();
+    setIsExpenseMode(false);
   };
 
   return (
     <S.Modal open={open} onClose={onCloseHandler} closeAfterTransition>
       <Fade in={open}>
-        <S.Form onSubmit={onSubmitHandler} autoComplete="off">
+        <S.Form onSubmit={formik.handleSubmit} autoComplete="off">
           <S.Title>Add transaction</S.Title>
           <S.CloseIcon onClick={onCloseHandler} />
           <Switch
             labelDefault="Income"
             labelChecked="Expenses"
             checked={isExpenseMode}
-            onChange={onSwitchChangeHandler}
+            onChange={onTypeChangeHandler}
           />
           {isExpenseMode && (
             <Select
-              value={categoryValue}
-              onChange={(e) => setCategoryValue(e.target.value)}
+              name="categoryId"
+              value={formik.values.categoryId}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               options={categories}
               placeholder="Select a category"
+              error={
+                isExpenseMode &&
+                formik.touched.categoryId &&
+                Boolean(formik.errors.categoryId)
+              }
+              helperText={
+                isExpenseMode &&
+                formik.touched.categoryId &&
+                formik.errors.categoryId
+              }
             />
           )}
           <S.InputsContainer>
@@ -67,14 +98,16 @@ const ModalAddTransaction = ({ open, onClose }) => {
               variant="standard"
               placeholder="0.00"
               type="number"
-              value={amountValue}
-              onChange={(e) => setAmountValue(e.target.value)}
+              name="amount"
+              value={formik.values.amount}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.amount && Boolean(formik.errors.amount)}
+              helperText={formik.touched.amount && formik.errors.amount}
             />
             <DatePicker
-              value={dateValue}
-              onChange={(newValue) => {
-                setDateValue(newValue);
-              }}
+              value={formik.values.transactionDate}
+              onChange={onDateChangeHandler}
             />
           </S.InputsContainer>
           <BaseInput
@@ -88,8 +121,9 @@ const ModalAddTransaction = ({ open, onClose }) => {
             variant="standard"
             placeholder="Comments"
             type="text"
-            value={commentValue}
-            onChange={(e) => setCommentValue(e.target.value)}
+            name="comment"
+            value={formik.values.comment}
+            onChange={formik.handleChange}
           />
           <S.ButtonsContainer>
             <S.FilledButton type="submit">Add</S.FilledButton>

@@ -43,6 +43,11 @@ const GREY = {
   200: '#BDBDBD',
 };
 
+const ERROR = {
+  main: '#FF6596',
+  contrastText: '#fff',
+};
+
 const palette = {
   common: { ...COMMON },
   primary: { ...PRIMARY },
@@ -51,6 +56,7 @@ const palette = {
   chart: { ...CHART_COLORS },
   text: { ...TEXT },
   grey: { ...GREY },
+  error: { ...ERROR },
 };
 
 export default palette;
