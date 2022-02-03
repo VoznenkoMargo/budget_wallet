@@ -1,6 +1,7 @@
 import './App.css';
 import ThemeConfig from 'theme';
 import DiagramTab from './components/DiagramTab/DiagramTab';
+import Registration from './components/Registration/RegistrationForm/RegistrationForm';
 import StatisticsPage from 'pages/StatisticsPage/StatisticsPage';
 import { Container, ButtonAddTransaction } from 'components/common';
 import { useState } from 'react';
@@ -62,7 +63,8 @@ const App = () => {
             }}
           >
             <DiagramTab />
-            {/* <StatisticsPage /> */}
+            <StatisticsPage />
+            <Registration />
             <ButtonAddTransaction
               onClick={() => {
                 setOpen(true);
