@@ -17,7 +17,6 @@ const CustomInput = (props) => {
         className={s.input}
         variant="standard"
         fullWidth
-        autoFocus
         color={isError ? 'error' : 'primary'}
         sx={{
           mt: '35px',
