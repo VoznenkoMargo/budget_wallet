@@ -22,6 +22,9 @@ const BaseInput = styled(TextField)(({ theme }) => {
     '&& .MuiInput-underline:hover:before': {
       borderBottom: `2px solid ${palette.secondary.light}`,
     },
+    '& .MuiFormHelperText-root': {
+      fontSize: '14px',
+    },
   };
 });
 
