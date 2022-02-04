@@ -1,18 +1,48 @@
 import React from 'react';
 import {TableHead, TableBody, TableRow, TableCell} from "@mui/material";
 import { StyledTable, TableContainer } from './MoneyExchangeTable.style';
-
-function createMoneyExchangeData(Currency, Purchase, Sale) {
-  return {Currency, Purchase, Sale};
-}
-
-const moneyExchangeData = [
-  createMoneyExchangeData('USD', 27.55, 27.65),
-  createMoneyExchangeData('EUR', 30.00, 30.10),
-  createMoneyExchangeData('RUB', 0.00, 0.00),
-];
+import { useState, useEffect } from 'react';
+import fetchCurrency from "./apiService";
+import { getCurrencyFromStorage, updateCurrency } from './currency';
 
 const MoneyExchangeTable = () => {
+  const availableCurrency = ['USD', 'EUR', 'RUR'];
+
+  const [currency, setCurrency] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [error, setError] = useState(null);
+
+  const updateCurrencyStates = (currency) => {
+    setCurrency(currency);
+    setIsLoaded(true);
+  }
+
+  useEffect(() => {
+    if(!getCurrencyFromStorage(updateCurrencyStates)) {
+      fetchCurrency()
+        .then(
+          data => {
+            const params = { data, setError, availableCurrency, updateCurrencyStates };
+            updateCurrency(params);
+          },
+          error => {
+            setError(error);
+          }
+        )
+    }
+  }, [])
+
+
+  if(error) {
+    return (
+      <div>Something went wrong... Try again later!</div>
+    )
+  }
+  if(!isLoaded) {
+    return (
+      <div>Loading...</div>
+    )
+  }
 
   return (
     <TableContainer>
@@ -26,11 +56,11 @@ const MoneyExchangeTable = () => {
         </TableHead>
 
         <TableBody>
-          {moneyExchangeData.map(currency => (
-            <TableRow key={currency.Currency}>
-              <TableCell>{currency.Currency}</TableCell>
-              <TableCell>{currency.Purchase.toFixed(2)}</TableCell>
-              <TableCell>{currency.Sale.toFixed(2)}</TableCell>
+          {currency.map(currency => (
+            <TableRow key={currency.currency}>
+              <TableCell>{currency.currency}</TableCell>
+              <TableCell>{currency.purchase}</TableCell>
+              <TableCell>{currency.sale}</TableCell>
             </TableRow>
           ))}
         </TableBody>
