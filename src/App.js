@@ -18,7 +18,6 @@ const App = () => {
   return (
     <ThemeConfig>
       <div className="App">
-        <RegistrationPage />
         <AppBar />
         <Container
           sx={[
@@ -75,11 +74,7 @@ const App = () => {
           >
             <DiagramTab />
             <StatisticsPage />
-
-            {/*
             <Login />
-            <Registration />
-            */}
             <ButtonAddTransaction
               onClick={() => {
                 setOpen(true);
