@@ -10,22 +10,23 @@
 }
 .wrapper__body {
    display: flex;
-   justify-content: space-between;
 }
 .left {
-   padding: 150px 50px 80px 70px;
+   padding: 150px 50px 80px 80px;
+   width: 45%;
 }
 .right {
    background-color: rgba(255, 255, 255, 0.4);
    backdrop-filter: blur(50px);
-   padding: 50px 90px;
+   padding: 130px 90px;
+   width: 55%;
 }
 .image {
    margin-bottom: 30px;
 }
 .purple {
    position: absolute;
-   left: -20%;
+   left: -16.5%;
    width: 100%;
    max-width: 750px;
    height: auto;
@@ -43,25 +44,38 @@
 }
 
 @media (max-width: 1250px) {
+   .wrapper__body {
+      justify-content: space-between;
+   }
    .left {
-      padding-left: 40px;
+      padding-left: 30px;
+      width: auto;
    }
    .right {
-      padding: 50px 50px;
+      width: auto;
+      padding: 130px 50px;
+   }
+   .purple {
+      left: -25%;
+   }
+   .peach {
+      right: -25%;
    }
 }
-@media (max-width: 1050px) {
+@media (max-width: 1020px) {
    .left {
-      padding-left: 10px;
-   }
-   .right {
-      padding: 50px 20px;
+      padding: 150px 30px 80px 30px;
    }
    .purple {
       left: -40%;
    }
    .peach {
       right: -40%;
+   }
+   .image {
+      max-width: 400px;
+      height: auto;
+      width: 100%;
    }
 }
 @media (max-width: 950px) {
@@ -78,12 +92,21 @@
    .right {
       background-color: inherit;
       backdrop-filter: none;
+      padding-top: 50px;
    }
    .image {
       max-width: 350px;
       height: auto;
       width: 100%;
       margin-right: 40px;
+      margin-bottom: 0;
+   }
+   .purple {
+      left: -20%;
+      top: 60%;
+   }
+   .peach {
+      right: -55%;
    }
 }
 @media (max-width: 770px) {
@@ -92,7 +115,7 @@
    }
    .image {
       max-width: 275px;
-      margin-right: 0px;
+      margin-right: 30px;
    }
    .purple {
       left: -35%;
@@ -103,9 +126,13 @@
       bottom: 61%;
    }
 }
-@media (max-width: 530px) {
+@media (max-width: 600px) {
    .wrapper__body {
-      padding: 0 20px;
+      padding: 0;
+   }
+   .image {
+      max-width: 250px;
+      margin-right: 10px;
    }
 }
 @media (max-width: 426px) {
@@ -122,6 +149,7 @@
       display: none;
    }
    .right {
-      padding: 0;
+      background-color: #fff;
+      padding: 0 40px;
    }
 }

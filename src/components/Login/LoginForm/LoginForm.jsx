@@ -1,4 +1,4 @@
-import s from './RegistrationForm.module.css';
+import s from './LoginForm.module.css';
 import { Button, Box } from '@mui/material';
 import InputAdornment from '@mui/material/InputAdornment';
 import EmailIcon from '@mui/icons-material/Email';
@@ -10,7 +10,7 @@ import { Formik, Form } from 'formik';
 import CustomInput from './CustomInput';
 import * as yup from 'yup';
 
-const RegistrationForm = (props) => {
+const LoginForm = (props) => {
   const validationSchema = yup.object().shape({
     email: yup.string().email('Invalid email').required('Email is required'),
     password: yup
@@ -18,21 +18,10 @@ const RegistrationForm = (props) => {
       .min(6, 'Must be at least 6 symbols')
       .max(12, 'Must be no more than 12 symbols')
       .required('Password is required'),
-    confirm: yup
-      .string()
-      .required('Confirm password is required')
-      .oneOf([yup.ref('password')], 'Passwords does not match'),
-    name: yup
-      .string()
-      .min(1, 'Must be at least 1 symbols')
-      .max(12, 'Must be no more than 12 symbols')
-      .required('Name is required'),
   });
   const initialValues = {
     email: '',
     password: '',
-    confirm: '',
-    name: '',
   };
 
   return (
@@ -97,51 +86,6 @@ const RegistrationForm = (props) => {
                 }}
               />
 
-              <CustomInput
-                name="confirm"
-                id="confirm"
-                placeholder="Confirm password"
-                type="password"
-                autoComplete="current-password"
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <LockIcon
-                        sx={{
-                          color: '#E0E0E0',
-                          margin: '0 10px 10px 10px',
-                        }}
-                      />
-                    </InputAdornment>
-                  ),
-                }}
-                sx={{
-                  mb: '35px',
-                  '.MuiInput-underline:before': {
-                    borderColor: '#E0E0E0',
-                  },
-                }}
-              />
-
-              <CustomInput
-                label="name"
-                name="name"
-                placeholder="Your name"
-                type="text"
-                id="name"
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <AccountBoxIcon
-                        sx={{
-                          color: '#E0E0E0',
-                          margin: '0 10px 10px 10px',
-                        }}
-                      />
-                    </InputAdornment>
-                  ),
-                }}
-              />
               <div className={s.buttons}>
                 <Button
                   type="submit"
@@ -162,7 +106,7 @@ const RegistrationForm = (props) => {
                     fontFamily: 'Abel'
                   }}
                 >
-                  REGISTRATION
+                  LOG IN
                 </Button>
                 <Button
                   type="submit"
@@ -170,17 +114,17 @@ const RegistrationForm = (props) => {
                   variant="outlined"
                   sx={{
                     borderRadius: '20px',
+                    borderColor: '#4A56E2',
+                    color: '#4A56E2',
                     width: '300px',
                     fontSize: '18px',
                     lineHeight: '23px',
                     letterSpacing: '0.1em',
                     padding: '12px 65px',
-                    fontFamily: 'Abel',
-                    borderColor: '#4A56E2',
-                    color: '#4A56E2'
+                    fontFamily: 'Abel'
                   }}
                 >
-                  LOG IN
+                  REGISTRATION
                 </Button>
               </div>
             </Form>
@@ -192,4 +136,4 @@ const RegistrationForm = (props) => {
   );
 };
 
-export default RegistrationForm;
+export default LoginForm;

@@ -1,0 +1,22 @@
+.tableHead {
+  border-radius: 50%;
+}
+
+.selectContainer {
+  display: flex;
+  justify-content: space-between;
+  column-gap: 20px;
+  margin-bottom: 20px;
+  @media screen and (max-width: 400px) {
+    flex-wrap: wrap;
+    row-gap: 10px;
+  }
+}
+
+.cellName {
+  display: flex;
+}
+
+.expensesColor {
+  color: #ff6596;
+}
