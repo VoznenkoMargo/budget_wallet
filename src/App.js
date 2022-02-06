@@ -2,12 +2,15 @@ import './App.css';
 import ThemeConfig from 'theme';
 import DiagramTab from './components/DiagramTab/DiagramTab';
 import Registration from './components/Registration/RegistrationForm/RegistrationForm';
+import Login from './components/Login/LoginForm/LoginForm';
 import StatisticsPage from 'pages/StatisticsPage/StatisticsPage';
 import { Container, ButtonAddTransaction } from 'components/common';
 import { useState } from 'react';
 import { AppBackground, ModalAddTransaction, AppBar } from 'components';
 import { SideMenu } from './components/SideMenu';
 import { Box } from '@mui/system';
+import LoginPage from 'components/Login/LoginPage';
+import RegistrationPage from 'components/Registration/RegistrationPage';
 
 const App = () => {
   const [open, setOpen] = useState(false);
@@ -71,7 +74,7 @@ const App = () => {
           >
             <DiagramTab />
             <StatisticsPage />
-            <Registration />
+            <Login />
             <ButtonAddTransaction
               onClick={() => {
                 setOpen(true);
