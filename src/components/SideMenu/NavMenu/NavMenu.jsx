@@ -25,7 +25,7 @@ const NavMenu = () => {
           checked={checked === menuItem.MenuName}
           onClick={() => setChecked(menuItem.MenuName)}
         >
-          <NavLink to={menuItem.Path} style={{ color: 'inherit', textDecoration: 'inherit'}}>
+          <NavLink to={menuItem.Path} style={{ color: 'inherit', textDecoration: 'inherit', display: 'flex',  alignItems:'center'}}>
           <ListItemIcon>{menuItem.Icon}</ListItemIcon>
           <ListItemText primary={menuItem.MenuName} />
            </NavLink>
