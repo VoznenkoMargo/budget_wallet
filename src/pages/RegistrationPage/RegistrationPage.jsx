@@ -3,7 +3,7 @@ import finance from 'assets//images/finance-registration.png';
 import purple from 'assets/images/ellipse-purple.png';
 import peach from 'assets/images/ellipse-peach.png';
 import { Typography, CssBaseline } from '@mui/material';
-import RegistrationForm from 'components/Registration/RegistrationForm';
+import RegistrationForm from 'components/Registration/RegistrationForm/RegistrationForm';
 
 const RegistrationPage = (props) => {
   return (
