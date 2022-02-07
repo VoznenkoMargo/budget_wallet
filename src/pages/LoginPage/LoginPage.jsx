@@ -1,11 +1,11 @@
-import s from './RegistrationPage.module.css';
-import finance from 'assets//images/finance-registration.png';
+import s from './LoginPage.module.css';
+import finance from 'assets/images/finance-login.png';
 import purple from 'assets/images/ellipse-purple.png';
 import peach from 'assets/images/ellipse-peach.png';
 import { Typography, CssBaseline } from '@mui/material';
-import RegistrationForm from './RegistrationForm/RegistrationForm';
+import LoginForm from 'components/Login/LoginForm/LoginForm';
 
-const RegistrationPage = (props) => {
+const LoginPage = (props) => {
   return (
     <div className={s.wrapper}>
       <CssBaseline />
@@ -20,13 +20,14 @@ const RegistrationPage = (props) => {
             sx={{
               fontSize: '30px',
               lineHeight: '45px',
+              fontFamily: 'Poppins'
             }}
           >
             Finance App
           </Typography>
         </div>
         <div className={s.right}>
-          <RegistrationForm />
+          <LoginForm />
         </div>
       </div>
       <img src={purple} alt="" className={s.purple} />
@@ -34,4 +35,4 @@ const RegistrationPage = (props) => {
   );
 };
 
-export default RegistrationPage;
+export default LoginPage;

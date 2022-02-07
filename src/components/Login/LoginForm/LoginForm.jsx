@@ -9,6 +9,7 @@ import React from 'react';
 import { Formik, Form } from 'formik';
 import CustomInput from './CustomInput';
 import * as yup from 'yup';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = (props) => {
   const validationSchema = yup.object().shape({
@@ -22,6 +23,10 @@ const LoginForm = (props) => {
   const initialValues = {
     email: '',
     password: '',
+  };
+  const navigate = useNavigate();
+   const handleClickRegistration = () => {
+    navigate('/registration');
   };
 
   return (
@@ -112,6 +117,7 @@ const LoginForm = (props) => {
                   type="submit"
                   fullWidth
                   variant="outlined"
+                  onClick={handleClickRegistration}
                   sx={{
                     borderRadius: '20px',
                     borderColor: '#4A56E2',
