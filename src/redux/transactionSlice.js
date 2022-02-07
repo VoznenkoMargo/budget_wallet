@@ -28,9 +28,11 @@ export const createTransaction = createAsyncThunk(
   }
 );
 
+const initialState = { transactions: [] };
+
 const transactionSlice = createSlice({
   name: 'transactions',
-  initialState: { transactions: [] },
+  initialState,
   reducers: {
     addTransaction: (state, action) => {
       state.transactions.push(action.payload.transaction);
@@ -39,4 +41,4 @@ const transactionSlice = createSlice({
 });
 
 export const { addTransaction } = transactionSlice.actions;
-export const rootReducer = transactionSlice.reducer;
+export const transactionsReducer = transactionSlice.reducer;
