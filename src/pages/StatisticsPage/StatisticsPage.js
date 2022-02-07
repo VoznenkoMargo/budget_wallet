@@ -1,5 +1,6 @@
 import React from 'react';
 import BasicTable from '../../components/BasicTable/BasicTable';
+import { useSelector } from 'react-redux';
 // import SmallTable from "../../components/SmallTable/SmallTable";
 // import Media from "react-media";
 
@@ -15,6 +16,8 @@ const items = [
 ];
 
 function StatisticsPage() {
+  const { transactions } = useSelector((store) => store.transactions);
+  console.log(transactions);
   return <BasicTable items={items} />;
 }
 

@@ -33,12 +33,12 @@ const Select = ({
           if (selected.trim() === '') {
             return <p className="placeholder">{placeholder}</p>;
           }
-          return options[parseInt(selected)].name;
+          return options.find((option) => option.id === selected).name;
         }}
       >
         {options.map((option) => {
           return (
-            <SelectItem value={option.id.toString()} key={option.id}>
+            <SelectItem value={option.id} key={option.id}>
               {option.name}
             </SelectItem>
           );

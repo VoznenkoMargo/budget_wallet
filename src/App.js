@@ -69,9 +69,9 @@ const App = () => {
               }),
             ]}
           >
-            <DiagramTab />
+            {/* <DiagramTab /> */}
             <StatisticsPage />
-            <Registration />
+            {/* <Registration /> */}
             <ButtonAddTransaction
               onClick={() => {
                 setOpen(true);
