@@ -6,33 +6,33 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 export default function Team() {
   const team = [
     {
-      img: '',
-      name: 'MARGARITA VOZNENKO',
+      img: 'https://picua.org/images/2022/02/07/4832d1ab436032d5671d4058ca6c9cd8.jpg',
+      name: 'MARHARITA VOZNENKO',
       position: 'Team Lead',
-      githubLink: '',
-      linkedInLink: '',
+      githubLink: 'https://github.com/VoznenkoMargo',
+      linkedInLink: 'https://ua.linkedin.com/in/marharyta-voznenko-6aa5b0137',
     },
     {
-      img: '',
+      img: 'https://picua.org/images/2022/02/07/3677d0fa45389cbc84f21c880bc9dfe9.jpg',
       name: 'ANASTASIA KAPROSH',
       position: 'Scrum Master',
-      githubLink: '',
-      linkedInLink: '',
+      githubLink: 'https://github.com/nastia260600',
+      linkedInLink: 'https://www.linkedin.com/in/anastasia-kaprosh-7b12331b2/',
     },
     {
-      img: '',
+      img: 'https://picua.org/images/2022/02/07/b918f8ad57e3dbecb9bb4033a55a4b99.jpg',
       name: 'KATERINA KISIV',
       position: 'Developer',
-      githubLink: '',
+      githubLink: 'https://github.com/Katekisiv',
       linkedInLink: '',
     },
 
     {
-      img: '',
+      img: 'https://picua.org/images/2022/02/07/33352d4e4bbbc27ace88fd9db296a9a2.jpg',
       name: 'ARTEM MATIUSHENKO',
       position: 'Developer',
-      githubLink: '',
-      linkedInLink: '',
+      githubLink: 'https://github.com/artemmatiushenko1',
+      linkedInLink: 'https://www.linkedin.com/in/artem-matiushenko-83b706203/',
     },
 
     {
@@ -71,7 +71,8 @@ export default function Team() {
               <ul className={s.socialLink}>
                 <li className={s.linkItem}>
                   <a
-                    href={(i.githubLink, s.link)}
+                    className={s.link}
+                    href={i.githubLink }
                     target="_blank"
                     rel="noreferrer"
                   >
@@ -80,7 +81,8 @@ export default function Team() {
                 </li>
                 <li className={s.linkItem}>
                   <a
-                    href={(i.linkedInLink, s.link)}
+                    className={s.link}
+                    href={i.linkedInLink}
                     target="_blank"
                     rel="noreferrer"
                   >
@@ -95,3 +97,5 @@ export default function Team() {
     </Box>
   );
 }
+
+
