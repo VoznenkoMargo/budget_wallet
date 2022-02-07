@@ -14,6 +14,8 @@
 }
 .devName {
   font-size: 23px;
+  font-weight: 600;
+  text-align: center;
 }
 
 .devTeam {
@@ -85,6 +87,8 @@
 
  .link {
     display: flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 50%;
     width: 34px;
     height: 34px;
@@ -95,7 +99,7 @@
 
   .link:hover,
   .link:focus {
-    background-color: #4a56e2;
+    background-color: #81E1FF;
     transform: scale(1.2);
   }
 

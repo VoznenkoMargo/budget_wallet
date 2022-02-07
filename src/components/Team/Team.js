@@ -66,7 +66,7 @@ export default function Team() {
             <li key={index} className={s.devItems}>
               <img src={i.img} className={s.devImg} alt="student" />
 
-              <b className={s.devName}>{i.name}</b>
+              <p className={s.devName}>{i.name}</p>
               <p className={s.position}>{i.position}</p>
               <ul className={s.socialLink}>
                 <li className={s.linkItem}>
