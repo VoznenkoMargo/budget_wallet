@@ -1,6 +1,7 @@
 import { AppBar } from 'components';
 import { Outlet } from 'react-router-dom';
-import { Container } from '@mui/material';
+
+import { Container } from 'components/common';
 import { Box } from '@mui/system';
 import SideMenu from 'components/SideMenu/SideMenu';
 import { AppBackground } from 'components';
