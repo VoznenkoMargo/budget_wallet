@@ -1,4 +1,6 @@
+/* eslint-disable no-restricted-globals */
 import * as React from 'react';
+import { useSelector } from 'react-redux';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -8,7 +10,28 @@ import TableRow from '@mui/material/TableRow';
 import './BasicTable.scss';
 
 export default function BasicTable(props) {
+  const categories = useSelector((state) => state.categories.categories);
   const { items } = props;
+  console.log(categories);
+
+  const getCategoryName = (categoryId, categories) => {
+    const result = categories?.find((el) => el.id === categoryId);
+
+    return result; // так работает, но свойство name не могу вычитать
+  };
+
+  // const getCategoryName = (categoryId, categories) => {
+  //   const result = categories?.find((el) => el.id === categoryId);
+  //   const name = result.name;
+  //   return name;
+  // }; не работае так
+
+  const result = getCategoryName(
+    'c9d9e447-1b83-4238-8712-edc77b18b739',
+    categories
+  );
+
+  console.log(result);
 
   return (
     <>
@@ -44,24 +67,26 @@ export default function BasicTable(props) {
             </TableRow>
           </TableHead>
           <TableBody className="tableBody">
-            {items.map((row) => (
-              <TableRow
-                key={row.Date}
-                className={`${row.Type === '+' ? 'income' : 'costs'}`}
-                sx={{
-                  '& .MuiTableCell-root': {
-                    textAlign: 'center',
-                  },
-                }}
-              >
-                <TableCell data-toggle="Date">{row.Date}</TableCell>
-                <TableCell data-toggle="Type">{row.Type}</TableCell>
-                <TableCell data-toggle="Category">{row.Category}</TableCell>
-                <TableCell data-toggle="Comments">{row.Comments}</TableCell>
-                <TableCell data-toggle="Amount">{row.Amount}</TableCell>
-                <TableCell data-toggle="Balance">{row.Balance}</TableCell>
-              </TableRow>
-            ))}
+            {items.map(
+              ({ Date, Type, Category, Comments, Amount, Balance, ID }) => (
+                <TableRow
+                  key={ID}
+                  className={`${Type === '+' ? 'income' : 'costs'}`}
+                  sx={{
+                    '& .MuiTableCell-root': {
+                      textAlign: 'center',
+                    },
+                  }}
+                >
+                  <TableCell data-toggle="Date">{Date}</TableCell>
+                  <TableCell data-toggle="Type">{Type}</TableCell>
+                  <TableCell data-toggle="Category">{Category}</TableCell>
+                  <TableCell data-toggle="Comments">{Comments}</TableCell>
+                  <TableCell data-toggle="Amount">{Amount}</TableCell>
+                  <TableCell data-toggle="Balance">{Balance}</TableCell>
+                </TableRow>
+              )
+            )}
           </TableBody>
         </Table>
       </TableContainer>
