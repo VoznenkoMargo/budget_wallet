@@ -3,7 +3,6 @@ import { Button, Box } from '@mui/material';
 import InputAdornment from '@mui/material/InputAdornment';
 import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import { Logo } from 'components/common';
 import React from 'react';
 import { Formik, Form } from 'formik';
@@ -25,7 +24,7 @@ const LoginForm = (props) => {
     password: '',
   };
   const navigate = useNavigate();
-   const handleClickRegistration = () => {
+  const handleClickRegistration = () => {
     navigate('/registration');
   };
 
@@ -108,7 +107,7 @@ const LoginForm = (props) => {
                     lineHeight: '23px',
                     letterSpacing: '0.1em',
                     padding: '12px 55px',
-                    fontFamily: 'Abel'
+                    fontFamily: 'Abel',
                   }}
                 >
                   LOG IN
@@ -127,7 +126,7 @@ const LoginForm = (props) => {
                     lineHeight: '23px',
                     letterSpacing: '0.1em',
                     padding: '12px 65px',
-                    fontFamily: 'Abel'
+                    fontFamily: 'Abel',
                   }}
                 >
                   REGISTRATION
