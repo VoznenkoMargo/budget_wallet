@@ -1,4 +1,6 @@
+/* eslint-disable no-restricted-globals */
 import * as React from 'react';
+import { useSelector } from 'react-redux';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -8,7 +10,15 @@ import TableRow from '@mui/material/TableRow';
 import './BasicTable.scss';
 
 export default function BasicTable(props) {
+  const categories = useSelector((state) => state.categories.categories);
   const { items } = props;
+
+  const getCategoryName = (categoryId, categories) => {
+    if (categories.length > 0) {
+      const result = categories?.find((el) => el.id === categoryId).name;
+      return result;
+    }
+  };
 
   return (
     <>
@@ -44,24 +54,28 @@ export default function BasicTable(props) {
             </TableRow>
           </TableHead>
           <TableBody className="tableBody">
-            {items.map((row) => (
-              <TableRow
-                key={row.Date}
-                className={`${row.Type === '+' ? 'income' : 'costs'}`}
-                sx={{
-                  '& .MuiTableCell-root': {
-                    textAlign: 'center',
-                  },
-                }}
-              >
-                <TableCell data-toggle="Date">{row.Date}</TableCell>
-                <TableCell data-toggle="Type">{row.Type}</TableCell>
-                <TableCell data-toggle="Category">{row.Category}</TableCell>
-                <TableCell data-toggle="Comments">{row.Comments}</TableCell>
-                <TableCell data-toggle="Amount">{row.Amount}</TableCell>
-                <TableCell data-toggle="Balance">{row.Balance}</TableCell>
-              </TableRow>
-            ))}
+            {items.map(
+              ({ Date, Type, Category, Comments, Amount, Balance, ID }) => (
+                <TableRow
+                  key={ID}
+                  className={`${Type === 'EXPENSE' ? 'costs' : 'income'}`}
+                  sx={{
+                    '& .MuiTableCell-root': {
+                      textAlign: 'center',
+                    },
+                  }}
+                >
+                  <TableCell data-toggle="Date">{Date}</TableCell>
+                  <TableCell data-toggle="Type">{Type}</TableCell>
+                  <TableCell data-toggle="Category">
+                    {getCategoryName(Category, categories)}
+                  </TableCell>
+                  <TableCell data-toggle="Comments">{Comments}</TableCell>
+                  <TableCell data-toggle="Amount">{Amount}</TableCell>
+                  <TableCell data-toggle="Balance">{Balance}</TableCell>
+                </TableRow>
+              )
+            )}
           </TableBody>
         </Table>
       </TableContainer>
