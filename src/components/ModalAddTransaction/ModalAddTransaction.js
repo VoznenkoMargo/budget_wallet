@@ -7,7 +7,8 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import * as S from './ModalAddTransaction.style';
 import { useDispatch } from 'react-redux';
-import { addTransaction, createTransaction } from 'redux/transactionSlice';
+import { createTransaction } from 'redux/transactionSlice';
+import { useSelector } from 'react-redux';
 
 const categories = [
   {
@@ -75,6 +76,7 @@ const validationSchema = yup.object({
 });
 
 const ModalAddTransaction = ({ open, onClose }) => {
+  const { error, isLoading } = useSelector((state) => state.transactions);
   const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
