@@ -1,18 +1,19 @@
 import { AppBar } from 'components';
 import { Outlet } from 'react-router-dom';
-
 import { Container } from 'components/common';
 import { Box } from '@mui/system';
 import SideMenu from 'components/SideMenu/SideMenu';
 import { AppBackground } from 'components';
+import { useEffect } from 'react';
 
 const Layout = () => {
+  useEffect(() => {});
   return (
     <>
       <AppBar />
       <Container
         sx={[
-          theme => ({
+          (theme) => ({
             height: 'calc(100% - 77px)',
             position: 'relative',
             zIndex: 20,
@@ -33,7 +34,7 @@ const Layout = () => {
       >
         <Box
           sx={[
-            theme => ({
+            (theme) => ({
               paddingTop: '40px',
               paddingRight: '30px',
               height: '100%',
@@ -50,7 +51,7 @@ const Layout = () => {
         </Box>
         <Box
           sx={[
-            theme => ({
+            (theme) => ({
               paddingLeft: '30px',
               paddingTop: '30px',
               paddingBottom: '30px',

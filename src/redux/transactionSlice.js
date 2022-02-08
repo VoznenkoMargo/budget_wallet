@@ -4,7 +4,6 @@ export const createTransaction = createAsyncThunk(
   'transactions/createTransaction',
   async (transaction, { rejectWithValue, dispatch }) => {
     try {
-      console.log(transaction);
       const req = await fetch('https://wallet.goit.ua/api/transactions', {
         method: 'POST',
         headers: {
@@ -16,17 +15,17 @@ export const createTransaction = createAsyncThunk(
       });
 
       if (!req.ok) {
-        throw new Error("Can't create new transaction");
+        throw new Error("Can't create a new transaction");
       }
 
       const resp = await req.json();
-      console.log(resp);
+      dispatch(addTransaction(resp));
     } catch (error) {
-      console.log(error);
       return rejectWithValue(error.message);
     }
   }
 );
+
 export const getTransactions = createAsyncThunk(
   'transactions/getAllTransactions',
   async (_, { rejectWithValue, dispatch }) => {
@@ -52,17 +51,17 @@ export const getTransactions = createAsyncThunk(
   }
 );
 
-const initialState = { transactions: [] };
+const initialState = { transactions: [], isLoading: false, error: null };
 
 const transactionSlice = createSlice({
   name: 'transactions',
   initialState,
   reducers: {
-    addTransaction: (state, action) => {
-      state.transactions.push(action.payload.transaction);
-    },
     getAllTransactions: (state, action) => {
       state.transactions = action.payload;
+    },
+    addTransaction: (state, action) => {
+      state.transactions.push(action.payload);
     },
   },
 });

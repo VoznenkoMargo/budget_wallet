@@ -1,6 +1,6 @@
 import 'chart.js/auto';
-import Chart from '../Chart';
-import MyTable from '../Table';
+import Chart from 'components/Chart';
+import MyTable from 'components/Table';
 import s from './DiagramTab.module.scss';
 
 export default function DiagramTab() {
