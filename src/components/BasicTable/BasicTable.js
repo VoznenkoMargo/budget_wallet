@@ -15,9 +15,10 @@ export default function BasicTable(props) {
   console.log(categories);
 
   const getCategoryName = (categoryId, categories) => {
-    const result = categories?.find((el) => el.id === categoryId);
-
-    return result; // так работает, но свойство name не могу вычитать
+    if (categories.length > 0) {
+      const result = categories?.find((el) => el.id === categoryId).name;
+      return result;
+    }
   };
 
   // const getCategoryName = (categoryId, categories) => {
@@ -80,7 +81,9 @@ export default function BasicTable(props) {
                 >
                   <TableCell data-toggle="Date">{Date}</TableCell>
                   <TableCell data-toggle="Type">{Type}</TableCell>
-                  <TableCell data-toggle="Category">{Category}</TableCell>
+                  <TableCell data-toggle="Category">
+                    {getCategoryName(Category, categories)}
+                  </TableCell>
                   <TableCell data-toggle="Comments">{Comments}</TableCell>
                   <TableCell data-toggle="Amount">{Amount}</TableCell>
                   <TableCell data-toggle="Balance">{Balance}</TableCell>
