@@ -16,7 +16,6 @@ export const getTransactionCategory = createAsyncThunk(
         }
       );
       const resp = await req.json();
-      console.log(resp);
       dispatch(getTransaction(resp));
       if (!req.ok) {
         throw new Error("Can't create get transaction categories");

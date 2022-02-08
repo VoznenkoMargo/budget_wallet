@@ -12,7 +12,6 @@ import './BasicTable.scss';
 export default function BasicTable(props) {
   const categories = useSelector((state) => state.categories.categories);
   const { items } = props;
-  console.log(categories);
 
   const getCategoryName = (categoryId, categories) => {
     if (categories.length > 0) {
@@ -20,19 +19,6 @@ export default function BasicTable(props) {
       return result;
     }
   };
-
-  // const getCategoryName = (categoryId, categories) => {
-  //   const result = categories?.find((el) => el.id === categoryId);
-  //   const name = result.name;
-  //   return name;
-  // }; не работае так
-
-  const result = getCategoryName(
-    'c9d9e447-1b83-4238-8712-edc77b18b739',
-    categories
-  );
-
-  console.log(result);
 
   return (
     <>

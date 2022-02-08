@@ -25,17 +25,12 @@ function DashBoardPage() {
   }, [dispatch]);
 
   const transactions = useSelector((state) => state.transactions.transactions);
-  // const categories = useSelector((state) => state.categories.categories);
   const [open, setOpen] = useState(false);
 
   function createData(Date, Type, Category, Comments, Amount, Balance, ID) {
     return { Date, Type, Category, Comments, Amount, Balance, ID };
   }
-  // function getCategoryName(categoryId, categories) {
-  //   const result = categories.find((item) => item.id === categoryId);
-  //   const category = result;
-  //   return category;
-  // }
+
   const items = transactions.map(function ({
     transactionDate,
     type,
@@ -48,7 +43,7 @@ function DashBoardPage() {
     return createData(
       transactionDate,
       type,
-      // getCategoryName(categoryId, categories),
+
       categoryId,
       comment,
       amount,
@@ -56,7 +51,6 @@ function DashBoardPage() {
       id
     );
   });
-  console.log(items);
 
   return (
     <>
