@@ -1,7 +1,7 @@
 import './App.css';
 import ThemeConfig from 'theme';
 
-import Login from './components/Login/LoginForm/LoginForm';
+// import Login from './components/Login/LoginForm/LoginForm';
 
 import { Route, Routes } from 'react-router-dom';
 import DashBoardPage from 'pages/DashBoard/DashBoardPage';
