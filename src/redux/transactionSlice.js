@@ -2,9 +2,8 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const createTransaction = createAsyncThunk(
   'transactions/createTransaction',
-  async (transaction, { rejectWithValue, dispatch, getState }) => {
+  async (transaction, { rejectWithValue, dispatch }) => {
     try {
-      console.log(transaction);
       const req = await fetch('https://wallet.goit.ua/api/transactions', {
         method: 'POST',
         headers: {
@@ -20,14 +19,13 @@ export const createTransaction = createAsyncThunk(
       }
 
       const resp = await req.json();
-      console.log(resp);
-      return resp;
+      dispatch(addTransaction(resp));
     } catch (error) {
-      console.log(error);
       return rejectWithValue(error.message);
     }
   }
 );
+
 export const getTransactions = createAsyncThunk(
   'transactions/getAllTransactions',
   async (_, { rejectWithValue, dispatch }) => {
@@ -58,22 +56,12 @@ const initialState = { transactions: [], isLoading: false, error: null };
 const transactionSlice = createSlice({
   name: 'transactions',
   initialState,
-  reducers: {},
-  extraReducers: {
-    [createTransaction.pending]: (state, action) => {
-      state.isLoading = true;
-      state.error = null;
-    },
-    [createTransaction.fulfilled]: (state, action) => {
-      state.isLoading = false;
-      state.transactions.push(action.payload);
-    },
-    [createTransaction.rejected]: (state, action) => {
-      state.isLoading = false;
-      state.error = action.payload;
-    },
+  reducers: {
     getAllTransactions: (state, action) => {
       state.transactions = action.payload;
+    },
+    addTransaction: (state, action) => {
+      state.transactions.push(action.payload);
     },
   },
 });

@@ -9,6 +9,7 @@ import * as S from './ModalAddTransaction.style';
 import { useDispatch } from 'react-redux';
 import { createTransaction } from 'redux/transactionSlice';
 import { useSelector } from 'react-redux';
+import moment from 'moment';
 
 const categories = [
   {
@@ -76,7 +77,6 @@ const validationSchema = yup.object({
 });
 
 const ModalAddTransaction = ({ open, onClose }) => {
-  const { error, isLoading } = useSelector((state) => state.transactions);
   const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
@@ -92,9 +92,11 @@ const ModalAddTransaction = ({ open, onClose }) => {
       const transaction = {
         amount: values.isExpenseMode ? -values.amount : values.amount,
         comment: values.comment,
-        transactionDate: values.transactionDate,
+        transactionDate: moment(values.transactionDate).format('YYYY-MM-DD'),
         type: values.type,
-        categoryId: values.categoryId,
+        categoryId: values.isExpenseMode
+          ? values.categoryId
+          : '063f1132-ba5d-42b4-951d-44011ca46262',
       };
       dispatch(createTransaction(transaction));
     },

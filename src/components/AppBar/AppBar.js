@@ -10,6 +10,7 @@ const StyledAppBar = () => {
   const handleClick = () => {
     navigate('/login');
   };
+
   return (
     <Header>
       <Container>

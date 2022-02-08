@@ -36,11 +36,9 @@ const RegistrationForm = (props) => {
     name: '',
   };
   const navigate = useNavigate();
-   const handleClickLogIn = () => {
+  const handleClickLogIn = () => {
     navigate('/login');
   };
-  
-
 
   return (
     <div className={s.form}>
@@ -153,7 +151,6 @@ const RegistrationForm = (props) => {
                 <Button
                   type="submit"
                   variant="contained"
-                 
                   sx={{
                     mt: '20px',
                     mb: '20px',
@@ -167,7 +164,7 @@ const RegistrationForm = (props) => {
                     lineHeight: '23px',
                     letterSpacing: '0.1em',
                     padding: '12px 55px',
-                    fontFamily: 'Abel'
+                    fontFamily: 'Abel',
                   }}
                 >
                   REGISTRATION
@@ -176,7 +173,7 @@ const RegistrationForm = (props) => {
                   type="submit"
                   fullWidth
                   variant="outlined"
-                   onClick={handleClickLogIn}
+                  onClick={handleClickLogIn}
                   sx={{
                     borderRadius: '20px',
                     width: '300px',
@@ -186,7 +183,7 @@ const RegistrationForm = (props) => {
                     padding: '12px 65px',
                     fontFamily: 'Abel',
                     borderColor: '#4A56E2',
-                    color: '#4A56E2'
+                    color: '#4A56E2',
                   }}
                 >
                   LOG IN

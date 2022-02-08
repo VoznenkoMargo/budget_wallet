@@ -72,7 +72,7 @@ export default function Team() {
                 <li className={s.linkItem}>
                   <a
                     className={s.link}
-                    href={i.githubLink }
+                    href={i.githubLink}
                     target="_blank"
                     rel="noreferrer"
                   >
@@ -97,5 +97,3 @@ export default function Team() {
     </Box>
   );
 }
-
-
