@@ -58,7 +58,7 @@ export default function BasicTable(props) {
               ({ Date, Type, Category, Comments, Amount, Balance, ID }) => (
                 <TableRow
                   key={ID}
-                  className={`${Type === '+' ? 'income' : 'costs'}`}
+                  className={`${Type === 'EXPENSE' ? 'costs' : 'income'}`}
                   sx={{
                     '& .MuiTableCell-root': {
                       textAlign: 'center',
