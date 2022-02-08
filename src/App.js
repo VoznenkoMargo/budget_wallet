@@ -20,11 +20,10 @@ const App = () => {
   return (
     <ThemeConfig>
       <div className="App">
-        {/* {loading === true ? <Spinner/>: <h1>hello</h1>} */}
+       
           <Suspense fallback={<Spinner/>}>
         <Routes>
-        
-        
+  
           <Route path="/" element={<Layout/>}>
             <Route index element={<DashBoardPage />} />
             <Route path="main" element={<DashBoardPage />} />

@@ -2,11 +2,11 @@
 // import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 
 import s from './Spinner.module.scss'
-import {  Puff, Grid, BallTriangle, Circles } from 'react-loader-spinner';
+import {  Oval } from 'react-loader-spinner';
 
 const Spinner = () => (
   <div className={s.Loader}>
-    <Circles
+    <Oval
    
     color="#4a56e2"
     
