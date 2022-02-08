@@ -23,7 +23,7 @@ const RegistrationForm = (props) => {
       .string()
       .required('Confirm password is required')
       .oneOf([yup.ref('password')], 'Passwords does not match'),
-    name: yup
+    username: yup
       .string()
       .min(1, 'Must be at least 1 symbols')
       .max(12, 'Must be no more than 12 symbols')
@@ -33,13 +33,13 @@ const RegistrationForm = (props) => {
     email: '',
     password: '',
     confirm: '',
-    name: '',
+    username: '',
   };
   const navigate = useNavigate();
-   const handleClickLogIn = () => {
+  const handleClickLogIn = () => {
     navigate('/login');
   };
-  
+
 
 
   return (
@@ -132,10 +132,10 @@ const RegistrationForm = (props) => {
 
               <CustomInput
                 label="name"
-                name="name"
+                name="username"
                 placeholder="Your name"
                 type="text"
-                id="name"
+                id="username"
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
@@ -153,7 +153,7 @@ const RegistrationForm = (props) => {
                 <Button
                   type="submit"
                   variant="contained"
-                 
+
                   sx={{
                     mt: '20px',
                     mb: '20px',
@@ -176,7 +176,7 @@ const RegistrationForm = (props) => {
                   type="submit"
                   fullWidth
                   variant="outlined"
-                   onClick={handleClickLogIn}
+                  onClick={handleClickLogIn}
                   sx={{
                     borderRadius: '20px',
                     width: '300px',
