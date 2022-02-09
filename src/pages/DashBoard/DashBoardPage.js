@@ -27,8 +27,8 @@ function DashBoardPage() {
     dispatch(getTransactionCategory());
   }, [dispatch]);
 
-  function createData(Date, Type, Category, Comments, Amount, Balance, ID) {
-    return { Date, Type, Category, Comments, Amount, Balance, ID };
+  function createData(date, type, category, comments, amount, balance, id) {
+    return { date, type, category, comments, amount, balance, id };
   }
 
   const onModalCloseHandler = () => {

@@ -8,7 +8,7 @@ import * as yup from 'yup';
 import * as S from './ModalAddTransaction.style';
 import { useDispatch } from 'react-redux';
 import { createTransaction } from 'redux/transactionSlice';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import moment from 'moment';
 
 const categories = [
