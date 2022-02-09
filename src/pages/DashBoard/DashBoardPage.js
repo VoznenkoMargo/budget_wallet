@@ -1,12 +1,13 @@
 /* eslint-disable no-restricted-globals */
-import React, { useState, useEffect } from 'react';
-import BasicTable from '../../components/BasicTable/BasicTable';
+import { useEffect } from 'react';
+import BasicTable from 'components/BasicTable/BasicTable';
 import { useDispatch } from 'react-redux';
 import { ButtonAddTransaction } from 'components/common';
 import { ModalAddTransaction } from 'components';
-import { getTransactions } from '../../redux/transactionSlice';
-import { getTransactionCategory } from '../../redux/categoriesSlice';
+import { getTransactions } from 'redux/transactionSlice';
+import { getTransactionCategory } from 'redux/categoriesSlice';
 import { useSelector } from 'react-redux';
+import { setIsModalAddTransactionOpen } from 'redux/globalSlice';
 
 // const items = [
 //   createData('04.01.19', '-', 'Other', 'A gift for wife', 300.0, '6 900.00'),
@@ -18,18 +19,25 @@ import { useSelector } from 'react-redux';
 
 function DashBoardPage() {
   const dispatch = useDispatch();
+  const transactions = useSelector((state) => state.transactions.transactions);
+  const { isModalAddTransactionOpen } = useSelector((state) => state.global);
 
   useEffect(() => {
     dispatch(getTransactions());
     dispatch(getTransactionCategory());
   }, [dispatch]);
 
-  const transactions = useSelector((state) => state.transactions.transactions);
-  const [open, setOpen] = useState(false);
-
   function createData(Date, Type, Category, Comments, Amount, Balance, ID) {
     return { Date, Type, Category, Comments, Amount, Balance, ID };
   }
+
+  const onModalCloseHandler = () => {
+    dispatch(setIsModalAddTransactionOpen(false));
+  };
+
+  const onAddTransactionClickHandler = () => {
+    dispatch(setIsModalAddTransactionOpen(true));
+  };
 
   const items = transactions.map(function ({
     transactionDate,
@@ -43,7 +51,6 @@ function DashBoardPage() {
     return createData(
       transactionDate,
       type,
-
       categoryId,
       comment,
       amount,
@@ -56,16 +63,10 @@ function DashBoardPage() {
     <>
       <BasicTable items={items} />
       <ModalAddTransaction
-        open={open}
-        onClose={() => {
-          setOpen(false);
-        }}
+        open={isModalAddTransactionOpen}
+        onClose={onModalCloseHandler}
       />
-      <ButtonAddTransaction
-        onClick={() => {
-          setOpen(true);
-        }}
-      />
+      <ButtonAddTransaction onClick={onAddTransactionClickHandler} />
     </>
   );
 }

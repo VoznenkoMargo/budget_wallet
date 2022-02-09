@@ -1,7 +1,6 @@
 import './App.css';
 import ThemeConfig from 'theme';
 import { Route, Routes } from 'react-router-dom';
-
 import { Suspense } from 'react';
 import Spinner from 'components/Spinner';
 import { lazy } from 'react';
