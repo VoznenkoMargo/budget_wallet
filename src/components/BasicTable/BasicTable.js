@@ -1,5 +1,4 @@
 /* eslint-disable no-restricted-globals */
-import * as React from 'react';
 import { useSelector } from 'react-redux';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -8,8 +7,10 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import './BasicTable.scss';
+import { useTheme } from '@mui/system';
 
 export default function BasicTable(props) {
+  const { palette } = useTheme();
   const categories = useSelector((state) => state.categories.categories);
   const { items } = props;
 
@@ -29,7 +30,7 @@ export default function BasicTable(props) {
               className="tableHeadRow"
               sx={{
                 borderRadius: '0px',
-                backgroundColor: '#fff',
+                backgroundColor: palette.common.white,
                 '& .MuiTableCell-root': {
                   borderRadius: '0px',
                   borderBottom: 'none',
@@ -71,7 +72,17 @@ export default function BasicTable(props) {
                     {getCategoryName(Category, categories)}
                   </TableCell>
                   <TableCell data-toggle="Comments">{Comments}</TableCell>
-                  <TableCell data-toggle="Amount">{Amount}</TableCell>
+                  <TableCell
+                    data-toggle="Amount"
+                    sx={{
+                      color:
+                        Type === 'EXPENSE'
+                          ? palette.tertiary.main
+                          : palette.primary.main,
+                    }}
+                  >
+                    {Amount}
+                  </TableCell>
                   <TableCell data-toggle="Balance">{Balance}</TableCell>
                 </TableRow>
               )

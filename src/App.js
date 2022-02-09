@@ -1,9 +1,8 @@
-import './App.css';
-import ThemeConfig from 'theme';
 import { Route, Routes } from 'react-router-dom';
-import { Suspense } from 'react';
+import { Suspense, lazy } from 'react';
 import Spinner from 'components/Spinner';
-import { lazy } from 'react';
+import { useSelector } from 'react-redux';
+import ThemeConfig from 'theme';
 
 const DashBoardPage = lazy(() =>
   import(
@@ -36,6 +35,8 @@ const LoginPage = lazy(() =>
 );
 
 const App = () => {
+  const { isLoading } = useSelector((state) => state.global);
+
   return (
     <ThemeConfig>
       <div className="App">
@@ -49,10 +50,10 @@ const App = () => {
             </Route>
             <Route path="registration" element={<RegistrationPage />} />
             <Route path="login" element={<LoginPage />} />
-
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Suspense>
+        {isLoading && <Spinner />}
       </div>
     </ThemeConfig>
   );
