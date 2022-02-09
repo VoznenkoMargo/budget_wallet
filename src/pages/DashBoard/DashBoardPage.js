@@ -18,25 +18,21 @@ import { setIsLoading, setIsModalAddTransactionOpen } from 'redux/globalSlice';
 function DashBoardPage() {
   const dispatch = useDispatch();
   const transactions = useSelector((state) => state.transactions.transactions);
+  const categories = useSelector((state) => state.categories.categories);
   const { isModalAddTransactionOpen, isLoading } = useSelector(
     (state) => state.global
   );
 
   useEffect(() => {
-    const init = async () => {
+    (async () => {
       dispatch(setIsLoading(true));
       await Promise.all([
         dispatch(getTransactions()),
         dispatch(getTransactionCategories()),
       ]);
       dispatch(setIsLoading(false));
-    };
-    init();
+    })();
   }, [dispatch]);
-
-  function createData(Date, Type, Category, Comments, Amount, Balance, ID) {
-    return { Date, Type, Category, Comments, Amount, Balance, ID };
-  }
 
   const onModalCloseHandler = () => {
     dispatch(setIsModalAddTransactionOpen(false));
@@ -46,34 +42,15 @@ function DashBoardPage() {
     dispatch(setIsModalAddTransactionOpen(true));
   };
 
-  const items = transactions.map(function ({
-    transactionDate,
-    type,
-    categoryId,
-    comment,
-    amount,
-    balanceAfter,
-    id,
-  }) {
-    return createData(
-      transactionDate,
-      type,
-      categoryId,
-      comment,
-      amount,
-      balanceAfter,
-      id
-    );
-  });
-
   return (
     <>
-      {!isLoading && (
+      {!isLoading && transactions && categories && (
         <>
-          <BasicTable items={items} />
+          <BasicTable transactions={transactions} categories={categories} />
           <ModalAddTransaction
             open={isModalAddTransactionOpen}
             onClose={onModalCloseHandler}
+            categories={categories}
           />
           <ButtonAddTransaction onClick={onAddTransactionClickHandler} />
         </>

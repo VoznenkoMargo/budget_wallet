@@ -6,7 +6,7 @@ import { Switch } from './Switch';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import * as S from './ModalAddTransaction.style';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { createTransaction } from 'redux/transactionSlice';
 import moment from 'moment';
 
@@ -26,40 +26,60 @@ const getCategoriesByType = (categories, type) => {
   return categories.filter((category) => category.type === type);
 };
 
-const ModalAddTransaction = ({ open, onClose }) => {
-  const dispatch = useDispatch();
-  const { categories } = useSelector((state) => state.categories);
-  const expenseCategories = getCategoriesByType(categories, 'EXPENSE');
-  const incomeCategory = getCategoriesByType(categories, 'INCOME');
+const transactionTypes = {
+  EXPENSE: 'EXPENSE',
+  INCOME: 'INCOME',
+};
 
+const ModalAddTransaction = ({ open, onClose, categories }) => {
+  const dispatch = useDispatch();
+  const expenseCategories = getCategoriesByType(
+    categories,
+    transactionTypes.EXPENSE
+  );
+  const [incomeCategory] = getCategoriesByType(
+    categories,
+    transactionTypes.INCOME
+  );
   const formik = useFormik({
     initialValues: {
       isExpenseMode: false,
       amount: '',
       comment: '',
       transactionDate: new Date().toISOString(),
-      type: 'INCOME',
-      categoryId: incomeCategory[0].id,
+      type: transactionTypes.INCOME,
+      categoryId: incomeCategory.id,
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
+      const transactionDate = moment(values.transactionDate).format(
+        'YYYY-MM-DD'
+      );
+      const amount = values.isExpenseMode ? -values.amount : values.amount;
+      const type = values.isExpenseMode
+        ? transactionTypes.EXPENSE
+        : transactionTypes.INCOME;
+      const categoryId = values.categoryId;
+      const comment = values.comment;
+
       const transaction = {
-        amount: values.isExpenseMode ? -values.amount : values.amount,
-        comment: values.comment,
-        transactionDate: moment(values.transactionDate).format('YYYY-MM-DD'),
-        type: values.type,
-        categoryId: values.categoryId,
+        transactionDate,
+        amount,
+        type,
+        categoryId,
+        comment,
       };
+
       console.log(transaction);
-      dispatch(createTransaction(transaction));
+      dispatch(createTransaction(transaction)).then((data) => {
+        onCloseHandler();
+      });
     },
   });
 
   const onTypeChangeHandler = (e) => {
-    const value = e.target.checked ? 'EXPENSE' : 'INCOME';
-    const categoryId = e.target.checked ? '' : incomeCategory[0].id;
+    const categoryId = e.target.checked ? '' : incomeCategory.id;
     formik.setFieldValue('isExpenseMode', e.target.checked);
-    formik.setFieldValue('type', value.toString());
     formik.setFieldValue('categoryId', categoryId);
   };
 

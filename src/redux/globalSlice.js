@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  isLoading: true,
+  isLoading: false,
   isModalAddTransactionOpen: false,
   isModalLogoutOpen: false,
 };

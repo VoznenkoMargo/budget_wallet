@@ -1,5 +1,4 @@
 /* eslint-disable no-restricted-globals */
-import { useSelector } from 'react-redux';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -11,8 +10,31 @@ import { useTheme } from '@mui/system';
 
 export default function BasicTable(props) {
   const { palette } = useTheme();
-  const categories = useSelector((state) => state.categories.categories);
-  const { items } = props;
+  const { categories, transactions } = props;
+
+  function createData(Date, Type, Category, Comments, Amount, Balance, ID) {
+    return { Date, Type, Category, Comments, Amount, Balance, ID };
+  }
+
+  const items = transactions.map(function ({
+    transactionDate,
+    type,
+    categoryId,
+    comment,
+    amount,
+    balanceAfter,
+    id,
+  }) {
+    return createData(
+      transactionDate,
+      type,
+      categoryId,
+      comment,
+      amount,
+      balanceAfter,
+      id
+    );
+  });
 
   const getCategoryName = (categoryId, categories) => {
     if (categories.length > 0) {

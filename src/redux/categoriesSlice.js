@@ -27,7 +27,7 @@ export const getTransactionCategories = createAsyncThunk(
   }
 );
 
-const initialState = { categories: [] };
+const initialState = { categories: null };
 
 const categoriesSlice = createSlice({
   name: 'categories',
