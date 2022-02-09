@@ -21,6 +21,7 @@ export const createTransaction = createAsyncThunk(
       const resp = await req.json();
       dispatch(addTransaction(resp));
     } catch (error) {
+      console.log(error);
       return rejectWithValue(error.message);
     }
   }
@@ -39,8 +40,7 @@ export const getTransactions = createAsyncThunk(
         },
       });
       const resp = await req.json();
-      console.log(resp);
-      dispatch(getAllTransactions(resp));
+      dispatch(addTransactions(resp));
       if (!req.ok) {
         throw new Error("Can't get all transactions");
       }
@@ -51,13 +51,13 @@ export const getTransactions = createAsyncThunk(
   }
 );
 
-const initialState = { transactions: [], isLoading: false, error: null };
+const initialState = { transactions: null, error: null };
 
 const transactionSlice = createSlice({
   name: 'transactions',
   initialState,
   reducers: {
-    getAllTransactions: (state, action) => {
+    addTransactions: (state, action) => {
       state.transactions = action.payload;
     },
     addTransaction: (state, action) => {
@@ -66,5 +66,5 @@ const transactionSlice = createSlice({
   },
 });
 
-export const { addTransaction, getAllTransactions } = transactionSlice.actions;
+export const { addTransaction, addTransactions } = transactionSlice.actions;
 export const transactionsReducer = transactionSlice.reducer;

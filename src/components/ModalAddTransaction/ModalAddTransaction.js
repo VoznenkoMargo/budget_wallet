@@ -8,61 +8,7 @@ import * as yup from 'yup';
 import * as S from './ModalAddTransaction.style';
 import { useDispatch } from 'react-redux';
 import { createTransaction } from 'redux/transactionSlice';
-// import { useSelector } from 'react-redux';
 import moment from 'moment';
-
-const categories = [
-  {
-    id: 'c9d9e447-1b83-4238-8712-edc77b18b739',
-    name: 'Основные расходы',
-    type: 'EXPENSE',
-  },
-  {
-    id: '27eb4b75-9a42-4991-a802-4aefe21ac3ce',
-    name: 'Продукты',
-    type: 'EXPENSE',
-  },
-  {
-    id: '3caa7ba0-79c0-40b9-ae1f-de1af1f6e386',
-    name: 'Машина',
-    type: 'EXPENSE',
-  },
-  {
-    id: 'bbdd58b8-e804-4ab9-bf4f-695da5ef64f4',
-    name: 'Забота о себе',
-    type: 'EXPENSE',
-  },
-  {
-    id: '76cc875a-3b43-4eae-8fdb-f76633821a34',
-    name: 'Забота о детях',
-    type: 'EXPENSE',
-  },
-  {
-    id: '128673b5-2f9a-46ae-a428-ec48cf1effa1',
-    name: 'Товары для дома',
-    type: 'EXPENSE',
-  },
-  {
-    id: '1272fcc4-d59f-462d-ad33-a85a075e5581',
-    name: 'Образование',
-    type: 'EXPENSE',
-  },
-  {
-    id: 'c143130f-7d1e-4011-90a4-54766d4e308e',
-    name: 'Досуг',
-    type: 'EXPENSE',
-  },
-  {
-    id: '719626f1-9d23-4e99-84f5-289024e437a8',
-    name: 'Другие расходы',
-    type: 'EXPENSE',
-  },
-  {
-    id: '3acd0ecd-5295-4d54-8e7c-d3908f4d0402',
-    name: 'Развлечения',
-    type: 'EXPENSE',
-  },
-];
 
 const validationSchema = yup.object({
   isExpenseMode: yup.boolean(),
@@ -76,37 +22,65 @@ const validationSchema = yup.object({
   }),
 });
 
-const ModalAddTransaction = ({ open, onClose }) => {
+const getCategoriesByType = (categories, type) => {
+  return categories.filter((category) => category.type === type);
+};
+
+const transactionTypes = {
+  EXPENSE: 'EXPENSE',
+  INCOME: 'INCOME',
+};
+
+const ModalAddTransaction = ({ open, onClose, categories }) => {
   const dispatch = useDispatch();
+  const expenseCategories = getCategoriesByType(
+    categories,
+    transactionTypes.EXPENSE
+  );
+  const [incomeCategory] = getCategoriesByType(
+    categories,
+    transactionTypes.INCOME
+  );
   const formik = useFormik({
     initialValues: {
       isExpenseMode: false,
       amount: '',
       comment: '',
       transactionDate: new Date().toISOString(),
-      type: 'INCOME',
-      categoryId: '',
+      type: transactionTypes.INCOME,
+      categoryId: incomeCategory.id,
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
+      const transactionDate = moment(values.transactionDate).format(
+        'YYYY-MM-DD'
+      );
+      const amount = values.isExpenseMode ? -values.amount : values.amount;
+      const type = values.isExpenseMode
+        ? transactionTypes.EXPENSE
+        : transactionTypes.INCOME;
+      const categoryId = values.categoryId;
+      const comment = values.comment;
+
       const transaction = {
-        amount: values.isExpenseMode ? -values.amount : values.amount,
-        comment: values.comment,
-        transactionDate: moment(values.transactionDate).format('YYYY-MM-DD'),
-        type: values.type,
-        categoryId: values.isExpenseMode
-          ? values.categoryId
-          : '063f1132-ba5d-42b4-951d-44011ca46262',
+        transactionDate,
+        amount,
+        type,
+        categoryId,
+        comment,
       };
-      dispatch(createTransaction(transaction));
+
+      console.log(transaction);
+      dispatch(createTransaction(transaction)).then((data) => {
+        onCloseHandler();
+      });
     },
   });
 
   const onTypeChangeHandler = (e) => {
-    const value = e.target.checked ? 'EXPENSE' : 'INCOME';
+    const categoryId = e.target.checked ? '' : incomeCategory.id;
     formik.setFieldValue('isExpenseMode', e.target.checked);
-    formik.setFieldValue('type', value.toString());
-    formik.setFieldValue('categoryId', '');
+    formik.setFieldValue('categoryId', categoryId);
   };
 
   const onDateChangeHandler = (date) => {
@@ -136,7 +110,7 @@ const ModalAddTransaction = ({ open, onClose }) => {
               value={formik.values.categoryId}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              options={categories}
+              options={expenseCategories}
               placeholder="Select a category"
               error={
                 formik.touched.categoryId && Boolean(formik.errors.categoryId)

@@ -1,11 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { setIsLoading } from './globalSlice';
 
-export const getTransactionCategory = createAsyncThunk(
+export const getTransactionCategories = createAsyncThunk(
   'categories/getTransactionCategory',
   async (_, { rejectWithValue, dispatch }) => {
     try {
-      dispatch(setIsLoading(true));
       const req = await fetch(
         'https://wallet.goit.ua/api/transaction-categories',
         {
@@ -18,8 +16,7 @@ export const getTransactionCategory = createAsyncThunk(
         }
       );
       const resp = await req.json();
-      dispatch(getTransaction(resp));
-      dispatch(setIsLoading(false));
+      dispatch(addCategories(resp));
       if (!req.ok) {
         throw new Error("Can't create get transaction categories");
       }
@@ -30,17 +27,17 @@ export const getTransactionCategory = createAsyncThunk(
   }
 );
 
-const initialState = { categories: [] };
+const initialState = { categories: null };
 
 const categoriesSlice = createSlice({
   name: 'categories',
   initialState,
   reducers: {
-    getTransaction: (state, action) => {
+    addCategories: (state, action) => {
       state.categories = action.payload;
     },
   },
 });
 
-export const { getTransaction } = categoriesSlice.actions;
+export const { addCategories } = categoriesSlice.actions;
 export const categoriesReducer = categoriesSlice.reducer;

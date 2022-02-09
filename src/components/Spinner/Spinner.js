@@ -2,11 +2,22 @@
 
 import s from './Spinner.module.scss';
 import { Oval } from 'react-loader-spinner';
+import { useTheme } from '@mui/system';
 
-const Spinner = () => (
-  <div className={s.Loader}>
-    <Oval color="#4a56e2" height={100} width={100} visible={true} />
-  </div>
-);
+const Spinner = () => {
+  const { palette } = useTheme();
+
+  return (
+    <div className={s.Loader}>
+      <Oval
+        color={palette.secondary.main}
+        secondaryColor={palette.primary.main}
+        height={100}
+        width={100}
+        visible={true}
+      />
+    </div>
+  );
+};
 
 export default Spinner;

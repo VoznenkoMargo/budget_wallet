@@ -1,9 +1,8 @@
-import './App.css';
-import ThemeConfig from 'theme';
 import { Route, Routes } from 'react-router-dom';
-import { Suspense } from 'react';
+import { Suspense, lazy } from 'react';
 import Spinner from 'components/Spinner';
-import { lazy } from 'react';
+import { useSelector } from 'react-redux';
+import ThemeConfig from 'theme';
 
 const DashBoardPage = lazy(() =>
   import(
@@ -36,25 +35,25 @@ const LoginPage = lazy(() =>
 );
 
 const App = () => {
-  return (
-    <ThemeConfig>
-      <div className="App">
-        <Suspense fallback={<Spinner />}>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<DashBoardPage />} />
-              <Route path="main" element={<DashBoardPage />} />
-              <Route path="statistic" element={<StatisticPage />} />
-              <Route path="dev" element={<TeamPage />} />
-            </Route>
-            <Route path="registration" element={<RegistrationPage />} />
-            <Route path="login" element={<LoginPage />} />
+  const { isLoading } = useSelector((state) => state.global);
 
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-        </Suspense>
-      </div>
-    </ThemeConfig>
+  return (
+    <div className="App">
+      <Suspense fallback={<Spinner />}>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<DashBoardPage />} />
+            <Route path="main" element={<DashBoardPage />} />
+            <Route path="statistic" element={<StatisticPage />} />
+            <Route path="dev" element={<TeamPage />} />
+          </Route>
+          <Route path="registration" element={<RegistrationPage />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </Suspense>
+      {isLoading && <Spinner />}
+    </div>
   );
 };
 

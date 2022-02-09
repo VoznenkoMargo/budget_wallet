@@ -1,13 +1,11 @@
 /* eslint-disable no-restricted-globals */
 import { useEffect } from 'react';
-import BasicTable from 'components/BasicTable/BasicTable';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ButtonAddTransaction } from 'components/common';
-import { ModalAddTransaction } from 'components';
+import { ModalAddTransaction, BasicTable } from 'components';
 import { getTransactions } from 'redux/transactionSlice';
-import { getTransactionCategory } from 'redux/categoriesSlice';
-import { useSelector } from 'react-redux';
-import { setIsModalAddTransactionOpen } from 'redux/globalSlice';
+import { getTransactionCategories } from 'redux/categoriesSlice';
+import { setIsLoading, setIsModalAddTransactionOpen } from 'redux/globalSlice';
 
 // const items = [
 //   createData('04.01.19', '-', 'Other', 'A gift for wife', 300.0, '6 900.00'),
@@ -20,16 +18,21 @@ import { setIsModalAddTransactionOpen } from 'redux/globalSlice';
 function DashBoardPage() {
   const dispatch = useDispatch();
   const transactions = useSelector((state) => state.transactions.transactions);
-  const { isModalAddTransactionOpen } = useSelector((state) => state.global);
+  const categories = useSelector((state) => state.categories.categories);
+  const { isModalAddTransactionOpen, isLoading } = useSelector(
+    (state) => state.global
+  );
 
   useEffect(() => {
-    dispatch(getTransactions());
-    dispatch(getTransactionCategory());
+    (async () => {
+      dispatch(setIsLoading(true));
+      await Promise.all([
+        dispatch(getTransactions()),
+        dispatch(getTransactionCategories()),
+      ]);
+      dispatch(setIsLoading(false));
+    })();
   }, [dispatch]);
-
-  function createData(date, type, category, comments, amount, balance, id) {
-    return { date, type, category, comments, amount, balance, id };
-  }
 
   const onModalCloseHandler = () => {
     dispatch(setIsModalAddTransactionOpen(false));
@@ -39,34 +42,19 @@ function DashBoardPage() {
     dispatch(setIsModalAddTransactionOpen(true));
   };
 
-  const items = transactions.map(function ({
-    transactionDate,
-    type,
-    categoryId,
-    comment,
-    amount,
-    balanceAfter,
-    id,
-  }) {
-    return createData(
-      transactionDate,
-      type,
-      categoryId,
-      comment,
-      amount,
-      balanceAfter,
-      id
-    );
-  });
-
   return (
     <>
-      <BasicTable items={items} />
-      <ModalAddTransaction
-        open={isModalAddTransactionOpen}
-        onClose={onModalCloseHandler}
-      />
-      <ButtonAddTransaction onClick={onAddTransactionClickHandler} />
+      {!isLoading && transactions && categories && (
+        <>
+          <BasicTable transactions={transactions} categories={categories} />
+          <ModalAddTransaction
+            open={isModalAddTransactionOpen}
+            onClose={onModalCloseHandler}
+            categories={categories}
+          />
+          <ButtonAddTransaction onClick={onAddTransactionClickHandler} />
+        </>
+      )}
     </>
   );
 }
