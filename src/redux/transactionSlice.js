@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { setIsModalAddTransactionOpen } from './globalSlice';
 
 export const createTransaction = createAsyncThunk(
   'transactions/createTransaction',
@@ -20,6 +21,7 @@ export const createTransaction = createAsyncThunk(
 
       const resp = await req.json();
       dispatch(addTransaction(resp));
+      dispatch(setIsModalAddTransactionOpen(false));
     } catch (error) {
       console.log(error);
       return rejectWithValue(error.message);

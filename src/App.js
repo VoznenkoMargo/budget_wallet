@@ -38,24 +38,22 @@ const App = () => {
   const { isLoading } = useSelector((state) => state.global);
 
   return (
-    <ThemeConfig>
-      <div className="App">
-        <Suspense fallback={<Spinner />}>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<DashBoardPage />} />
-              <Route path="main" element={<DashBoardPage />} />
-              <Route path="statistic" element={<StatisticPage />} />
-              <Route path="dev" element={<TeamPage />} />
-            </Route>
-            <Route path="registration" element={<RegistrationPage />} />
-            <Route path="login" element={<LoginPage />} />
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-        </Suspense>
-        {isLoading && <Spinner />}
-      </div>
-    </ThemeConfig>
+    <div className="App">
+      <Suspense fallback={<Spinner />}>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<DashBoardPage />} />
+            <Route path="main" element={<DashBoardPage />} />
+            <Route path="statistic" element={<StatisticPage />} />
+            <Route path="dev" element={<TeamPage />} />
+          </Route>
+          <Route path="registration" element={<RegistrationPage />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </Suspense>
+      {isLoading && <Spinner />}
+    </div>
   );
 };
 
