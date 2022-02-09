@@ -12,8 +12,8 @@ export default function BasicTable(props) {
   const { palette } = useTheme();
   const { categories, transactions } = props;
 
-  function createData(Date, Type, Category, Comments, Amount, Balance, ID) {
-    return { Date, Type, Category, Comments, Amount, Balance, ID };
+  function createData(date, type, category, comments, amount, balance, id) {
+    return { date, type, category, comments, amount, balance, id };
   }
 
   const items = transactions.map(function ({
@@ -78,34 +78,34 @@ export default function BasicTable(props) {
           </TableHead>
           <TableBody className="tableBody">
             {items.map(
-              ({ Date, Type, Category, Comments, Amount, Balance, ID }) => (
+              ({ date, type, category, comments, amount, balance, id }) => (
                 <TableRow
-                  key={ID}
-                  className={`${Type === 'EXPENSE' ? 'costs' : 'income'}`}
+                  key={id}
+                  className={`${type === 'EXPENSE' ? 'costs' : 'income'}`}
                   sx={{
                     '& .MuiTableCell-root': {
                       textAlign: 'center',
                     },
                   }}
                 >
-                  <TableCell data-toggle="Date">{Date}</TableCell>
-                  <TableCell data-toggle="Type">{Type}</TableCell>
+                  <TableCell data-toggle="Date">{date}</TableCell>
+                  <TableCell data-toggle="Type">{type}</TableCell>
                   <TableCell data-toggle="Category">
-                    {getCategoryName(Category, categories)}
+                    {getCategoryName(category, categories)}
                   </TableCell>
-                  <TableCell data-toggle="Comments">{Comments}</TableCell>
+                  <TableCell data-toggle="Comments">&nbsp;{comments}</TableCell>
                   <TableCell
                     data-toggle="Amount"
                     sx={{
                       color:
-                        Type === 'EXPENSE'
+                        type === 'EXPENSE'
                           ? palette.tertiary.main
                           : palette.primary.main,
                     }}
                   >
-                    {Amount}
+                    {amount}
                   </TableCell>
-                  <TableCell data-toggle="Balance">{Balance}</TableCell>
+                  <TableCell data-toggle="Balance">{balance}</TableCell>
                 </TableRow>
               )
             )}
