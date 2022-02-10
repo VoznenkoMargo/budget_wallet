@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 export const getCategoriesStatistic = createAsyncThunk(
   'statistic/getCategoriesStatistic',
-  async() => {
+  async(_, {rejectWithValue}) => {
     const options = {
       method: 'GET',
       headers: {
@@ -13,11 +13,19 @@ export const getCategoriesStatistic = createAsyncThunk(
     }
     const response  = await fetch('https://wallet.goit.ua/api/transactions-summary', options);
     if (!response.ok) {
-      return Error("Can't get statistic");
+      return rejectWithValue(await response.json());
     }
     return await response.json();
   }
 )
+
+const generateUniqueColor = (usedColors) => {
+  let color = null;
+  while(!color || usedColors.includes(color)){
+    color = `#${Math.floor(Math.random()*16777215).toString(16)}`;
+  }
+  return color;
+}
 
 const initialState = {
   statistic: null,
@@ -34,10 +42,18 @@ const StatisticSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(getCategoriesStatistic.fulfilled, (state, {payload}) => {
+        const usedColors = [];
+        payload['categoriesSummary'] = payload['categoriesSummary']
+          .map(elem => {
+            const color = generateUniqueColor(usedColors);
+            usedColors.push(color);
+            return {...elem, color}
+          })
         state.statistic = payload;
       })
+
       .addCase(getCategoriesStatistic.rejected, (state, action) => {
-        state.error = action.error.message;
+        state.error = action.payload.message;
       })
   }
 })
