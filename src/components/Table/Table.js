@@ -206,7 +206,7 @@ function MyTable({statistic}) {
                   align="right"
                   sx={{ borderBottom: 'none', fontSize: '16px' }}
                 >
-                  {category.total}
+                  {Math.abs(category.total)}
                 </TableCell>
               </TableRow>
             ))}
