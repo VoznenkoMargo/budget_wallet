@@ -16,11 +16,12 @@ export default function Chart({statistics}) {
           <Doughnut
             className="s.douhnut"
             data={{
+              labels: categoryTotal?.length === 0 ? ['No expends'] : null,
               datasets: [
                 {
-                  data: categoryTotal,
-                  backgroundColor: categoryColor,
-                  borderColor: categoryColor,
+                  data: categoryTotal?.length > 0 ? categoryTotal : [1],
+                  backgroundColor: categoryColor?.length > 0 ? categoryColor : ['#4ad9bf'],
+                  borderColor: categoryColor?.length > 0 ? categoryColor : ['#4ad9bf'],
                   borderWidth: 1,
                   cutout: 90,
                 },
