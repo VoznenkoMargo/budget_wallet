@@ -6,6 +6,9 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import { setIsLoading } from '../../redux/globalSlice';
+import { getCategoriesStatistic, setMonth, setYear } from '../../redux/statisticSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 const colourStyles = {
   placeholder: (base) => ({
@@ -86,8 +89,8 @@ const colourStyles = {
 
 const month = [
   {
-    value: 'All',
-    label: 'All Period',
+    value: '',
+    label: 'All period',
   }
 ]
 
@@ -97,7 +100,7 @@ const monthName =
 for (let i = 1; i <= 12; i+= 1) {
   month.push(
     {
-      value: String(i).padStart(2, '0'),
+      value: i,
       label: monthName[i-1],
     }
   )
@@ -105,23 +108,23 @@ for (let i = 1; i <= 12; i+= 1) {
 
 const year = [
   {
-    value: 'All',
-    label: 'All Years',
+    value: '',
+    label: 'All years',
   },
   {
-    value: '2019',
+    value: 2019,
     label: '2019',
   },
   {
-    value: '2020',
+    value: 2020,
     label: '2020',
   },
   {
-    value: '2021',
+    value: 2021,
     label: '2021',
   },
   {
-    value: '2022',
+    value: 2022,
     label: '2022',
   },
 ];
@@ -130,6 +133,26 @@ function MyTable({statistic}) {
   const categories = (statistic?.categoriesSummary && statistic?.categoriesSummary.filter(category => category.total <= 0)) || [];
   const incomeSummary = statistic?.incomeSummary;
   const expenseSummary = statistic?.expenseSummary && Math.abs(statistic?.expenseSummary);
+  const dispatch = useDispatch();
+
+  const selectMonth = async ({value}) => {
+    const {month, year} = statistic;
+    dispatch(setMonth(value));
+    if(!year && !month) return;
+
+    dispatch(setIsLoading(true));
+    await dispatch(getCategoriesStatistic({month: +value, year}));
+    dispatch(setIsLoading(false));
+  }
+
+  const selectYear = async ({value}) => {
+    const {month, year} = statistic;
+    dispatch(setYear(value));
+
+    dispatch(setIsLoading(true));
+    await dispatch(getCategoriesStatistic({ month, year: +value }));
+    dispatch(setIsLoading(false));
+  }
 
   return (
     <div className={s.tableContainer}>
@@ -138,13 +161,15 @@ function MyTable({statistic}) {
           name="month"
           styles={colourStyles}
           options={month}
-          placeholder="Month"
+          placeholder={month[statistic?.month]?.label || "All period"}
+          onChange={selectMonth}
         />
         <Select
           name="year"
           styles={colourStyles}
           options={year}
-          placeholder="Year"
+          placeholder={statistic?.year || "All years"}
+          onChange={selectYear}
         />
       </div>
 

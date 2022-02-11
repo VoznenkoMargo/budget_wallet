@@ -1,8 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
+const BASIC_URL = 'https://wallet.goit.ua/api';
+
 export const getCategoriesStatistic = createAsyncThunk(
   'statistic/getCategoriesStatistic',
-  async(_, {rejectWithValue}) => {
+  async(period, {rejectWithValue}) => {
     const options = {
       method: 'GET',
       headers: {
@@ -11,7 +13,16 @@ export const getCategoriesStatistic = createAsyncThunk(
           'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzaWQiOiJlNzNkNDNhNS1hYjJmLTRlODgtYmI3Ni0wZjFlMGJjNWNhYjMiLCJpYXQiOjE2NDQxNTczNzgsImV4cCI6MTAwMDAwMDE2NDQxNTczNzh9.e5qXzp0wq7x1xir0unYYGBgHwBEtCxlWNEgBrp-UteU',
       }
     }
-    const response  = await fetch('https://wallet.goit.ua/api/transactions-summary', options);
+
+    let response;
+    if(!period || (!period.year && period.month)) {
+      response = await fetch(`${BASIC_URL}/transactions-summary`, options);
+    } else if (!period.month) {
+      response = await fetch(`${BASIC_URL}/transactions-summary?year=${period.year}`, options);
+    } else {
+      response = await fetch(`${BASIC_URL}/transactions-summary?month=${period.month}&year=${period.year}`, options);
+    }
+
     if (!response.ok) {
       return rejectWithValue(await response.json());
     }
@@ -36,6 +47,14 @@ const StatisticSlice = createSlice({
   name: 'statistic',
   initialState,
   reducers: {
+    setMonth: (state, {payload}) => {
+      state.statistic.month = payload;
+    },
+
+    setYear: (state, {payload}) => {
+      state.statistic.year = payload;
+    },
+
     addTransactionToStatistic: (state, {payload}) => {
     }
   },
@@ -58,5 +77,5 @@ const StatisticSlice = createSlice({
   }
 })
 
-export const {addTransactionToStatistic} = StatisticSlice.actions;
+export const {setMonth, setYear, addTransactionToStatistic} = StatisticSlice.actions;
 export const statisticReducer = StatisticSlice.reducer;
