@@ -7,9 +7,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { setIsLoading } from '../../redux/globalSlice';
-import { getCategoriesStatistic, setMonth, setYear } from '../../redux/statisticSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { getCategoriesStatistics, setMonth, setYear } from '../../redux/statisticsSlice';
+import { useDispatch } from 'react-redux';
 
 const colourStyles = {
   placeholder: (base) => ({
@@ -130,41 +129,28 @@ const year = [
   },
 ];
 
-function MyTable({statistic}) {
-  const transactions = useSelector((state) => state.transactions.transactions);
-  const categories = (statistic?.categoriesSummary && statistic?.categoriesSummary.filter(category => category.total <= 0)) || [];
-  const incomeSummary = statistic?.incomeSummary;
-  const expenseSummary = statistic?.expenseSummary && Math.abs(statistic?.expenseSummary);
+function MyTable({statistics}) {
+  const categories = (statistics?.categoriesSummary && statistics?.categoriesSummary.filter(category => category.total <= 0)) || [];
+  const incomeSummary = statistics?.incomeSummary;
+  const expenseSummary = statistics?.expenseSummary && Math.abs(statistics?.expenseSummary);
   const dispatch = useDispatch();
 
-  // useEffect(async() => {
-  //   if(!statistic) {
-  //     return;
-  //   }
-  //
-  //   dispatch(setIsLoading(true));
-  //   //await dispatch(getCategoriesStatistic({month: statistic.month, year: statistic.year}));
-  //   dispatch(setIsLoading(false));
-  //
-  //
-  // }, [transactions])
-
   const selectMonth = async ({value}) => {
-    const {month, year} = statistic;
+    const {month, year} = statistics;
     dispatch(setMonth(value));
     if(!year && !month) return;
 
     dispatch(setIsLoading(true));
-    await dispatch(getCategoriesStatistic({month: +value, year}));
+    await dispatch(getCategoriesStatistics({month: +value, year}));
     dispatch(setIsLoading(false));
   }
 
   const selectYear = async ({value}) => {
-    const {month, year} = statistic;
+    const {month} = statistics;
     dispatch(setYear(value));
 
     dispatch(setIsLoading(true));
-    await dispatch(getCategoriesStatistic({ month, year: +value }));
+    await dispatch(getCategoriesStatistics({ month, year: +value }));
     dispatch(setIsLoading(false));
   }
 
@@ -175,14 +161,14 @@ function MyTable({statistic}) {
           name="month"
           styles={colourStyles}
           options={month}
-          placeholder={month[statistic?.month]?.label || "All period"}
+          placeholder={month[statistics?.month]?.label || "All period"}
           onChange={selectMonth}
         />
         <Select
           name="year"
           styles={colourStyles}
           options={year}
-          placeholder={statistic?.year || "All years"}
+          placeholder={statistics?.year || "All years"}
           onChange={selectYear}
         />
       </div>

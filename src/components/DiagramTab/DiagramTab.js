@@ -5,17 +5,17 @@ import s from './DiagramTab.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { setIsLoading } from '../../redux/globalSlice';
-import { getCategoriesStatistic } from '../../redux/statisticSlice';
+import { getCategoriesStatistics } from '../../redux/statisticsSlice';
 
 export default function DiagramTab() {
-  const statistic = useSelector((state) => state.statistic.statistic);
+  const statistics = useSelector((state) => state.statistics.statistics);
   const { isLoading } = useSelector((state) => state.global);
   const dispatch = useDispatch();
 
   useEffect(async () => {
-    if(!statistic) {
+    if(!statistics) {
       dispatch(setIsLoading(true));
-      await dispatch(getCategoriesStatistic());
+      await dispatch(getCategoriesStatistics());
       dispatch(setIsLoading(false));
     }
   }, [dispatch])
@@ -26,8 +26,8 @@ export default function DiagramTab() {
       <section className={s.sectionStats}>
         <h1 className={s.statisticsTitle}>Statistics</h1>
         <div className={s.containerStats}>
-          <Chart statistic={statistic}/>
-          <MyTable statistic={statistic}/>
+          <Chart statistics={statistics}/>
+          <MyTable statistics={statistics}/>
         </div>
       </section>}
     </>

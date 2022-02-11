@@ -2,9 +2,9 @@ import { Doughnut } from 'react-chartjs-2';
 import Balance from './ChartBalance/ChartBalance';
 import s from './Chart.module.scss';
 
-export default function Chart({statistic}) {
-  const periodTotal = statistic?.periodTotal;
-  const categories = statistic?.categoriesSummary.filter(category => category.total <= 0);
+export default function Chart({statistics}) {
+  const periodTotal = statistics?.periodTotal;
+  const categories = statistics?.categoriesSummary.filter(category => category.total <= 0);
   const categoryTotal = categories?.map(category => Math.abs(category.total));
   const categoryColor = categories?.map(category => category.color);
 

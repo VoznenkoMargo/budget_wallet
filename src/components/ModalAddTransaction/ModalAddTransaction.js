@@ -9,7 +9,7 @@ import * as S from './ModalAddTransaction.style';
 import { useDispatch, useSelector } from 'react-redux';
 import { createTransaction } from 'redux/transactionSlice';
 import moment from 'moment';
-import { addTransactionToStatistic } from '../../redux/statisticSlice';
+import { addTransactionToStatistics } from '../../redux/statisticsSlice';
 
 const checkDatesEquality = (date, statistics) => {
   if(!statistics) {
@@ -49,7 +49,7 @@ const transactionTypes = {
 };
 
 const ModalAddTransaction = ({ open, onClose, categories }) => {
-  const statistics = useSelector((state) => state.statistic.statistic);
+  const statistics = useSelector((state) => state.statistics.statistics);
   const allCategories = useSelector((state) => state.categories.categories);
 
   const dispatch = useDispatch();
@@ -95,7 +95,7 @@ const ModalAddTransaction = ({ open, onClose, categories }) => {
       dispatch(createTransaction(transaction)).then((data) => {
         if(checkDatesEquality(transactionDate, statistics)) {
           const categoryName = allCategories.find(category => category.id === transaction.categoryId).name;
-          dispatch(addTransactionToStatistic({transaction, categoryName}));
+          dispatch(addTransactionToStatistics({transaction, categoryName}));
         }
 
         onCloseHandler();

@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 const BASIC_URL = 'https://wallet.goit.ua/api';
 
-export const getCategoriesStatistic = createAsyncThunk(
+export const getCategoriesStatistics = createAsyncThunk(
   'statistic/getCategoriesStatistic',
   async(period, {rejectWithValue}) => {
     const options = {
@@ -42,37 +42,36 @@ const generateUniqueColor = () => {
 }
 
 const initialState = {
-  statistic: null,
+  statistics: null,
   error: null,
 }
 
-const StatisticSlice = createSlice({
-  name: 'statistic',
+const StatisticsSlice = createSlice({
+  name: 'statistics',
   initialState,
   reducers: {
     setMonth: (state, {payload}) => {
-      state.statistic.month = payload;
+      state.statistics.month = payload;
     },
 
     setYear: (state, {payload}) => {
-      state.statistic.year = payload;
+      state.statistics.year = payload;
     },
 
-    addTransactionToStatistic: (state, {payload}) => {
-      console.log(payload);
+    addTransactionToStatistics: (state, {payload}) => {
       const {transaction, categoryName} = payload;
 
       switch (transaction.type) {
         case 'INCOME':
-          state.statistic.incomeSummary += transaction.amount;
+          state.statistics.incomeSummary += transaction.amount;
           break;
         default:
-          state.statistic.expenseSummary += transaction.amount;
+          state.statistics.expenseSummary += transaction.amount;
       }
 
-      state.statistic.periodTotal += transaction.amount;
+      state.statistics.periodTotal += transaction.amount;
 
-      const stateCategory = state.statistic['categoriesSummary'].find(category => category.name === categoryName);
+      const stateCategory = state.statistics['categoriesSummary'].find(category => category.name === categoryName);
       if (stateCategory) {
         stateCategory.total += transaction.amount;
       } else {
@@ -82,27 +81,27 @@ const StatisticSlice = createSlice({
           total: transaction.amount,
           color: generateUniqueColor(),
         }
-        state.statistic['categoriesSummary'].push(category)
+        state.statistics['categoriesSummary'].push(category)
       }
     }
   },
 
   extraReducers(builder) {
     builder
-      .addCase(getCategoriesStatistic.fulfilled, (state, {payload}) => {
+      .addCase(getCategoriesStatistics.fulfilled, (state, {payload}) => {
         payload['categoriesSummary'] = payload['categoriesSummary']
           .map(elem => {
             const color = generateUniqueColor();
             return {...elem, color}
           })
-        state.statistic = payload;
+        state.statistics = payload;
       })
 
-      .addCase(getCategoriesStatistic.rejected, (state, action) => {
+      .addCase(getCategoriesStatistics.rejected, (state, action) => {
         state.error = action.payload.message;
       })
   }
 })
 
-export const {setMonth, setYear, addTransactionToStatistic} = StatisticSlice.actions;
-export const statisticReducer = StatisticSlice.reducer;
+export const {setMonth, setYear, addTransactionToStatistics} = StatisticsSlice.actions;
+export const statisticsReducer = StatisticsSlice.reducer;

@@ -2,13 +2,13 @@ import { configureStore } from '@reduxjs/toolkit';
 import { transactionsReducer } from './transactionSlice';
 import { categoriesReducer } from './categoriesSlice';
 import { globalReducer } from './globalSlice';
-import { statisticReducer } from './statisticSlice';
+import { statisticsReducer } from './statisticsSlice';
 
 export const store = configureStore({
   reducer: {
     transactions: transactionsReducer,
     categories: categoriesReducer,
-    statistic: statisticReducer,
+    statistics: statisticsReducer,
     global: globalReducer,
   },
 });
