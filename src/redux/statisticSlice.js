@@ -30,11 +30,14 @@ export const getCategoriesStatistic = createAsyncThunk(
   }
 )
 
-const generateUniqueColor = (usedColors) => {
+const usedColors = [];
+
+const generateUniqueColor = () => {
   let color = null;
   while(!color || usedColors.includes(color)){
     color = `#${Math.floor(Math.random()*16777215).toString(16).padStart(6, '0')}`;
   }
+  usedColors.push(color);
   return color;
 }
 
@@ -56,16 +59,40 @@ const StatisticSlice = createSlice({
     },
 
     addTransactionToStatistic: (state, {payload}) => {
+      console.log(payload);
+      const {transaction, categoryName} = payload;
+
+      switch (transaction.type) {
+        case 'INCOME':
+          state.statistic.incomeSummary += transaction.amount;
+          break;
+        default:
+          state.statistic.expenseSummary += transaction.amount;
+      }
+
+      state.statistic.periodTotal += transaction.amount;
+
+      const stateCategory = state.statistic['categoriesSummary'].find(category => category.name === categoryName);
+      if (stateCategory) {
+        stateCategory.total += transaction.amount;
+      } else {
+        const category = {
+          name: categoryName,
+          type: transaction.type,
+          total: transaction.amount,
+          color: generateUniqueColor(),
+        }
+        state.statistic['categoriesSummary'].push(category)
+      }
     }
   },
+
   extraReducers(builder) {
     builder
       .addCase(getCategoriesStatistic.fulfilled, (state, {payload}) => {
-        const usedColors = [];
         payload['categoriesSummary'] = payload['categoriesSummary']
           .map(elem => {
-            const color = generateUniqueColor(usedColors);
-            usedColors.push(color);
+            const color = generateUniqueColor();
             return {...elem, color}
           })
         state.statistic = payload;

@@ -3,7 +3,7 @@ import Balance from './ChartBalance/ChartBalance';
 import s from './Chart.module.scss';
 
 export default function Chart({statistic}) {
-  const expenseSummary = statistic?.expenseSummary;
+  const periodTotal = statistic?.periodTotal;
   const categories = statistic?.categoriesSummary.filter(category => category.total <= 0);
   const categoryTotal = categories?.map(category => Math.abs(category.total));
   const categoryColor = categories?.map(category => category.color);
@@ -11,7 +11,7 @@ export default function Chart({statistic}) {
   return (
     <div className={s.chart}>
       <div className={s.containerChart}>
-        <Balance expenseSummary={expenseSummary}/>
+        <Balance periodTotal={periodTotal}/>
         <div className={s.doughnut}>
           <Doughnut
             className="s.douhnut"
