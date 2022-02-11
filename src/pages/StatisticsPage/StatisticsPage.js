@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getCategoriesStatistic } from '../../redux/statisticSlice';
 import { setIsLoading } from '../../redux/globalSlice';
 
-
 export default function StatisticPage() {
   const statistic = useSelector((state) => state.statistic.statistic);
   const { isLoading } = useSelector((state) => state.global);
@@ -17,10 +16,6 @@ export default function StatisticPage() {
       dispatch(setIsLoading(false));
     }
   }, [dispatch])
-
-  useEffect(() => {
-    console.log(statistic);
-  })
 
   return (
     <>
