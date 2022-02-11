@@ -10,20 +10,20 @@ function createMenuData(Icon, MenuName, Path) {
 
 const menuItems = [
   createMenuData(<HomeIcon />, 'Main', '/main'),
-  createMenuData(<StatisticIcon />, 'Statistics', '/statistic'),
+  createMenuData(<StatisticIcon />, 'Statistic', '/statistic'),
   createMenuData(<ExchangeRateIcon />, 'Exchange rate', '/'),
 ];
 
 const NavMenu = () => {
-  const [checked, setChecked] = useState('Main');
+  const [checked, setChecked] = useState(window.location.pathname);
 
   return (
     <StyledNavMenu>
       {menuItems.map((menuItem) => (
         <StyledListItem
           key={menuItem.MenuName}
-          checked={checked === menuItem.MenuName}
-          onClick={() => setChecked(menuItem.MenuName)}
+          checked={checked === `/${menuItem.MenuName.toLowerCase()}`}
+          onClick={() => setChecked(`/${menuItem.MenuName.toLowerCase()}`)}
         >
           <NavLink
             to={menuItem.Path}
