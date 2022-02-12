@@ -16,10 +16,11 @@ const StyledAppBar = () => {
   const { username } = useSelector(userSelector);
 
   const onLogOut = () => {
-    localStorage.removeItem("token")
-    dispatch(clearState())
-    navigate("/login")
-  }
+    // localStorage.removeItem("token")
+    localStorage.clear();
+    dispatch(clearState());
+    navigate('/login');
+  };
 
   return (
     <Header>
