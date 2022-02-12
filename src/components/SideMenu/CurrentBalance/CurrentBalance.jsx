@@ -1,8 +1,9 @@
 import React from 'react';
 import {StyledCurrentBalance, StyledCurrentBalanceText, StyledCurrentBalanceTotal} from "./CurrentBalance.style";
+import { useSelector } from 'react-redux';
 
 function separateNumber(number) {
-  const NumberArray = String(number.toFixed(2)).split('').reverse();
+  const NumberArray = String(number).split('').reverse();
 
   const separatedNumberArray = NumberArray.reduce((acc, current, ind) => {
 
@@ -18,9 +19,8 @@ function separateNumber(number) {
   return separatedNumberArray.reverse().join('');
 }
 
-const CurrentBalance = (props) => {
-  let {balance} = props;
-  balance = separateNumber(balance);
+const CurrentBalance = () => {
+  const balance = useSelector(state => state.user.balance);
 
   return (
     <StyledCurrentBalance>
@@ -28,7 +28,7 @@ const CurrentBalance = (props) => {
         your balance
       </StyledCurrentBalanceText>
       <StyledCurrentBalanceTotal>
-        &#8372; {balance}
+        &#8372; {separateNumber(balance)}
       </StyledCurrentBalanceTotal>
     </StyledCurrentBalance>
   );

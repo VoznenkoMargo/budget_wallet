@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createTransaction } from 'redux/transactionSlice';
 import moment from 'moment';
 import { addTransactionToStatistics } from '../../redux/statisticsSlice';
+import { updateBalance } from '../../redux/userSlice';
 
 const checkDatesEquality = (date, statistics) => {
   if(!statistics) {
@@ -98,6 +99,7 @@ const ModalAddTransaction = ({ open, onClose, categories }) => {
           dispatch(addTransactionToStatistics({transaction, categoryName}));
         }
 
+        dispatch(updateBalance(amount));
         onCloseHandler();
       });
     },
