@@ -35,7 +35,11 @@ export default function BasicTable(props) {
       id
     );
   });
-
+  const sortedItems = items.sort(function (a, b) {
+    const c = new Date(a.date).getTime();
+    const d = new Date(b.date).getTime();
+    return d - c;
+  });
   const getCategoryName = (categoryId, categories) => {
     if (categories.length > 0) {
       const result = categories?.find((el) => el.id === categoryId).name;
@@ -77,7 +81,7 @@ export default function BasicTable(props) {
             </TableRow>
           </TableHead>
           <TableBody className="tableBody">
-            {items.map(
+            {sortedItems.map(
               ({ date, type, category, comments, amount, balance, id }) => (
                 <TableRow
                   key={id}

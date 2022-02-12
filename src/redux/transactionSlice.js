@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+const token = localStorage.getItem('token');
 
 export const createTransaction = createAsyncThunk(
   'transactions/createTransaction',
@@ -8,8 +9,7 @@ export const createTransaction = createAsyncThunk(
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization:
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzaWQiOiJlNzNkNDNhNS1hYjJmLTRlODgtYmI3Ni0wZjFlMGJjNWNhYjMiLCJpYXQiOjE2NDQxNTczNzgsImV4cCI6MTAwMDAwMDE2NDQxNTczNzh9.e5qXzp0wq7x1xir0unYYGBgHwBEtCxlWNEgBrp-UteU',
+          Authorization: token,
         },
         body: JSON.stringify(transaction),
       });
@@ -35,8 +35,7 @@ export const getTransactions = createAsyncThunk(
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          Authorization:
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzaWQiOiJlNzNkNDNhNS1hYjJmLTRlODgtYmI3Ni0wZjFlMGJjNWNhYjMiLCJpYXQiOjE2NDQxNTczNzgsImV4cCI6MTAwMDAwMDE2NDQxNTczNzh9.e5qXzp0wq7x1xir0unYYGBgHwBEtCxlWNEgBrp-UteU',
+          Authorization: token,
         },
       });
       const resp = await req.json();
@@ -61,7 +60,7 @@ const transactionSlice = createSlice({
       state.transactions = action.payload;
     },
     addTransaction: (state, action) => {
-      state.transactions.push(action.payload);
+      state.transactions.unshift(action.payload);
     },
   },
 });
