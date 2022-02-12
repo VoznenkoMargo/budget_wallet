@@ -1,17 +1,33 @@
 import s from './RegistrationForm.module.css';
+import { signupUser, userSelector, clearState } from './../../../redux/userSlice';
 import { Button, Box } from '@mui/material';
 import InputAdornment from '@mui/material/InputAdornment';
 import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import { Logo } from 'components/common';
-import React from 'react';
+import React, { Fragment, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import CustomInput from './CustomInput';
 import * as yup from 'yup';
-import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
 const RegistrationForm = (props) => {
+  const dispatch = useDispatch();
+  const { isFetching, isSuccess, isError, errorMessage } = useSelector(
+    userSelector
+  );
+  useEffect(() => {
+    if (isSuccess) {
+      navigate('/');
+    }
+    if (isError) {
+      console.error(errorMessage);
+      dispatch(clearState());
+    }
+  }, [isSuccess, isError]);
+
   const validationSchema = yup.object().shape({
     email: yup.string().email('Invalid email').required('Email is required'),
     password: yup
@@ -40,8 +56,6 @@ const RegistrationForm = (props) => {
     navigate('/login');
   };
 
-
-
   return (
     <div className={s.form}>
       <Box
@@ -59,7 +73,7 @@ const RegistrationForm = (props) => {
           initialValues={initialValues}
           validationSchema={validationSchema}
           onSubmit={(values) => {
-            console.log(values);
+            dispatch(signupUser(values));
           }}
         >
           {({ dirty }) => (

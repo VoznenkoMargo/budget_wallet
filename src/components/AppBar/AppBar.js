@@ -1,15 +1,26 @@
 import { Box, Divider } from '@mui/material';
 import { useTheme } from '@mui/system';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Container, Logo } from 'components/common';
+import { userSelector, clearState } from 'redux/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { StyledToolbar, Header, ExitButton, UserName } from './AppBar.styled';
 
 const StyledAppBar = () => {
   const navigate = useNavigate();
   const { breakpoints } = useTheme();
-  const handleClick = () => {
-    navigate('/login');
-  };
+
+  const dispatch = useDispatch();
+
+  const { username } = useSelector(userSelector);
+
+  const onLogOut = () => {
+    localStorage.removeItem("token")
+    dispatch(clearState())
+    navigate("/login")
+  }
+
   return (
     <Header>
       <Container>
@@ -25,9 +36,9 @@ const StyledAppBar = () => {
               },
             }}
           >
-            <UserName>Name</UserName>
+            <UserName>{username}</UserName>
             <Divider orientation="vertical" flexItem />
-            <ExitButton onClick={handleClick}>
+            <ExitButton onClick={onLogOut}>
               <div>Exit</div>
             </ExitButton>
           </Box>
