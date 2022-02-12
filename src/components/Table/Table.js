@@ -6,22 +6,9 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-
-function createData(category, amount) {
-  return { category, amount };
-}
-
-const rows = [
-  createData('Main expenses', '8 700.00'),
-  createData('Products', '3 800.74'),
-  createData('Car', '1 500.00'),
-  createData('Self-care', '800.00'),
-  createData('Care of children', '2208.50'),
-  createData('Housewares', '300.00'),
-  createData('Education', '3 400.00'),
-  createData('Leisure', '1 230.00'),
-  createData('Other expenses', '610.00'),
-];
+import { setIsLoading } from '../../redux/globalSlice';
+import { getCategoriesStatistics, setMonth, setYear } from '../../redux/statisticsSlice';
+import { useDispatch } from 'react-redux';
 
 const colourStyles = {
   placeholder: (base) => ({
@@ -99,95 +86,73 @@ const colourStyles = {
   }),
 };
 
+
 const month = [
   {
-    value: 'All',
-    label: 'All Period',
-  },
-  {
-    value: '01',
-    label: 'January',
-  },
-  {
-    value: '02',
-    label: 'February',
-  },
-  {
-    value: '03',
-    label: 'March',
-  },
-  {
-    value: '04',
-    label: 'April',
-  },
-  {
-    value: '05',
-    label: 'May',
-  },
-  {
-    value: '06',
-    label: 'June',
-  },
-  {
-    value: '07',
-    label: 'Jule',
-  },
-  {
-    value: '08',
-    label: 'August',
-  },
-  {
-    value: '09',
-    label: 'September',
-  },
-  {
-    value: '10',
-    label: 'October',
-  },
-  {
-    value: '11',
-    label: 'November',
-  },
-  {
-    value: '12',
-    label: 'December',
-  },
-];
+    value: '',
+    label: 'All period',
+  }
+]
+
+const monthName =
+  ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+
+for (let i = 1; i <= 12; i+= 1) {
+  month.push(
+    {
+      value: i,
+      label: monthName[i-1],
+    }
+  )
+}
+
 const year = [
   {
-    value: 'All',
-    label: 'All Years',
+    value: '',
+    label: 'All years',
   },
   {
-    value: '2019',
+    value: 2019,
     label: '2019',
   },
   {
-    value: '2020',
+    value: 2020,
     label: '2020',
   },
   {
-    value: '2021',
+    value: 2021,
     label: '2021',
   },
   {
-    value: '2022',
+    value: 2022,
     label: '2022',
   },
 ];
 
-function MyTable() {
-  const backgroundColor = [
-    '#FED057',
-    '#FFD8D0',
-    '#FD9498',
-    '#C5BAFF',
-    '#6E78E8',
-    '#4A56E2',
-    '#81E1FF',
-    '#24CCA7',
-    '#00AD84',
-  ];
+function MyTable({statistics}) {
+  const categories = (statistics?.categoriesSummary && statistics?.categoriesSummary.filter(category => category.total <= 0)) || [];
+  const incomeSummary = statistics?.incomeSummary;
+  const expenseSummary = statistics?.expenseSummary && Math.abs(statistics?.expenseSummary);
+  const dispatch = useDispatch();
+
+  const selectMonth = async ({value}) => {
+    const {month, year} = statistics;
+    dispatch(setMonth(value));
+    if(!year && !month) return;
+
+    dispatch(setIsLoading(true));
+    await dispatch(getCategoriesStatistics({month: +value, year}));
+    dispatch(setIsLoading(false));
+  }
+
+  const selectYear = async ({value}) => {
+    const {month} = statistics;
+    dispatch(setYear(value));
+
+    dispatch(setIsLoading(true));
+    await dispatch(getCategoriesStatistics({ month, year: +value }));
+    dispatch(setIsLoading(false));
+  }
 
   return (
     <div className={s.tableContainer}>
@@ -196,13 +161,15 @@ function MyTable() {
           name="month"
           styles={colourStyles}
           options={month}
-          placeholder="Month"
+          placeholder={month[statistics?.month]?.label || "All period"}
+          onChange={selectMonth}
         />
         <Select
           name="year"
           styles={colourStyles}
           options={year}
-          placeholder="Year"
+          placeholder={statistics?.year || "All years"}
+          onChange={selectYear}
         />
       </div>
 
@@ -234,9 +201,9 @@ function MyTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row, index) => (
+            {categories.map((category) => (
               <TableRow
-                key={row.category}
+                key={category.name}
                 sx={{ borderBottom: '1px solid rgba(224, 224, 224, 1)' }}
               >
                 <TableCell
@@ -251,20 +218,20 @@ function MyTable() {
                 >
                   <div
                     style={{
-                      backgroundColor: backgroundColor[index],
+                      backgroundColor: category.color,
                       width: '24px',
                       height: '24px',
                       marginRight: '16px',
                       borderRadius: '2px',
                     }}
                   ></div>
-                  {row.category}
+                  {category.name}
                 </TableCell>
                 <TableCell
                   align="right"
                   sx={{ borderBottom: 'none', fontSize: '16px' }}
                 >
-                  {row.amount}
+                  {Math.abs(category.total)}
                 </TableCell>
               </TableRow>
             ))}
@@ -276,7 +243,7 @@ function MyTable() {
                 align="right"
                 sx={{ color: '#ff6596', fontSize: '16px' }}
               >
-                22 549.24
+                {expenseSummary}
               </TableCell>
             </TableRow>
 
@@ -288,7 +255,7 @@ function MyTable() {
                 align="right"
                 sx={{ color: '#24CCA7', fontSize: '16px' }}
               >
-                27 350.00
+                {incomeSummary}
               </TableCell>
             </TableRow>
           </TableBody>

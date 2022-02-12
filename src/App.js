@@ -1,20 +1,46 @@
-import './App.css';
+//import './App.css';
 import ThemeConfig from 'theme';
-
 import { Route, Routes } from 'react-router-dom';
-import DashBoardPage from 'pages/DashBoard/DashBoardPage';
+import { Suspense, lazy } from 'react';
+import Spinner from 'components/Spinner';
+import { useSelector } from 'react-redux';
 
-import NotFoundPage from 'pages/NotFoundPage/NotFoundPage';
-import Layout from 'components/Layout';
-import StatisticPage from 'pages/StatisticsPage/StatisticsPage';
-import TeamPage from 'pages/TeamPage/TeamPage';
-import RegistrationPage from 'pages/RegistrationPage/RegistrationPage';
-import LoginPage from 'pages/LoginPage/LoginPage';
+const DashBoardPage = lazy(() =>
+  import(
+    './pages/DashBoard/DashBoardPage' /* webpackChunkName: "dashboard-page" */
+  )
+);
+const NotFoundPage = lazy(() =>
+  import(
+    './pages/NotFoundPage/NotFoundPage' /* webpackChunkName: "not-found-page" */
+  )
+);
+const Layout = lazy(() =>
+  import('./components/Layout' /* webpackChunkName: "layout" */)
+);
+const StatisticPage = lazy(() =>
+  import(
+    './pages/StatisticsPage/StatisticsPage' /* webpackChunkName: "statistic-page" */
+  )
+);
+const TeamPage = lazy(() =>
+  import('./pages/TeamPage/TeamPage' /* webpackChunkName: "team-page" */)
+);
+const RegistrationPage = lazy(() =>
+  import(
+    './pages/RegistrationPage/RegistrationPage' /* webpackChunkName: "registration-page" */
+  )
+);
+const LoginPage = lazy(() =>
+  import('./pages/LoginPage/LoginPage' /* webpackChunkName: "login-page" */)
+);
 
 const App = () => {
+  const { isLoading } = useSelector((state) => state.global);
+
   return (
-    <ThemeConfig>
-      <div className="App">
+    <div className="App">
+      <Suspense fallback={<Spinner />}>
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<DashBoardPage />} />
@@ -24,11 +50,11 @@ const App = () => {
           </Route>
           <Route path="registration" element={<RegistrationPage />} />
           <Route path="login" element={<LoginPage />} />
-
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
-      </div>
-    </ThemeConfig>
+      </Suspense>
+      {isLoading && <Spinner />}
+    </div>
   );
 };
 

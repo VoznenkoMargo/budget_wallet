@@ -1,42 +1,27 @@
-import React from 'react';
 import { Doughnut } from 'react-chartjs-2';
 import Balance from './ChartBalance/ChartBalance';
 import s from './Chart.module.scss';
 
-export default function Chart() {
+export default function Chart({statistics}) {
+  const periodTotal = statistics?.periodTotal;
+  const categories = statistics?.categoriesSummary.filter(category => category.total <= 0);
+  const categoryTotal = categories?.map(category => Math.abs(category.total));
+  const categoryColor = categories?.map(category => category.color);
+
   return (
     <div className={s.chart}>
       <div className={s.containerChart}>
-        <Balance />
+        <Balance periodTotal={periodTotal}/>
         <div className={s.doughnut}>
           <Doughnut
             className="s.douhnut"
             data={{
+              labels: categoryTotal?.length === 0 ? ['No expends'] : null,
               datasets: [
                 {
-                  data: [12, 19, 3, 5, 2, 3],
-                  backgroundColor: [
-                    '#FED057',
-                    '#FFD8D0',
-                    '#FD9498',
-                    '#C5BAFF',
-                    '#6E78E8',
-                    '#4A56E2',
-                    '#81E1FF',
-                    '#24CCA7',
-                    '#00AD84',
-                  ],
-                  borderColor: [
-                    '#FED057',
-                    '#FFD8D0',
-                    '#FD9498',
-                    '#C5BAFF',
-                    '#6E78E8',
-                    '#4A56E2',
-                    '#81E1FF',
-                    '#24CCA7',
-                    '#00AD84',
-                  ],
+                  data: categoryTotal?.length > 0 ? categoryTotal : [1],
+                  backgroundColor: categoryColor?.length > 0 ? categoryColor : ['#4ad9bf'],
+                  borderColor: categoryColor?.length > 0 ? categoryColor : ['#4ad9bf'],
                   borderWidth: 1,
                   cutout: 90,
                 },
