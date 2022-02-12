@@ -6,9 +6,26 @@ import { Switch } from './Switch';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import * as S from './ModalAddTransaction.style';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createTransaction } from 'redux/transactionSlice';
 import moment from 'moment';
+import { addTransactionToStatistics } from '../../redux/statisticsSlice';
+
+const checkDatesEquality = (date, statistics) => {
+  if(!statistics) {
+    return;
+  }
+
+  const transactionYear = Number(date.slice(0, 4));
+  const transactionMonth = Number(date.slice(5, 7));
+  const {month, year} = statistics;
+
+  if((transactionYear === year && (!month || transactionMonth === month)) || (!month && !year)) {
+    return 1;
+  }
+
+  return 0;
+}
 
 const validationSchema = yup.object({
   isExpenseMode: yup.boolean(),
@@ -32,6 +49,9 @@ const transactionTypes = {
 };
 
 const ModalAddTransaction = ({ open, onClose, categories }) => {
+  const statistics = useSelector((state) => state.statistics.statistics);
+  const allCategories = useSelector((state) => state.categories.categories);
+
   const dispatch = useDispatch();
   const expenseCategories = getCategoriesByType(
     categories,
@@ -71,7 +91,13 @@ const ModalAddTransaction = ({ open, onClose, categories }) => {
       };
 
       console.log(transaction);
+
       dispatch(createTransaction(transaction)).then((data) => {
+        if(checkDatesEquality(transactionDate, statistics)) {
+          const categoryName = allCategories.find(category => category.id === transaction.categoryId).name;
+          dispatch(addTransactionToStatistics({transaction, categoryName}));
+        }
+
         onCloseHandler();
       });
     },
