@@ -1,9 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { basicCategoriesColors, generateUniqueColor } from '../components/DiagramTab/categoriesColors';
 
 const BASIC_URL = 'https://wallet.goit.ua/api';
 
 export const getCategoriesStatistics = createAsyncThunk(
-  'statistic/getCategoriesStatistic',
+  'statistics/getCategoriesStatistics',
   async(period, {rejectWithValue}) => {
     const options = {
       method: 'GET',
@@ -29,17 +30,6 @@ export const getCategoriesStatistics = createAsyncThunk(
     return await response.json();
   }
 )
-
-const usedColors = [];
-
-const generateUniqueColor = () => {
-  let color = null;
-  while(!color || usedColors.includes(color)){
-    color = `#${Math.floor(Math.random()*16777215).toString(16).padStart(6, '0')}`;
-  }
-  usedColors.push(color);
-  return color;
-}
 
 const initialState = {
   statistics: null,
@@ -79,7 +69,9 @@ const StatisticsSlice = createSlice({
           name: categoryName,
           type: transaction.type,
           total: transaction.amount,
-          color: generateUniqueColor(),
+          color:
+            basicCategoriesColors.find(category => category.category === categoryName)?.color
+            || generateUniqueColor(),
         }
         state.statistics['categoriesSummary'].push(category)
       }
@@ -91,8 +83,8 @@ const StatisticsSlice = createSlice({
       .addCase(getCategoriesStatistics.fulfilled, (state, {payload}) => {
         payload['categoriesSummary'] = payload['categoriesSummary']
           .map(elem => {
-            const color = generateUniqueColor();
-            return {...elem, color}
+            const color = basicCategoriesColors.find(category => category.category === elem.name)?.color;
+            return color ? {...elem, color } : {...elem, color: generateUniqueColor()};
           })
         state.statistics = payload;
       })

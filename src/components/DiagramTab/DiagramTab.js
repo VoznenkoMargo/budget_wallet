@@ -20,14 +20,21 @@ export default function DiagramTab() {
     }
   }, [dispatch])
 
+  let sortedStatistics =
+    statistics &&
+    {...statistics,
+    categoriesSummary: [...statistics?.categoriesSummary]
+      .sort((prevEl, nextEl) => prevEl.name.localeCompare(nextEl.name))
+    }
+
   return (
     <>
       {!isLoading &&
       <section className={s.sectionStats}>
         <h1 className={s.statisticsTitle}>Statistics</h1>
         <div className={s.containerStats}>
-          <Chart statistics={statistics}/>
-          <MyTable statistics={statistics}/>
+          <Chart statistics={sortedStatistics}/>
+          <MyTable statistics={sortedStatistics}/>
         </div>
       </section>}
     </>
