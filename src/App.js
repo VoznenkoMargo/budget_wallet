@@ -1,8 +1,9 @@
+//import './App.css';
+import ThemeConfig from 'theme';
 import { Route, Routes } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 import Spinner from 'components/Spinner';
 import { useSelector } from 'react-redux';
-import ThemeConfig from 'theme';
 
 const DashBoardPage = lazy(() =>
   import(
