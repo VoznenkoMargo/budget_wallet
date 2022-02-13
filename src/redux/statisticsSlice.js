@@ -15,14 +15,13 @@ export const getCategoriesStatistics = createAsyncThunk(
       }
     }
 
-    let response;
-    if(!period || (!period.year && period.month)) {
-      response = await fetch(`${BASIC_URL}/transactions-summary`, options);
-    } else if (!period.month) {
-      response = await fetch(`${BASIC_URL}/transactions-summary?year=${period.year}`, options);
-    } else {
-      response = await fetch(`${BASIC_URL}/transactions-summary?month=${period.month}&year=${period.year}`, options);
+    let queryString = '';
+    if(period?.year && period?.month) {
+      queryString = `month=${period.month}&year=${period.year}`;
+    } else if(period && !period?.month) {
+      queryString = `year=${period.year}`;
     }
+    const response = await fetch(`${BASIC_URL}/transactions-summary?${queryString}`, options);
 
     if (!response.ok) {
       return rejectWithValue(await response.json());
