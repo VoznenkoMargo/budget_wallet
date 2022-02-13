@@ -89,7 +89,13 @@ const StatisticsSlice = createSlice({
       })
 
       .addCase(getCategoriesStatistics.rejected, (state, action) => {
-        state.error = action.payload.message;
+        if (action.payload) {
+          state.error = action.payload.message;
+        } else if (action.error) {
+          state.error = action.error.message;
+        } else {
+          state.error = 'Unknown error'
+        }
       })
   }
 })
