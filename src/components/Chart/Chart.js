@@ -20,8 +20,8 @@ export default function Chart({statistics}) {
               datasets: [
                 {
                   data: categoryTotal?.length > 0 ? categoryTotal : [1],
-                  backgroundColor: categoryColor?.length > 0 ? categoryColor : ['#4ad9bf'],
-                  borderColor: categoryColor?.length > 0 ? categoryColor : ['#4ad9bf'],
+                  backgroundColor: categoryColor?.length > 0 ? categoryColor : ['#C5BAFF'],
+                  borderColor: categoryColor?.length > 0 ? categoryColor : ['#C5BAFF'],
                   borderWidth: 1,
                   cutout: 90,
                 },

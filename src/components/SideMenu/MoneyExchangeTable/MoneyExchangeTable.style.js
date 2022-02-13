@@ -91,7 +91,7 @@ export const TableContainer = styled('div')(({ theme }) => {
 
   return {
     maxWidth: '350px',
-    height: '350px',
+    height: '46vh',
     background: palette.secondary.main,
     borderRadius: '30px',
     webkitFilter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))',

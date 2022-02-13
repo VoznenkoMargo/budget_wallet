@@ -9,26 +9,20 @@ import * as S from './ModalAddTransaction.style';
 import { useDispatch, useSelector } from 'react-redux';
 import { createTransaction } from 'redux/transactionSlice';
 import moment from 'moment';
-import { addTransactionToStatistics } from 'redux/statisticsSlice';
+import { addTransactionToStatistics } from '../../redux/statisticsSlice';
+import { updateBalance } from '../../redux/userSlice';
 
-const checkDatesEquality = (date, statistics) => {
-  if (!statistics) {
-    return;
+const fitsStatisticsFilter = (date, month, year) => {
+  if(!month && !year) {
+    return true;
   }
 
-  const transactionYear = Number(date.slice(0, 4));
-  const transactionMonth = Number(date.slice(5, 7));
-  const { month, year } = statistics;
-
-  if (
-    (transactionYear === year && (!month || transactionMonth === month)) ||
-    (!month && !year)
-  ) {
-    return 1;
-  }
-
-  return 0;
-};
+  const transactionYear = new Date(date).getFullYear();
+  const transactionMonth = new Date(date).getMonth() + 1;
+  return month ?
+    transactionYear === year && transactionMonth === month
+    : transactionYear === year;
+}
 
 const validationSchema = yup.object({
   isExpenseMode: yup.boolean(),
@@ -38,7 +32,7 @@ const validationSchema = yup.object({
     .required("Amount can't be empty"),
   categoryId: yup.string().when('isExpenseMode', {
     is: true,
-    then: yup.string().required('Please, choose a category'),
+    then: yup.string().required('Please choose a category'),
   }),
 });
 
@@ -69,7 +63,7 @@ const ModalAddTransaction = ({ open, onClose, categories }) => {
       isExpenseMode: false,
       amount: '',
       comment: '',
-      transactionDate: new Date(),
+      transactionDate: new Date().toISOString(),
       type: transactionTypes.INCOME,
       categoryId: incomeCategory.id,
     },
@@ -96,13 +90,13 @@ const ModalAddTransaction = ({ open, onClose, categories }) => {
       console.log(transaction);
 
       dispatch(createTransaction(transaction)).then((data) => {
-        if (checkDatesEquality(transactionDate, statistics)) {
-          const categoryName = allCategories.find(
-            (category) => category.id === transaction.categoryId
-          ).name;
-          dispatch(addTransactionToStatistics({ transaction, categoryName }));
+
+        if(statistics && fitsStatisticsFilter(transactionDate, statistics.month, statistics.year)) {
+          const categoryName = allCategories.find(category => category.id === transaction.categoryId).name;
+          dispatch(addTransactionToStatistics({transaction, categoryName}));
         }
 
+        dispatch(updateBalance(amount));
         onCloseHandler();
       });
     },
@@ -115,7 +109,7 @@ const ModalAddTransaction = ({ open, onClose, categories }) => {
   };
 
   const onDateChangeHandler = (date) => {
-    formik.setFieldValue('transactionDate', date);
+    formik.setFieldValue('transactionDate', date.toISOString());
   };
 
   const onCloseHandler = () => {

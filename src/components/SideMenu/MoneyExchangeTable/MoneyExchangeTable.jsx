@@ -4,6 +4,7 @@ import { StyledTable, TableContainer } from './MoneyExchangeTable.style';
 import { useState, useEffect } from 'react';
 import fetchCurrency from "./apiService";
 import { getCurrencyFromStorage, updateCurrency } from './currency';
+import Spinner from '../../Spinner';
 
 const MoneyExchangeTable = () => {
   const availableCurrency = ['USD', 'EUR', 'RUR'];
@@ -40,7 +41,7 @@ const MoneyExchangeTable = () => {
   }
   if(!isLoaded) {
     return (
-      <div>Loading...</div>
+      <Spinner/>
     )
   }
 

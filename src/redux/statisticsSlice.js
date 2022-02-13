@@ -1,9 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { basicCategoriesColors, generateUniqueColor } from '../components/DiagramTab/categoriesColors';
 
 const BASIC_URL = 'https://wallet.goit.ua/api';
 
 export const getCategoriesStatistics = createAsyncThunk(
-  'statistic/getCategoriesStatistic',
+  'statistics/getCategoriesStatistics',
   async(period, {rejectWithValue}) => {
     const options = {
       method: 'GET',
@@ -14,14 +15,13 @@ export const getCategoriesStatistics = createAsyncThunk(
       }
     }
 
-    let response;
-    if(!period || (!period.year && period.month)) {
-      response = await fetch(`${BASIC_URL}/transactions-summary`, options);
-    } else if (!period.month) {
-      response = await fetch(`${BASIC_URL}/transactions-summary?year=${period.year}`, options);
-    } else {
-      response = await fetch(`${BASIC_URL}/transactions-summary?month=${period.month}&year=${period.year}`, options);
+    let queryString = '';
+    if(period?.year && period?.month) {
+      queryString = `month=${period.month}&year=${period.year}`;
+    } else if(period && !period?.month) {
+      queryString = `year=${period.year}`;
     }
+    const response = await fetch(`${BASIC_URL}/transactions-summary?${queryString}`, options);
 
     if (!response.ok) {
       return rejectWithValue(await response.json());
@@ -29,17 +29,6 @@ export const getCategoriesStatistics = createAsyncThunk(
     return await response.json();
   }
 )
-
-const usedColors = [];
-
-const generateUniqueColor = () => {
-  let color = null;
-  while(!color || usedColors.includes(color)){
-    color = `#${Math.floor(Math.random()*16777215).toString(16).padStart(6, '0')}`;
-  }
-  usedColors.push(color);
-  return color;
-}
 
 const initialState = {
   statistics: null,
@@ -61,12 +50,10 @@ const StatisticsSlice = createSlice({
     addTransactionToStatistics: (state, {payload}) => {
       const {transaction, categoryName} = payload;
 
-      switch (transaction.type) {
-        case 'INCOME':
-          state.statistics.incomeSummary += transaction.amount;
-          break;
-        default:
-          state.statistics.expenseSummary += transaction.amount;
+      if(transaction.type === 'INCOME') {
+        state.statistics.incomeSummary += transaction.amount;
+      } else {
+        state.statistics.expenseSummary += transaction.amount;
       }
 
       state.statistics.periodTotal += transaction.amount;
@@ -79,7 +66,9 @@ const StatisticsSlice = createSlice({
           name: categoryName,
           type: transaction.type,
           total: transaction.amount,
-          color: generateUniqueColor(),
+          color:
+            basicCategoriesColors[categoryName]
+            || generateUniqueColor(),
         }
         state.statistics['categoriesSummary'].push(category)
       }
@@ -91,14 +80,20 @@ const StatisticsSlice = createSlice({
       .addCase(getCategoriesStatistics.fulfilled, (state, {payload}) => {
         payload['categoriesSummary'] = payload['categoriesSummary']
           .map(elem => {
-            const color = generateUniqueColor();
-            return {...elem, color}
+            const color = basicCategoriesColors[elem.name];
+            return color ? {...elem, color } : {...elem, color: generateUniqueColor()};
           })
         state.statistics = payload;
       })
 
       .addCase(getCategoriesStatistics.rejected, (state, action) => {
-        state.error = action.payload.message;
+        if (action.payload) {
+          state.error = action.payload.message;
+        } else if (action.error) {
+          state.error = action.error.message;
+        } else {
+          state.error = 'Unknown error'
+        }
       })
   }
 })

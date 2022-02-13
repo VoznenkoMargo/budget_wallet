@@ -108,6 +108,7 @@ export const userSlice = createSlice({
       isError: false,
       errorMessage: "",
       token: "",
+      balance: "",
    },
    reducers: {
       clearState: (state) => {
@@ -117,6 +118,10 @@ export const userSlice = createSlice({
 
          return state;
       },
+
+      updateBalance: (state, {payload}) => {
+         state.balance += payload;
+      }
    },
    extraReducers: {
       [signupUser.fulfilled]: (state, { payload }) => {
@@ -161,6 +166,7 @@ export const userSlice = createSlice({
 
          state.email = payload.email;
          state.username = payload.username;
+         state.balance = payload.balance;
       },
       [fetchUserBytoken.rejected]: (state) => {
          console.log('fetchUserBytoken');
@@ -169,6 +175,6 @@ export const userSlice = createSlice({
       },
    },
 })
-export const { clearState } = userSlice.actions;
+export const { clearState, updateBalance } = userSlice.actions;
 export const userSelector = state => state.user;
 export const userReducer = userSlice.reducer;

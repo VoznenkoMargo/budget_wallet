@@ -21,10 +21,10 @@ export default function Team() {
     },
     {
       img: 'https://picua.org/images/2022/02/07/b918f8ad57e3dbecb9bb4033a55a4b99.jpg',
-      name: 'KATERINA KISIV',
+      name: 'KATERYNA KISIV',
       position: 'Developer',
       githubLink: 'https://github.com/Katekisiv',
-      linkedInLink: '',
+      linkedInLink: 'www.linkedin.com/in/katekisiv',
     },
 
     {
