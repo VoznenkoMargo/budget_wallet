@@ -61,7 +61,7 @@ const transactionSlice = createSlice({
       state.transactions = action.payload;
     },
     addTransaction: (state, action) => {
-      state.transactions.push(action.payload);
+      state.transactions.unshift(action.payload);
     },
   },
 });

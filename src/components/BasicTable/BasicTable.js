@@ -1,4 +1,5 @@
 /* eslint-disable no-restricted-globals */
+import React, { useMemo } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -35,6 +36,16 @@ export default function BasicTable(props) {
       id
     );
   });
+
+  const sortedItems = useMemo(
+    () =>
+      items.sort(function (a, b) {
+        const c = new Date(a.date).getTime();
+        const d = new Date(b.date).getTime();
+        return d - c;
+      }),
+    [items]
+  );
 
   const getCategoryName = (categoryId, categories) => {
     if (categories.length > 0) {
@@ -77,7 +88,7 @@ export default function BasicTable(props) {
             </TableRow>
           </TableHead>
           <TableBody className="tableBody">
-            {items.map(
+            {sortedItems.map(
               ({ date, type, category, comments, amount, balance, id }) => (
                 <TableRow
                   key={id}
@@ -89,7 +100,9 @@ export default function BasicTable(props) {
                   }}
                 >
                   <TableCell data-toggle="Date">{date}</TableCell>
-                  <TableCell data-toggle="Type">{type}</TableCell>
+                  <TableCell data-toggle="Type">
+                    {type === 'INCOME' ? '+' : '-'}
+                  </TableCell>
                   <TableCell data-toggle="Category">
                     {getCategoryName(category, categories)}
                   </TableCell>
