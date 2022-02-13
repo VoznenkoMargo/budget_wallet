@@ -1,47 +1,30 @@
 import palette from '../../theme/palette';
 
-export const basicCategoriesColors = [
-  {
-    category: "Основные расходы",
-    color: palette.chart.violet[0],
-  },
-  {
-    category: "Продукты",
-    color: palette.chart.blue[0],
-  },
-  {
-    category: "Машина",
-    color: palette.chart.violet[2],
-  },
-  {
-    category: "Забота о себе",
-    color: palette.chart.red[0],
-  },
-  {
-    category: "Забота о детях",
-    color: palette.chart.red[1],
-  },
-  {
-    category: "Товары для дома",
-    color: palette.chart.green[1],
-  },
-  {
-    category: "Образование",
-    color: palette.chart.violet[1],
-  },
-  {
-    category: "Досуг",
-    color: palette.chart.yellow[0],
-  },
-  {
-    category: "Другие расходы",
-    color: palette.chart.yellow[1],
-  },
-  {
-    category: "Развлечения",
-    color: palette.chart.green[1],
-  },
-]
+const categoriesName = {
+  BASIC_EXPENSES: "Основные расходы",
+  PRODUCTS: "Продукты",
+  CAR: "Машина",
+  CARE_OF_YOURSELF: "Забота о себе",
+  CARE_OF_CHILDREN: "Забота о детях",
+  HOUSEHOLD_PRODUCTS: "Товары для дома",
+  EDUCATION: "Образование",
+  LEISURE: "Досуг",
+  OTHER_EXPENSES: "Другие расходы",
+  ENTERTAINMENT: "Развлечения",
+}
+
+export const basicCategoriesColors = {
+  [categoriesName.BASIC_EXPENSES]: palette.chart.violet[0],
+  [categoriesName.PRODUCTS]: palette.chart.blue[0],
+  [categoriesName.CAR]: palette.chart.violet[2],
+  [categoriesName.CARE_OF_YOURSELF]: palette.chart.red[0],
+  [categoriesName.CARE_OF_CHILDREN]: palette.chart.red[1],
+  [categoriesName.HOUSEHOLD_PRODUCTS]: palette.chart.green[1],
+  [categoriesName.EDUCATION]: palette.chart.violet[1],
+  [categoriesName.LEISURE]: palette.chart.yellow[0],
+  [categoriesName.OTHER_EXPENSES]: palette.chart.yellow[1],
+  [categoriesName.ENTERTAINMENT]: palette.chart.green[1],
+}
 
 const usedColors = [];
 

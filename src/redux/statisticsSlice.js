@@ -50,12 +50,10 @@ const StatisticsSlice = createSlice({
     addTransactionToStatistics: (state, {payload}) => {
       const {transaction, categoryName} = payload;
 
-      switch (transaction.type) {
-        case 'INCOME':
-          state.statistics.incomeSummary += transaction.amount;
-          break;
-        default:
-          state.statistics.expenseSummary += transaction.amount;
+      if(transaction.type === 'INCOME') {
+        state.statistics.incomeSummary += transaction.amount;
+      } else {
+        state.statistics.expenseSummary += transaction.amount;
       }
 
       state.statistics.periodTotal += transaction.amount;
@@ -69,7 +67,7 @@ const StatisticsSlice = createSlice({
           type: transaction.type,
           total: transaction.amount,
           color:
-            basicCategoriesColors.find(category => category.category === categoryName)?.color
+            basicCategoriesColors[categoryName]
             || generateUniqueColor(),
         }
         state.statistics['categoriesSummary'].push(category)
@@ -82,7 +80,7 @@ const StatisticsSlice = createSlice({
       .addCase(getCategoriesStatistics.fulfilled, (state, {payload}) => {
         payload['categoriesSummary'] = payload['categoriesSummary']
           .map(elem => {
-            const color = basicCategoriesColors.find(category => category.category === elem.name)?.color;
+            const color = basicCategoriesColors[elem.name];
             return color ? {...elem, color } : {...elem, color: generateUniqueColor()};
           })
         state.statistics = payload;
