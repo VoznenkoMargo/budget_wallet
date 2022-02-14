@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ListItemIcon, ListItemText } from '@mui/material';
 import { ExchangeRateIcon, HomeIcon, StatisticIcon } from './Icons';
 import { StyledListItem, StyledNavMenu } from './NavMenu.style';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useMatch } from 'react-router-dom';
 
 function createMenuData(Icon, MenuName, Path) {
   return { Icon, MenuName, Path };
@@ -15,15 +15,12 @@ const menuItems = [
 ];
 
 const NavMenu = () => {
-  const [checked, setChecked] = useState(window.location.pathname);
-
   return (
     <StyledNavMenu>
       {menuItems.map((menuItem) => (
         <StyledListItem
           key={menuItem.MenuName}
-          checked={checked === `/${menuItem.MenuName.toLowerCase()}`}
-          onClick={() => setChecked(`/${menuItem.MenuName.toLowerCase()}`)}
+          path={menuItem.Path}
         >
           <NavLink
             to={menuItem.Path}

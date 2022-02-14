@@ -1,5 +1,6 @@
 import { styled } from '@mui/material/styles';
 import { List, ListItem } from '@mui/material';
+import { useMatch } from 'react-router-dom';
 
 export const StyledNavMenu = styled((props) => <List {...props} />)(
   ({ theme }) => {
@@ -25,8 +26,9 @@ export const StyledNavMenu = styled((props) => <List {...props} />)(
 );
 
 export const StyledListItem = styled((props) => <ListItem {...props} />)(
-  ({ theme, checked }) => {
+  ({ theme, path }) => {
     const { breakpoints, typography, palette } = theme;
+    const match = useMatch(path);
 
     return {
       width: 'auto',
@@ -55,15 +57,15 @@ export const StyledListItem = styled((props) => <ListItem {...props} />)(
       '.MuiListItemIcon-root': {
         minWidth: 'auto',
         borderRadius: '10px',
-        filter: checked
+        filter: match
           ? 'drop-shadow(0px 3px 10px rgba(74, 86, 226, 0.5))'
           : 'none',
-        backgroundColor: checked ? palette.common.white : 'none',
+        backgroundColor: match ? palette.common.white : 'none',
 
         '& .MuiSvgIcon-root': {
           width: '24px',
           height: '24px',
-          fill: checked ? palette.secondary.main : palette.secondary.light,
+          fill: match ? palette.secondary.main : palette.secondary.light,
 
           [breakpoints.down('tablet')]: {
             width: '38px',
@@ -78,7 +80,7 @@ export const StyledListItem = styled((props) => <ListItem {...props} />)(
         '& .MuiTypography-root': {
           fontFamily: typography.fontFamily.primary,
           fontSize: '18px',
-          fontWeight: checked
+          fontWeight: match
             ? typography.fontWeightBold
             : typography.fontWeightRegular,
           lineHeight: '1.5',
