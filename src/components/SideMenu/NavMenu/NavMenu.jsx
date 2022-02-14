@@ -1,32 +1,25 @@
-import React, { useState } from 'react';
 import { ListItemIcon, ListItemText } from '@mui/material';
 import { ExchangeRateIcon, HomeIcon, StatisticIcon } from './Icons';
 import { StyledListItem, StyledNavMenu } from './NavMenu.style';
 import { NavLink } from 'react-router-dom';
 
-function createMenuData(Icon, MenuName, Path) {
-  return { Icon, MenuName, Path };
+function createMenuData(icon, menuName, path) {
+  return { icon, menuName, path };
 }
 
 const menuItems = [
-  createMenuData(<HomeIcon />, 'Main', '/main'),
+  createMenuData(<HomeIcon />, 'Main', '/'),
   createMenuData(<StatisticIcon />, 'Statistic', '/statistic'),
   createMenuData(<ExchangeRateIcon />, 'Exchange rate', '/'),
 ];
 
 const NavMenu = () => {
-  const [checked, setChecked] = useState(window.location.pathname);
-
   return (
     <StyledNavMenu>
       {menuItems.map((menuItem) => (
-        <StyledListItem
-          key={menuItem.MenuName}
-          checked={checked === `/${menuItem.MenuName.toLowerCase()}`}
-          onClick={() => setChecked(`/${menuItem.MenuName.toLowerCase()}`)}
-        >
+        <StyledListItem key={menuItem.menuName}>
           <NavLink
-            to={menuItem.Path}
+            to={menuItem.path}
             style={{
               color: 'inherit',
               textDecoration: 'inherit',
@@ -34,8 +27,8 @@ const NavMenu = () => {
               alignItems: 'center',
             }}
           >
-            <ListItemIcon>{menuItem.Icon}</ListItemIcon>
-            <ListItemText primary={menuItem.MenuName} />
+            <ListItemIcon>{menuItem.icon}</ListItemIcon>
+            <ListItemText primary={menuItem.menuName} />
           </NavLink>
         </StyledListItem>
       ))}

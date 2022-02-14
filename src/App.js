@@ -1,5 +1,3 @@
-//import './App.css';
-import ThemeConfig from 'theme';
 import { Route, Routes } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 import Spinner from 'components/Spinner';
@@ -44,7 +42,6 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<DashBoardPage />} />
-            <Route path="main" element={<DashBoardPage />} />
             <Route path="statistic" element={<StatisticPage />} />
             <Route path="dev" element={<TeamPage />} />
           </Route>

@@ -25,13 +25,23 @@ export const StyledNavMenu = styled((props) => <List {...props} />)(
 );
 
 export const StyledListItem = styled((props) => <ListItem {...props} />)(
-  ({ theme, checked }) => {
+  ({ theme }) => {
     const { breakpoints, typography, palette } = theme;
 
     return {
       width: 'auto',
       padding: '0',
       cursor: 'pointer',
+      '& a.active': {
+        '& .MuiSvgIcon-root': {
+          filter: 'drop-shadow(0px 3px 10px rgba(74, 86, 226, 0.5))',
+          backgroundColor: palette.common.white,
+          fill: palette.secondary.main,
+        },
+        '& .MuiTypography-root': {
+          fontWeight: typography.fontWeightBold,
+        },
+      },
 
       ':not(:first-of-type)': {
         marginTop: '10px',
@@ -55,15 +65,11 @@ export const StyledListItem = styled((props) => <ListItem {...props} />)(
       '.MuiListItemIcon-root': {
         minWidth: 'auto',
         borderRadius: '10px',
-        filter: checked
-          ? 'drop-shadow(0px 3px 10px rgba(74, 86, 226, 0.5))'
-          : 'none',
-        backgroundColor: checked ? palette.common.white : 'none',
 
         '& .MuiSvgIcon-root': {
           width: '24px',
           height: '24px',
-          fill: checked ? palette.secondary.main : palette.secondary.light,
+          fill: palette.secondary.light,
 
           [breakpoints.down('tablet')]: {
             width: '38px',
@@ -78,9 +84,7 @@ export const StyledListItem = styled((props) => <ListItem {...props} />)(
         '& .MuiTypography-root': {
           fontFamily: typography.fontFamily.primary,
           fontSize: '18px',
-          fontWeight: checked
-            ? typography.fontWeightBold
-            : typography.fontWeightRegular,
+          fontWeight: typography.fontWeightRegular,
           lineHeight: '1.5',
         },
 
