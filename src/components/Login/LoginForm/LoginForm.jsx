@@ -9,14 +9,17 @@ import { Formik, Form } from 'formik';
 import CustomInput from './CustomInput';
 import * as yup from 'yup';
 import { useSelector, useDispatch } from 'react-redux';
-import { loginUser, userSelector, clearState } from './../../../redux/userSlice';
+import {
+  loginUser,
+  userSelector,
+  clearState,
+} from './../../../redux/userSlice';
 import { useNavigate } from 'react-router-dom';
 
 const LoginForm = (props) => {
   const dispatch = useDispatch();
-  const { isFetching, isSuccess, isError, errorMessage } = useSelector(
-    userSelector
-  );
+  const { isFetching, isSuccess, isError, errorMessage } =
+    useSelector(userSelector);
   useEffect(() => {
     if (isError) {
       console.error(errorMessage);
@@ -26,7 +29,6 @@ const LoginForm = (props) => {
       navigate('/');
     }
   }, [isError, isSuccess]);
-
 
   const validationSchema = yup.object().shape({
     email: yup.string().email('Invalid email').required('Email is required'),

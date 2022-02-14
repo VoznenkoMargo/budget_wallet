@@ -13,16 +13,16 @@ import { addTransactionToStatistics } from '../../redux/statisticsSlice';
 import { updateBalance } from '../../redux/userSlice';
 
 const fitsStatisticsFilter = (date, month, year) => {
-  if(!month && !year) {
+  if (!month && !year) {
     return true;
   }
 
   const transactionYear = new Date(date).getFullYear();
   const transactionMonth = new Date(date).getMonth() + 1;
-  return month ?
-    transactionYear === year && transactionMonth === month
+  return month
+    ? transactionYear === year && transactionMonth === month
     : transactionYear === year;
-}
+};
 
 const validationSchema = yup.object({
   isExpenseMode: yup.boolean(),
@@ -63,7 +63,7 @@ const ModalAddTransaction = ({ open, onClose, categories }) => {
       isExpenseMode: false,
       amount: '',
       comment: '',
-      transactionDate: new Date().toISOString(),
+      transactionDate: new Date(),
       type: transactionTypes.INCOME,
       categoryId: incomeCategory.id,
     },
@@ -90,10 +90,18 @@ const ModalAddTransaction = ({ open, onClose, categories }) => {
       console.log(transaction);
 
       dispatch(createTransaction(transaction)).then((data) => {
-
-        if(statistics && fitsStatisticsFilter(transactionDate, statistics.month, statistics.year)) {
-          const categoryName = allCategories.find(category => category.id === transaction.categoryId).name;
-          dispatch(addTransactionToStatistics({transaction, categoryName}));
+        if (
+          statistics &&
+          fitsStatisticsFilter(
+            transactionDate,
+            statistics.month,
+            statistics.year
+          )
+        ) {
+          const categoryName = allCategories.find(
+            (category) => category.id === transaction.categoryId
+          ).name;
+          dispatch(addTransactionToStatistics({ transaction, categoryName }));
         }
 
         dispatch(updateBalance(amount));
@@ -109,7 +117,7 @@ const ModalAddTransaction = ({ open, onClose, categories }) => {
   };
 
   const onDateChangeHandler = (date) => {
-    formik.setFieldValue('transactionDate', date.toISOString());
+    formik.setFieldValue('transactionDate', date);
   };
 
   const onCloseHandler = () => {
