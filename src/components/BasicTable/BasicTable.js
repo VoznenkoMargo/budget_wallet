@@ -116,9 +116,11 @@ export default function BasicTable(props) {
                           : palette.primary.main,
                     }}
                   >
-                    {amount}
+                    {Number(amount).toFixed(2)}
                   </TableCell>
-                  <TableCell data-toggle="Balance">{balance}</TableCell>
+                  <TableCell data-toggle="Balance">
+                    {Number(balance).toFixed(2)}
+                  </TableCell>
                 </TableRow>
               )
             )}

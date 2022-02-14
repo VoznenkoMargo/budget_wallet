@@ -7,7 +7,11 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { setIsLoading } from '../../redux/globalSlice';
-import { getCategoriesStatistics, setMonth, setYear } from '../../redux/statisticsSlice';
+import {
+  getCategoriesStatistics,
+  setMonth,
+  setYear,
+} from '../../redux/statisticsSlice';
 import { useDispatch } from 'react-redux';
 
 const colourStyles = {
@@ -86,24 +90,33 @@ const colourStyles = {
   }),
 };
 
-
 const month = [
   {
     value: '',
     label: 'All period',
-  }
-]
+  },
+];
 
-const monthName =
-  ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+const monthName = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
 
-for (let i = 1; i <= 12; i+= 1) {
-  month.push(
-    {
-      value: i,
-      label: monthName[i-1],
-    }
-  )
+for (let i = 1; i <= 12; i += 1) {
+  month.push({
+    value: i,
+    label: monthName[i - 1],
+  });
 }
 
 const year = [
@@ -129,30 +142,36 @@ const year = [
   },
 ];
 
-function MyTable({statistics}) {
-  const categories = (statistics?.categoriesSummary && statistics?.categoriesSummary.filter(category => category.total <= 0)) || [];
+function MyTable({ statistics }) {
+  const categories =
+    (statistics?.categoriesSummary &&
+      statistics?.categoriesSummary.filter(
+        (category) => category.total <= 0
+      )) ||
+    [];
   const incomeSummary = statistics?.incomeSummary;
-  const expenseSummary = statistics?.expenseSummary && Math.abs(statistics?.expenseSummary);
+  const expenseSummary =
+    statistics?.expenseSummary && Math.abs(statistics?.expenseSummary);
   const dispatch = useDispatch();
 
-  const selectMonth = async ({value}) => {
-    const {month, year} = statistics;
+  const selectMonth = async ({ value }) => {
+    const { month, year } = statistics;
     dispatch(setMonth(value));
-    if(!year && !month) return;
+    if (!year && !month) return;
 
     dispatch(setIsLoading(true));
-    await dispatch(getCategoriesStatistics({month: +value, year}));
+    await dispatch(getCategoriesStatistics({ month: +value, year }));
     dispatch(setIsLoading(false));
-  }
+  };
 
-  const selectYear = async ({value}) => {
-    const {month} = statistics;
+  const selectYear = async ({ value }) => {
+    const { month } = statistics;
     dispatch(setYear(value));
 
     dispatch(setIsLoading(true));
     await dispatch(getCategoriesStatistics({ month, year: +value }));
     dispatch(setIsLoading(false));
-  }
+  };
 
   return (
     <div className={s.tableContainer}>
@@ -161,14 +180,14 @@ function MyTable({statistics}) {
           name="month"
           styles={colourStyles}
           options={month}
-          placeholder={month[statistics?.month]?.label || "All period"}
+          placeholder={month[statistics?.month]?.label || 'All period'}
           onChange={selectMonth}
         />
         <Select
           name="year"
           styles={colourStyles}
           options={year}
-          placeholder={statistics?.year || "All years"}
+          placeholder={statistics?.year || 'All years'}
           onChange={selectYear}
         />
       </div>
@@ -231,7 +250,7 @@ function MyTable({statistics}) {
                   align="right"
                   sx={{ borderBottom: 'none', fontSize: '16px' }}
                 >
-                  {Math.abs(category.total)}
+                  {Math.abs(category.total).toFixed(2)}
                 </TableCell>
               </TableRow>
             ))}
@@ -243,7 +262,7 @@ function MyTable({statistics}) {
                 align="right"
                 sx={{ color: '#ff6596', fontSize: '16px' }}
               >
-                {expenseSummary}
+                {Number(expenseSummary).toFixed(2)}
               </TableCell>
             </TableRow>
 
@@ -255,7 +274,7 @@ function MyTable({statistics}) {
                 align="right"
                 sx={{ color: '#24CCA7', fontSize: '16px' }}
               >
-                {incomeSummary}
+                {Number(incomeSummary).toFixed(2)}
               </TableCell>
             </TableRow>
           </TableBody>
