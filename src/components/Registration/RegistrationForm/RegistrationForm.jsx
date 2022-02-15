@@ -1,12 +1,12 @@
 import s from './RegistrationForm.module.css';
-import { signupUser, userSelector, clearState } from './../../../redux/userSlice';
+import { signupUser, userSelector, clearState } from 'redux/userSlice';
 import { Button, Box } from '@mui/material';
 import InputAdornment from '@mui/material/InputAdornment';
 import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import { Logo } from 'components/common';
-import React, { Fragment, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import CustomInput from './CustomInput';
@@ -15,9 +15,8 @@ import { useSelector, useDispatch } from 'react-redux';
 
 const RegistrationForm = (props) => {
   const dispatch = useDispatch();
-  const { isFetching, isSuccess, isError, errorMessage } = useSelector(
-    userSelector
-  );
+  const { isFetching, isSuccess, isError, errorMessage } =
+    useSelector(userSelector);
   useEffect(() => {
     if (isSuccess) {
       navigate('/');

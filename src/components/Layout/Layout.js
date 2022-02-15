@@ -3,8 +3,6 @@ import { Outlet } from 'react-router-dom';
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { userSelector, clearState } from 'redux/userSlice';
-import { Container } from 'components/common';
-import { Box } from '@mui/system';
 import { useNavigate } from 'react-router-dom';
 import { fetchUserBytoken } from 'redux/userSlice';
 import * as S from './Layout.style';

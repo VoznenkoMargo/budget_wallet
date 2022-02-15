@@ -1,10 +1,10 @@
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 import { useSelector } from 'react-redux';
-import { useMedia } from 'react-media';
 import { MoneyExchangeTable } from 'components/SideMenu/MoneyExchangeTable';
 import { useTheme } from '@mui/system';
 import Spinner from 'components/Spinner';
+import { useMediaQuery } from 'react-responsive';
 
 const DashBoardPage = lazy(() =>
   import(
@@ -39,9 +39,7 @@ const LoginPage = lazy(() =>
 const App = () => {
   const { isLoading } = useSelector((state) => state.global);
   const { breakpoints } = useTheme();
-  const isSmallScreen = useMedia({
-    query: `(max-width: ${breakpoints.values.tablet}px)`,
-  });
+  const isSmallScreen = useMediaQuery({ maxWidth: breakpoints.values.tablet });
 
   return (
     <div className="App">
