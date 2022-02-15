@@ -5,6 +5,8 @@ import { DatePicker as MuiDatePicker } from '@mui/lab';
 import moment from 'moment';
 
 const DatePicker = ({ value, onChange }) => {
+  const maxDate = moment();
+
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <MuiDatePicker
@@ -12,6 +14,7 @@ const DatePicker = ({ value, onChange }) => {
         onChange={onChange}
         inputFormat="DD.MM.YYYY"
         mask={'__.__.____'}
+        maxDate={maxDate}
         renderInput={(params) => {
           return <DateInput {...params} />;
         }}

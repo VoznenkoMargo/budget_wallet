@@ -2,6 +2,7 @@ import s from './NotFoundPage.module.scss';
 import { Link } from 'react-router-dom';
 import { Box } from '@mui/system';
 import { Container } from '@mui/material';
+import { ROUTES } from 'constants/routes';
 
 const NotFoundPage = () => {
   return (
@@ -46,7 +47,7 @@ const NotFoundPage = () => {
             //   src="https://cdn.pixabay.com/photo/2017/03/09/12/31/error-2129569_960_720.jpg"
             alt="error"
           />
-          <Link className={s.link} to="/">
+          <Link className={s.link} to={ROUTES.MAIN}>
             Let's start over again
           </Link>
         </div>

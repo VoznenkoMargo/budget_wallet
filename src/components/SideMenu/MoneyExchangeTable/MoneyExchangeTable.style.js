@@ -108,7 +108,8 @@ export const TableContainer = styled('div')(({ theme }) => {
     },
 
     [breakpoints.down('tablet')]: {
-      backgroundImage: `none`,
+      backgroundImage: 'none',
+      margin: '0 auto',
     },
   };
 });

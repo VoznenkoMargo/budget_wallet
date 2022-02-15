@@ -1,7 +1,11 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
-import Spinner from 'components/Spinner';
 import { useSelector } from 'react-redux';
+import { MoneyExchangeTable } from 'components/SideMenu/MoneyExchangeTable';
+import { useTheme } from '@mui/system';
+import Spinner from 'components/Spinner';
+import { useMediaQuery } from 'react-responsive';
+import { ROUTES } from 'constants/routes';
 
 const DashBoardPage = lazy(() =>
   import(
@@ -35,19 +39,31 @@ const LoginPage = lazy(() =>
 
 const App = () => {
   const { isLoading } = useSelector((state) => state.global);
+  const { breakpoints } = useTheme();
+  const isSmallScreen = useMediaQuery({ maxWidth: breakpoints.values.tablet });
 
   return (
     <div className="App">
       <Suspense fallback={<Spinner />}>
         <Routes>
-          <Route path="/" element={<Layout />}>
+          <Route path={ROUTES.MAIN} element={<Layout />}>
             <Route index element={<DashBoardPage />} />
-            <Route path="statistic" element={<StatisticPage />} />
-            <Route path="dev" element={<TeamPage />} />
+            <Route path={ROUTES.STATISTICS} element={<StatisticPage />} />
+            <Route path={ROUTES.DEV} element={<TeamPage />} />
+            <Route
+              path={ROUTES.EXCHANGE_RATE}
+              element={
+                isSmallScreen ? (
+                  <MoneyExchangeTable />
+                ) : (
+                  <Navigate to={ROUTES.MAIN} />
+                )
+              }
+            />
           </Route>
-          <Route path="registration" element={<RegistrationPage />} />
-          <Route path="login" element={<LoginPage />} />
-          <Route path="*" element={<NotFoundPage />} />
+          <Route path={ROUTES.REGISTRATION} element={<RegistrationPage />} />
+          <Route path={ROUTES.LOGIN} element={<LoginPage />} />
+          <Route path={ROUTES.NO_MATCH} element={<NotFoundPage />} />
         </Routes>
       </Suspense>
       {isLoading && <Spinner />}

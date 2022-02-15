@@ -1,25 +1,23 @@
 import { Box, Divider } from '@mui/material';
 import { useTheme } from '@mui/system';
-import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Container, Logo } from 'components/common';
 import { userSelector, clearState } from 'redux/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { StyledToolbar, Header, ExitButton, UserName } from './AppBar.styled';
+import { ROUTES } from 'constants/routes';
 
 const StyledAppBar = () => {
   const navigate = useNavigate();
   const { breakpoints } = useTheme();
-
   const dispatch = useDispatch();
-
   const { username } = useSelector(userSelector);
 
   const onLogOut = () => {
-    localStorage.removeItem("token")
-    dispatch(clearState())
-    navigate("/login")
-  }
+    localStorage.removeItem('token');
+    dispatch(clearState());
+    navigate(ROUTES.LOGIN);
+  };
 
   return (
     <Header>
