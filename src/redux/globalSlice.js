@@ -6,7 +6,7 @@ const initialState = {
   isModalLogoutOpen: false,
 };
 
-const transactionSlice = createSlice({
+const globalSlice = createSlice({
   name: 'global',
   initialState,
   reducers: {
@@ -26,5 +26,5 @@ export const {
   setIsLoading,
   setIsModalAddTransactionOpen,
   setIsModalLogoutOpen,
-} = transactionSlice.actions;
-export const globalReducer = transactionSlice.reducer;
+} = globalSlice.actions;
+export const globalReducer = globalSlice.reducer;

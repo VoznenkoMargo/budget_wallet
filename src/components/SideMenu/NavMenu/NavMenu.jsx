@@ -10,7 +10,7 @@ function createMenuData(icon, menuName, path) {
 const menuItems = [
   createMenuData(<HomeIcon />, 'Main', '/'),
   createMenuData(<StatisticIcon />, 'Statistic', '/statistic'),
-  createMenuData(<ExchangeRateIcon />, 'Exchange rate', '/'),
+  createMenuData(<ExchangeRateIcon />, 'Exchange rate', '/exchange-rate'),
 ];
 
 const NavMenu = () => {

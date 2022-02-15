@@ -10,21 +10,20 @@ import { fetchUserBytoken } from 'redux/userSlice';
 import * as S from './Layout.style';
 
 const Layout = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isFetching, isSuccess, isError } = useSelector(userSelector)
+  const { isFetching, isSuccess, isError } = useSelector(userSelector);
 
   useEffect(() => {
     if (isError) {
-      dispatch(clearState())
-      navigate("/login")
+      dispatch(clearState());
+      navigate('/login');
     }
-  }, [isError])
+  }, [isError, dispatch, navigate]);
 
   useEffect(() => {
-    dispatch(fetchUserBytoken({ token: localStorage.getItem("token") }))
-  }, [])
-
+    dispatch(fetchUserBytoken({ token: localStorage.getItem('token') }));
+  }, [dispatch]);
 
   return (
     <>

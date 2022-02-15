@@ -32,10 +32,13 @@ export const StyledListItem = styled((props) => <ListItem {...props} />)(
       width: 'auto',
       padding: '0',
       cursor: 'pointer',
+      borderRadius: '10px',
       '& a.active': {
-        '& .MuiSvgIcon-root': {
-          filter: 'drop-shadow(0px 3px 10px rgba(74, 86, 226, 0.5))',
+        '& .MuiListItemIcon-root': {
           backgroundColor: palette.common.white,
+          filter: 'drop-shadow(0px 3px 10px rgba(74, 86, 226, 0.5))',
+        },
+        '& .MuiSvgIcon-root': {
           fill: palette.secondary.main,
         },
         '& .MuiTypography-root': {
