@@ -1,7 +1,10 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
-import Spinner from 'components/Spinner';
 import { useSelector } from 'react-redux';
+import { useMedia } from 'react-media';
+import { MoneyExchangeTable } from 'components/SideMenu/MoneyExchangeTable';
+import { useTheme } from '@mui/system';
+import Spinner from 'components/Spinner';
 
 const DashBoardPage = lazy(() =>
   import(
@@ -35,6 +38,10 @@ const LoginPage = lazy(() =>
 
 const App = () => {
   const { isLoading } = useSelector((state) => state.global);
+  const { breakpoints } = useTheme();
+  const isSmallScreen = useMedia({
+    query: `(max-width: ${breakpoints.values.tablet}px)`,
+  });
 
   return (
     <div className="App">
@@ -44,6 +51,11 @@ const App = () => {
             <Route index element={<DashBoardPage />} />
             <Route path="statistic" element={<StatisticPage />} />
             <Route path="dev" element={<TeamPage />} />
+            {isSmallScreen ? (
+              <Route path="exchange-rate" element={<MoneyExchangeTable />} />
+            ) : (
+              <Route path="exchange-rate" element={<Navigate to="/" />} />
+            )}
           </Route>
           <Route path="registration" element={<RegistrationPage />} />
           <Route path="login" element={<LoginPage />} />
