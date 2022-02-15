@@ -53,7 +53,11 @@ const App = () => {
             <Route
               path={ROUTES.EXCHANGE_RATE}
               element={
-                isSmallScreen ? <MoneyExchangeTable /> : <Navigate to="/" />
+                isSmallScreen ? (
+                  <MoneyExchangeTable />
+                ) : (
+                  <Navigate to={ROUTES.MAIN} />
+                )
               }
             />
           </Route>

@@ -9,8 +9,9 @@ import * as S from './ModalAddTransaction.style';
 import { useDispatch, useSelector } from 'react-redux';
 import { createTransaction } from 'redux/transactionSlice';
 import moment from 'moment';
-import { addTransactionToStatistics } from '../../redux/statisticsSlice';
-import { updateBalance } from '../../redux/userSlice';
+import { addTransactionToStatistics } from 'redux/statisticsSlice';
+import { updateBalance } from 'redux/userSlice';
+import { TRANSACTION_TYPES } from 'constants/transactionTypes';
 
 const fitsStatisticsFilter = (date, month, year) => {
   if (!month && !year) {
@@ -64,7 +65,7 @@ const ModalAddTransaction = ({ open, onClose, categories }) => {
       amount: '',
       comment: '',
       transactionDate: new Date(),
-      type: transactionTypes.INCOME,
+      type: TRANSACTION_TYPES.INCOME,
       categoryId: incomeCategory.id,
     },
     validationSchema: validationSchema,
@@ -74,8 +75,8 @@ const ModalAddTransaction = ({ open, onClose, categories }) => {
       );
       const amount = values.isExpenseMode ? -values.amount : values.amount;
       const type = values.isExpenseMode
-        ? transactionTypes.EXPENSE
-        : transactionTypes.INCOME;
+        ? TRANSACTION_TYPES.EXPENSE
+        : TRANSACTION_TYPES.INCOME;
       const categoryId = values.categoryId;
       const comment = values.comment;
 
