@@ -5,6 +5,7 @@ import { Container, Logo } from 'components/common';
 import { userSelector, clearState } from 'redux/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { StyledToolbar, Header, ExitButton, UserName } from './AppBar.styled';
+import { ROUTES } from 'constants/routes';
 
 const StyledAppBar = () => {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ const StyledAppBar = () => {
   const onLogOut = () => {
     localStorage.removeItem('token');
     dispatch(clearState());
-    navigate('/login');
+    navigate(ROUTES.LOGIN);
   };
 
   return (

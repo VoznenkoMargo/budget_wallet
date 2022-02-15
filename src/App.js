@@ -5,6 +5,7 @@ import { MoneyExchangeTable } from 'components/SideMenu/MoneyExchangeTable';
 import { useTheme } from '@mui/system';
 import Spinner from 'components/Spinner';
 import { useMediaQuery } from 'react-responsive';
+import { ROUTES } from 'constants/routes';
 
 const DashBoardPage = lazy(() =>
   import(
@@ -45,18 +46,19 @@ const App = () => {
     <div className="App">
       <Suspense fallback={<Spinner />}>
         <Routes>
-          <Route path="/" element={<Layout />}>
+          <Route path={ROUTES.MAIN} element={<Layout />}>
             <Route index element={<DashBoardPage />} />
-            <Route path="statistic" element={<StatisticPage />} />
-            <Route path="dev" element={<TeamPage />} />
-            {isSmallScreen ? (
-              <Route path="exchange-rate" element={<MoneyExchangeTable />} />
-            ) : (
-              <Route path="exchange-rate" element={<Navigate to="/" />} />
-            )}
+            <Route path={ROUTES.STATISTICS} element={<StatisticPage />} />
+            <Route path={ROUTES.DEV} element={<TeamPage />} />
+            <Route
+              path={ROUTES.EXCHANGE_RATE}
+              element={
+                isSmallScreen ? <MoneyExchangeTable /> : <Navigate to="/" />
+              }
+            />
           </Route>
-          <Route path="registration" element={<RegistrationPage />} />
-          <Route path="login" element={<LoginPage />} />
+          <Route path={ROUTES.REGISTRATION} element={<RegistrationPage />} />
+          <Route path={ROUTES.LOGIN} element={<LoginPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Suspense>

@@ -12,6 +12,7 @@ import { Formik, Form } from 'formik';
 import CustomInput from './CustomInput';
 import * as yup from 'yup';
 import { useSelector, useDispatch } from 'react-redux';
+import { ROUTES } from 'constants/routes';
 
 const RegistrationForm = (props) => {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ const RegistrationForm = (props) => {
     useSelector(userSelector);
   useEffect(() => {
     if (isSuccess) {
-      navigate('/');
+      navigate(ROUTES.MAIN);
     }
     if (isError) {
       console.error(errorMessage);
@@ -52,7 +53,7 @@ const RegistrationForm = (props) => {
   };
   const navigate = useNavigate();
   const handleClickLogIn = () => {
-    navigate('/login');
+    navigate(ROUTES.LOGIN);
   };
 
   return (

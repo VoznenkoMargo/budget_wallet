@@ -9,12 +9,9 @@ import { Formik, Form } from 'formik';
 import CustomInput from './CustomInput';
 import * as yup from 'yup';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  loginUser,
-  userSelector,
-  clearState,
-} from './../../../redux/userSlice';
+import { loginUser, userSelector, clearState } from 'redux/userSlice';
 import { useNavigate } from 'react-router-dom';
+import { ROUTES } from 'constants/routes';
 
 const LoginForm = (props) => {
   const dispatch = useDispatch();
@@ -26,7 +23,7 @@ const LoginForm = (props) => {
       dispatch(clearState());
     }
     if (isSuccess) {
-      navigate('/');
+      navigate(ROUTES.MAIN);
     }
   }, [isError, isSuccess]);
 
