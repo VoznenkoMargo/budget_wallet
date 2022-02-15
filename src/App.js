@@ -59,7 +59,7 @@ const App = () => {
           </Route>
           <Route path={ROUTES.REGISTRATION} element={<RegistrationPage />} />
           <Route path={ROUTES.LOGIN} element={<LoginPage />} />
-          <Route path="*" element={<NotFoundPage />} />
+          <Route path={ROUTES.NO_MATCH} element={<NotFoundPage />} />
         </Routes>
       </Suspense>
       {isLoading && <Spinner />}
