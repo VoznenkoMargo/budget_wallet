@@ -9,7 +9,7 @@ export const createTransaction = createAsyncThunk(
         headers: {
           'Content-Type': 'application/json',
           Authorization:
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzaWQiOiJlNzNkNDNhNS1hYjJmLTRlODgtYmI3Ni0wZjFlMGJjNWNhYjMiLCJpYXQiOjE2NDQxNTczNzgsImV4cCI6MTAwMDAwMDE2NDQxNTczNzh9.e5qXzp0wq7x1xir0unYYGBgHwBEtCxlWNEgBrp-UteU',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzaWQiOiJlNDM1ZmYzOC0wMzY0LTRkYmItOTk5OS1lNjdmNDliNzQ0NTEiLCJpYXQiOjE2NDUwMTA3MTMsImV4cCI6MTAwMDAwMDE2NDUwMTA3MTJ9.x4Zq1HqY3ZXXtMjy80wlsisyXT0VV2ezyeAEbUp2z3c',
         },
         body: JSON.stringify(transaction),
       });
@@ -24,7 +24,7 @@ export const createTransaction = createAsyncThunk(
       console.log(error);
       return rejectWithValue(error.message);
     }
-  }
+  },
 );
 
 export const getTransactions = createAsyncThunk(
@@ -48,7 +48,7 @@ export const getTransactions = createAsyncThunk(
       console.log(error);
       return rejectWithValue(error.message);
     }
-  }
+  },
 );
 
 const initialState = { transactions: null, error: null };

@@ -1,56 +1,62 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { basicCategoriesColors, generateUniqueColor } from '../components/DiagramTab/categoriesColors';
+import {
+  basicCategoriesColors,
+  generateUniqueColor,
+} from '../components/DiagramTab/categoriesColors';
 
 const BASIC_URL = 'https://wallet.goit.ua/api';
 
 export const getCategoriesStatistics = createAsyncThunk(
   'statistics/getCategoriesStatistics',
-  async(period, {rejectWithValue}) => {
+  async (period, { rejectWithValue }) => {
     const options = {
       method: 'GET',
       headers: {
-        'Accept': 'application/json',
+        Accept: 'application/json',
         Authorization:
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzaWQiOiJlNzNkNDNhNS1hYjJmLTRlODgtYmI3Ni0wZjFlMGJjNWNhYjMiLCJpYXQiOjE2NDQxNTczNzgsImV4cCI6MTAwMDAwMDE2NDQxNTczNzh9.e5qXzp0wq7x1xir0unYYGBgHwBEtCxlWNEgBrp-UteU',
-      }
-    }
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzaWQiOiJlNDM1ZmYzOC0wMzY0LTRkYmItOTk5OS1lNjdmNDliNzQ0NTEiLCJpYXQiOjE2NDUwMTA3MTMsImV4cCI6MTAwMDAwMDE2NDUwMTA3MTJ9.x4Zq1HqY3ZXXtMjy80wlsisyXT0VV2ezyeAEbUp2z3c',
+      },
+    };
 
     let queryString = '';
-    if(period?.year && period?.month) {
+    if (period?.year && period?.month) {
       queryString = `month=${period.month}&year=${period.year}`;
-    } else if(period && !period?.month) {
+    } else if (period && !period?.month) {
       queryString = `year=${period.year}`;
     }
-    const response = await fetch(`${BASIC_URL}/transactions-summary?${queryString}`, options);
+    const response = await fetch(
+      `${BASIC_URL}/transactions-summary?${queryString}`,
+      options,
+    );
 
     if (!response.ok) {
       return rejectWithValue(await response.json());
     }
     return await response.json();
-  }
-)
+  },
+);
 
 const initialState = {
   statistics: null,
   error: null,
-}
+};
 
 const StatisticsSlice = createSlice({
   name: 'statistics',
   initialState,
   reducers: {
-    setMonth: (state, {payload}) => {
+    setMonth: (state, { payload }) => {
       state.statistics.month = payload;
     },
 
-    setYear: (state, {payload}) => {
+    setYear: (state, { payload }) => {
       state.statistics.year = payload;
     },
 
-    addTransactionToStatistics: (state, {payload}) => {
-      const {transaction, categoryName} = payload;
+    addTransactionToStatistics: (state, { payload }) => {
+      const { transaction, categoryName } = payload;
 
-      if(transaction.type === 'INCOME') {
+      if (transaction.type === 'INCOME') {
         state.statistics.incomeSummary += transaction.amount;
       } else {
         state.statistics.expenseSummary += transaction.amount;
@@ -58,7 +64,9 @@ const StatisticsSlice = createSlice({
 
       state.statistics.periodTotal += transaction.amount;
 
-      const stateCategory = state.statistics['categoriesSummary'].find(category => category.name === categoryName);
+      const stateCategory = state.statistics['categoriesSummary'].find(
+        category => category.name === categoryName,
+      );
       if (stateCategory) {
         stateCategory.total += transaction.amount;
       } else {
@@ -66,23 +74,24 @@ const StatisticsSlice = createSlice({
           name: categoryName,
           type: transaction.type,
           total: transaction.amount,
-          color:
-            basicCategoriesColors[categoryName]
-            || generateUniqueColor(),
-        }
-        state.statistics['categoriesSummary'].push(category)
+          color: basicCategoriesColors[categoryName] || generateUniqueColor(),
+        };
+        state.statistics['categoriesSummary'].push(category);
       }
-    }
+    },
   },
 
   extraReducers(builder) {
     builder
-      .addCase(getCategoriesStatistics.fulfilled, (state, {payload}) => {
-        payload['categoriesSummary'] = payload['categoriesSummary']
-          .map(elem => {
+      .addCase(getCategoriesStatistics.fulfilled, (state, { payload }) => {
+        payload['categoriesSummary'] = payload['categoriesSummary'].map(
+          elem => {
             const color = basicCategoriesColors[elem.name];
-            return color ? {...elem, color } : {...elem, color: generateUniqueColor()};
-          })
+            return color
+              ? { ...elem, color }
+              : { ...elem, color: generateUniqueColor() };
+          },
+        );
         state.statistics = payload;
       })
 
@@ -92,11 +101,12 @@ const StatisticsSlice = createSlice({
         } else if (action.error) {
           state.error = action.error.message;
         } else {
-          state.error = 'Unknown error'
+          state.error = 'Unknown error';
         }
-      })
-  }
-})
+      });
+  },
+});
 
-export const {setMonth, setYear, addTransactionToStatistics} = StatisticsSlice.actions;
+export const { setMonth, setYear, addTransactionToStatistics } =
+  StatisticsSlice.actions;
 export const statisticsReducer = StatisticsSlice.reducer;
