@@ -7,7 +7,9 @@ export default function Balance({ periodTotal }) {
 
   return (
     (periodTotal || periodTotal === 0) ?
-    <p className={s.balance}>&#8372; {periodTotal}</p>
+    <p className={s.balance}>&#8372;&nbsp;{new Intl.NumberFormat('ru-RU')
+      .format(periodTotal)
+      .replace(',','.')}</p>
       : !isLoading
   );
 }

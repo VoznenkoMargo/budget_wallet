@@ -68,20 +68,20 @@ const StatisticsSlice = createSlice({
           total: transaction.amount,
           color:
             basicCategoriesColors[categoryName]
-            || generateUniqueColor(),
+            || '#000000',
         }
         state.statistics['categoriesSummary'].push(category)
       }
     }
   },
 
-  extraReducers(builder) {
+  extraReducers: (builder) => {
     builder
       .addCase(getCategoriesStatistics.fulfilled, (state, {payload}) => {
         payload['categoriesSummary'] = payload['categoriesSummary']
           .map(elem => {
             const color = basicCategoriesColors[elem.name];
-            return color ? {...elem, color } : {...elem, color: generateUniqueColor()};
+            return color ? {...elem, color } : {...elem, color: '#000000'};
           })
         state.statistics = payload;
       })

@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ListItemIcon, ListItemText } from '@mui/material';
 import { ExchangeRateIcon, HomeIcon, StatisticIcon } from './Icons';
 import { StyledListItem, StyledNavMenu } from './NavMenu.style';
-import { NavLink, useMatch } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 function createMenuData(Icon, MenuName, Path) {
   return { Icon, MenuName, Path };

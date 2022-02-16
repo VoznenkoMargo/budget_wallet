@@ -25,14 +25,3 @@ export const basicCategoriesColors = {
   [categoriesName.OTHER_EXPENSES]: palette.chart.yellow[1],
   [categoriesName.ENTERTAINMENT]: palette.chart.green[1],
 }
-
-const usedColors = [];
-
-export const generateUniqueColor = () => {
-  let color = null;
-  while(!color || usedColors.includes(color)){
-    color = `#${Math.floor(Math.random()*16777215).toString(16).padStart(6, '0')}`;
-  }
-  usedColors.push(color);
-  return color;
-}
