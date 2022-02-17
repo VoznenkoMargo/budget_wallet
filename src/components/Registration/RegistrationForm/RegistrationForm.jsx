@@ -186,6 +186,7 @@ const RegistrationForm = (props) => {
                   REGISTRATION
                 </Button>
                 <Button
+                  type="submit"
                   fullWidth
                   variant="outlined"
                   onClick={handleClickLogIn}

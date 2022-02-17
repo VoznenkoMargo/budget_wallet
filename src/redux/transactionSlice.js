@@ -2,14 +2,14 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const createTransaction = createAsyncThunk(
   'transactions/createTransaction',
-  async (transaction, { rejectWithValue, dispatch, getState }) => {
+  async (transaction, { rejectWithValue, dispatch }) => {
     try {
-      const { token } = getState().user;
       const req = await fetch('https://wallet.goit.ua/api/transactions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: token,
+          Authorization:
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzaWQiOiJlNDM1ZmYzOC0wMzY0LTRkYmItOTk5OS1lNjdmNDliNzQ0NTEiLCJpYXQiOjE2NDUwMTA3MTMsImV4cCI6MTAwMDAwMDE2NDUwMTA3MTJ9.x4Zq1HqY3ZXXtMjy80wlsisyXT0VV2ezyeAEbUp2z3c',
         },
         body: JSON.stringify(transaction),
       });
@@ -24,19 +24,19 @@ export const createTransaction = createAsyncThunk(
       console.log(error);
       return rejectWithValue(error.message);
     }
-  }
+  },
 );
 
 export const getTransactions = createAsyncThunk(
   'transactions/getAllTransactions',
-  async (_, { rejectWithValue, dispatch, getState }) => {
+  async (_, { rejectWithValue, dispatch }) => {
     try {
-      const { token } = getState().user;
       const req = await fetch('https://wallet.goit.ua/api/transactions', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: token,
+          Authorization:
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzaWQiOiJlNzNkNDNhNS1hYjJmLTRlODgtYmI3Ni0wZjFlMGJjNWNhYjMiLCJpYXQiOjE2NDQxNTczNzgsImV4cCI6MTAwMDAwMDE2NDQxNTczNzh9.e5qXzp0wq7x1xir0unYYGBgHwBEtCxlWNEgBrp-UteU',
         },
       });
       const resp = await req.json();
@@ -48,7 +48,7 @@ export const getTransactions = createAsyncThunk(
       console.log(error);
       return rejectWithValue(error.message);
     }
-  }
+  },
 );
 
 const initialState = { transactions: null, error: null };

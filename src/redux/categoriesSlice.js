@@ -1,19 +1,23 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { userSelector } from './userSlice';
+import { useSelector } from 'react-redux';
 
 export const getTransactionCategories = createAsyncThunk(
   'categories/getTransactionCategory',
-  async (_, { rejectWithValue, dispatch, getState }) => {
+  async (_, { rejectWithValue, dispatch }) => {
     try {
-      const { token } = getState().user;
       const req = await fetch(
         'https://wallet.goit.ua/api/transaction-categories',
+
         {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: token,
+            // Authorization: `Bearer ${token}`,
+            Authorization:
+              'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzaWQiOiJlNzNkNDNhNS1hYjJmLTRlODgtYmI3Ni0wZjFlMGJjNWNhYjMiLCJpYXQiOjE2NDQxNTczNzgsImV4cCI6MTAwMDAwMDE2NDQxNTczNzh9.e5qXzp0wq7x1xir0unYYGBgHwBEtCxlWNEgBrp-UteU',
           },
-        }
+        },
       );
       const resp = await req.json();
       dispatch(addCategories(resp));
@@ -24,7 +28,7 @@ export const getTransactionCategories = createAsyncThunk(
       console.log(error);
       return rejectWithValue(error.message);
     }
-  }
+  },
 );
 
 const initialState = { categories: null };
