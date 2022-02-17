@@ -1,11 +1,10 @@
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import { transactionsReducer } from './transactionSlice';
 import { userReducer } from './userSlice';
 import { categoriesReducer } from './categoriesSlice';
 import { globalReducer } from './globalSlice';
 import { statisticsReducer } from './statisticsSlice';
 import logger from 'redux-logger';
-
 import {
   persistStore,
   persistReducer,
@@ -17,15 +16,6 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-
-const middleware = [
-  ...getDefaultMiddleware({
-    serializableCheck: {
-      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-    },
-  }),
-  logger,
-];
 
 const authPersistConfig = {
   key: 'user',
@@ -41,7 +31,12 @@ export const store = configureStore({
     statistics: statisticsReducer,
     global: globalReducer,
   },
-  middleware,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }).concat(logger),
   devTools: process.env.NODE_ENV === 'development',
 });
 

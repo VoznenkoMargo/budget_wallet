@@ -10,7 +10,7 @@ import * as S from './Layout.style';
 const Layout = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isFetching, isSuccess, isError } = useSelector(userSelector);
+  const { isFetching, isSuccess, isError, token } = useSelector(userSelector);
 
   useEffect(() => {
     if (isError) {
@@ -20,7 +20,7 @@ const Layout = () => {
   }, [isError, dispatch, navigate]);
 
   useEffect(() => {
-    dispatch(fetchUserBytoken({ token: localStorage.getItem('token') }));
+    dispatch(fetchUserBytoken({ token }));
   }, [dispatch]);
 
   return (
