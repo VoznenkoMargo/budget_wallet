@@ -1,17 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-// axios.defaults.baseURL = 'https://wallet.goit.ua';
-
-// const token = {
-//   set(token) {
-//     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-//   },
-//   unset() {
-//     axios.defaults.headers.common.Authorization = '';
-//   },
-// }; /// при аксиосе запись токена в хедер можно сделать автоматом
-
 export const signupUser = createAsyncThunk(
   'auth/sign-up',
   async ({ username, email, password }, thunkAPI) => {
@@ -35,8 +24,6 @@ export const signupUser = createAsyncThunk(
       if (response.status === 201) {
         localStorage.setItem('data', data);
         localStorage.setItem('token', data.token);
-
-        //   console.log(token);
         //return { ...data, username: username, email: email }
         return thunkAPI.fulfillWithValue({
           ...data,
@@ -98,8 +85,6 @@ export const fetchUserBytoken = createAsyncThunk(
         },
       });
       let data = await response.json();
-      // console.log('data', data, response.status);
-
       if (response.status === 200) {
         return { ...data };
       } else {
@@ -163,7 +148,6 @@ export const userSlice = createSlice({
       state.isFetching = false;
       state.isSuccess = true;
       state.isLoggedIn = true;
-      // console.log(state.isLoggedIn);
       console.log(state.token);
       return state;
     },

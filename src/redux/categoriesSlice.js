@@ -16,9 +16,6 @@ export const getTransactionCategories = createAsyncThunk(
             // Authorization: `Bearer ${token}`,
             Authorization:
               'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzaWQiOiJlNzNkNDNhNS1hYjJmLTRlODgtYmI3Ni0wZjFlMGJjNWNhYjMiLCJpYXQiOjE2NDQxNTczNzgsImV4cCI6MTAwMDAwMDE2NDQxNTczNzh9.e5qXzp0wq7x1xir0unYYGBgHwBEtCxlWNEgBrp-UteU',
-
-            //   Authorization:
-            //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzaWQiOiI1NDExNTNiZS00NWZlLTRiYmMtOTkxNy1hNmJiOWJmMzM4YjMiLCJpYXQiOjE2NDUwMDk3OTgsImV4cCI6MTAwMDAwMDE2NDUwMDk3OTh9.7YZM8pSm3XufIdm5g0XvUPPA2CtpEr-A7XBiUI-EAxI',
           },
         },
       );
