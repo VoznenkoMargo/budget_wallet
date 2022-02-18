@@ -111,7 +111,7 @@ const ModalAddTransaction = ({ open, onClose, categories }) => {
           ).name;
           dispatch(addTransactionToStatistics({ transaction, categoryName }));
         }
-        dispatch(updateBalance(amount));
+        dispatch(updateBalance(transaction.amount));
         onCloseHandler();
       }
     },
@@ -163,7 +163,7 @@ const ModalAddTransaction = ({ open, onClose, categories }) => {
               color="secondary"
               variant="standard"
               placeholder="0.00"
-              // type="number"
+              type="number"
               name="amount"
               value={formik.values.amount}
               onChange={formik.handleChange}
