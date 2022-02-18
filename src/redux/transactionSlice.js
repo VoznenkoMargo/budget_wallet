@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { reset } from './globalSlice';
 
 export const createTransaction = createAsyncThunk(
   'transactions/createTransaction',
@@ -63,12 +64,11 @@ const transactionSlice = createSlice({
     addTransaction: (state, action) => {
       state.transactions.unshift(action.payload);
     },
-    resetTransactionState: (state) => {
-      return initialState;
-    },
+  },
+  extraReducers: {
+    [reset]: (state) => initialState,
   },
 });
 
-export const { addTransaction, addTransactions, resetTransactionState } =
-  transactionSlice.actions;
+export const { addTransaction, addTransactions } = transactionSlice.actions;
 export const transactionsReducer = transactionSlice.reducer;

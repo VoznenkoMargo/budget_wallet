@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { reset } from './globalSlice';
 
 export const getTransactionCategories = createAsyncThunk(
   'categories/getTransactionCategory',
@@ -36,6 +37,9 @@ const categoriesSlice = createSlice({
     addCategories: (state, action) => {
       state.categories = action.payload;
     },
+  },
+  extraReducers: {
+    [reset]: (state) => initialState,
   },
 });
 

@@ -2,7 +2,8 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
   basicCategoriesColors,
   generateUniqueColor,
-} from '../components/DiagramTab/categoriesColors';
+} from 'components/DiagramTab/categoriesColors';
+import { reset } from './globalSlice';
 
 const BASIC_URL = 'https://wallet.goit.ua/api';
 
@@ -103,7 +104,9 @@ const StatisticsSlice = createSlice({
         } else {
           state.error = 'Unknown error';
         }
-      });
+      })
+
+      .addCase(reset, (state) => initialState);
   },
 });
 

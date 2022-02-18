@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { setIsLoading } from './globalSlice';
+import { reset } from './globalSlice';
 
 export const signupUser = createAsyncThunk(
   'auth/sign-up',
@@ -101,7 +102,6 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    clearState: () => initialState,
     updateBalance: (state, { payload }) => {
       state.user.balance += payload;
     },
@@ -141,6 +141,7 @@ export const userSlice = createSlice({
     [getCurrentUser.rejected]: (state, payload) => {
       state.error = payload.message;
     },
+    [reset]: (state) => initialState,
   },
 });
 

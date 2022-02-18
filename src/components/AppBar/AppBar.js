@@ -2,11 +2,10 @@ import { Box, Divider } from '@mui/material';
 import { useTheme } from '@mui/system';
 import { useSelector, useDispatch } from 'react-redux';
 import { Container, Logo } from 'components/common';
-import { clearState } from 'redux/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { StyledToolbar, Header, ExitButton, UserName } from './AppBar.styled';
 import { ROUTES } from 'constants/routes';
-import { resetTransactionState } from 'redux/transactionSlice';
+import { reset } from 'redux/globalSlice';
 
 const StyledAppBar = () => {
   const navigate = useNavigate();
@@ -15,8 +14,7 @@ const StyledAppBar = () => {
   const { username } = useSelector((state) => state.user.user);
 
   const onLogOut = () => {
-    dispatch(clearState());
-    dispatch(resetTransactionState());
+    dispatch(reset());
     navigate(ROUTES.LOGIN);
   };
 
