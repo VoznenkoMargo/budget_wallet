@@ -1,5 +1,3 @@
-// import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
-
 import s from './Spinner.module.scss';
 import { Oval } from 'react-loader-spinner';
 import { useTheme } from '@mui/system';
@@ -12,8 +10,8 @@ const Spinner = () => {
       <Oval
         color={palette.secondary.main}
         secondaryColor={palette.primary.main}
-        height={100}
-        width={100}
+        height={85}
+        width={85}
         visible={true}
       />
     </div>

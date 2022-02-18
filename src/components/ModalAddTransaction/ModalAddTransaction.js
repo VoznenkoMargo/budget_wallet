@@ -12,6 +12,7 @@ import moment from 'moment';
 import { addTransactionToStatistics } from 'redux/statisticsSlice';
 import { updateBalance } from 'redux/userSlice';
 import { TRANSACTION_TYPES } from 'constants/transactionTypes';
+import { useEffect } from 'react';
 
 const fitsStatisticsFilter = (date, month, year) => {
   if (!month && !year) {
@@ -49,7 +50,7 @@ const transactionTypes = {
 const ModalAddTransaction = ({ open, onClose, categories }) => {
   const statistics = useSelector((state) => state.statistics.statistics);
   const allCategories = useSelector((state) => state.categories.categories);
-
+  const { error } = useSelector((state) => state.transactions);
   const dispatch = useDispatch();
   const expenseCategories = getCategoriesByType(
     categories,
@@ -59,7 +60,13 @@ const ModalAddTransaction = ({ open, onClose, categories }) => {
     categories,
     transactionTypes.INCOME
   );
+
+  useEffect(() => {
+    console.log('ERROR from effect', error);
+  }, [error]);
+
   const formik = useFormik({
+    validationSchema: validationSchema,
     initialValues: {
       isExpenseMode: false,
       amount: '',
@@ -68,8 +75,7 @@ const ModalAddTransaction = ({ open, onClose, categories }) => {
       type: TRANSACTION_TYPES.INCOME,
       categoryId: incomeCategory.id,
     },
-    validationSchema: validationSchema,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       const transactionDate = moment(values.transactionDate).format(
         'YYYY-MM-DD'
       );
@@ -90,7 +96,8 @@ const ModalAddTransaction = ({ open, onClose, categories }) => {
 
       console.log(transaction);
 
-      dispatch(createTransaction(transaction)).then((data) => {
+      const createAction = await dispatch(createTransaction(transaction));
+      if (!createAction.error) {
         if (
           statistics &&
           fitsStatisticsFilter(
@@ -104,10 +111,9 @@ const ModalAddTransaction = ({ open, onClose, categories }) => {
           ).name;
           dispatch(addTransactionToStatistics({ transaction, categoryName }));
         }
-
         dispatch(updateBalance(amount));
         onCloseHandler();
-      });
+      }
     },
   });
 
@@ -157,7 +163,7 @@ const ModalAddTransaction = ({ open, onClose, categories }) => {
               color="secondary"
               variant="standard"
               placeholder="0.00"
-              type="number"
+              // type="number"
               name="amount"
               value={formik.values.amount}
               onChange={formik.handleChange}

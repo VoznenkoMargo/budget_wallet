@@ -1,10 +1,15 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { reset } from './globalSlice';
+import { setIsLoading } from './globalSlice';
 
 export const createTransaction = createAsyncThunk(
   'transactions/createTransaction',
-  async (transaction, { rejectWithValue, dispatch, getState }) => {
+  async (
+    transaction,
+    { rejectWithValue, dispatch, getState, fulfillWithValue }
+  ) => {
     try {
+      dispatch(setIsLoading(true));
       const { token } = getState().user;
       const req = await fetch('https://wallet.goit.ua/api/transactions', {
         method: 'POST',
@@ -15,15 +20,15 @@ export const createTransaction = createAsyncThunk(
         body: JSON.stringify(transaction),
       });
 
+      const data = await req.json();
       if (!req.ok) {
-        throw new Error("Can't create a new transaction");
+        throw new Error(data.message);
       }
-
-      const resp = await req.json();
-      dispatch(addTransaction(resp));
-    } catch (error) {
-      console.log(error);
-      return rejectWithValue(error.message);
+      dispatch(setIsLoading(false));
+      return fulfillWithValue(data);
+    } catch (err) {
+      dispatch(setIsLoading(false));
+      return rejectWithValue({ message: err.message });
     }
   }
 );
@@ -61,14 +66,20 @@ const transactionSlice = createSlice({
     addTransactions: (state, action) => {
       state.transactions = action.payload;
     },
-    addTransaction: (state, action) => {
-      state.transactions.unshift(action.payload);
-    },
   },
   extraReducers: {
+    [createTransaction.pending]: (state) => {
+      state.error = null;
+    },
+    [createTransaction.fulfilled]: (state, { payload }) => {
+      state.transactions.unshift(payload);
+    },
+    [createTransaction.rejected]: (state, { payload }) => {
+      state.error = payload.message;
+    },
     [reset]: (state) => initialState,
   },
 });
 
-export const { addTransaction, addTransactions } = transactionSlice.actions;
+export const { addTransactions } = transactionSlice.actions;
 export const transactionsReducer = transactionSlice.reducer;
