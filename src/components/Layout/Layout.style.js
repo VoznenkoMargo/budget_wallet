@@ -18,6 +18,7 @@ export const AppContainer = styled(Container)(({ theme }) => {
     },
     [breakpoints.down('tablet')]: {
       padding: '0 20px',
+      rowGap: '25px',
     },
   };
 });

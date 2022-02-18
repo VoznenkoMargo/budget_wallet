@@ -18,7 +18,7 @@ export const StyledCurrentBalance = styled((props) => <div {...props} />)(
       },
 
       [breakpoints.down('tablet')]: {
-        marginTop: '10px',
+        marginTop: '18px',
       },
     };
   }
