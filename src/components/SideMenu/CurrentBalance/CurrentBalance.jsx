@@ -7,7 +7,7 @@ import {
 import { useSelector } from 'react-redux';
 
 const CurrentBalance = () => {
-  const balance = useSelector((state) => state.user.balance);
+  const balance = useSelector((state) => state.user.user.balance);
 
   return (
     <StyledCurrentBalance>

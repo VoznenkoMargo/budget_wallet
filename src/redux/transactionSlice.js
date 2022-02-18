@@ -63,8 +63,12 @@ const transactionSlice = createSlice({
     addTransaction: (state, action) => {
       state.transactions.unshift(action.payload);
     },
+    resetTransactionState: (state) => {
+      return initialState;
+    },
   },
 });
 
-export const { addTransaction, addTransactions } = transactionSlice.actions;
+export const { addTransaction, addTransactions, resetTransactionState } =
+  transactionSlice.actions;
 export const transactionsReducer = transactionSlice.reducer;

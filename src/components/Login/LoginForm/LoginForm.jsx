@@ -9,23 +9,19 @@ import { Formik, Form } from 'formik';
 import CustomInput from './CustomInput';
 import * as yup from 'yup';
 import { useSelector, useDispatch } from 'react-redux';
-import { loginUser, userSelector, clearState } from 'redux/userSlice';
+import { loginUser, userSelector } from 'redux/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from 'constants/routes';
 
 const LoginForm = (props) => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isFetching, isSuccess, isError, errorMessage } =
-    useSelector(userSelector);
+  const { error, isAuth } = useSelector(userSelector);
   useEffect(() => {
-    if (isError) {
-      console.error(errorMessage);
-      dispatch(clearState());
-    }
-    if (isSuccess) {
+    if (isAuth) {
       navigate(ROUTES.MAIN);
     }
-  }, [isError, isSuccess]);
+  }, [isAuth, navigate]);
 
   const validationSchema = yup.object().shape({
     email: yup.string().email('Invalid email').required('Email is required'),
@@ -39,7 +35,6 @@ const LoginForm = (props) => {
     email: '',
     password: '',
   };
-  const navigate = useNavigate();
   const handleClickRegistration = () => {
     navigate('/registration');
   };
