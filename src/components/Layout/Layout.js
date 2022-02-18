@@ -4,24 +4,20 @@ import { useSelector } from 'react-redux';
 import * as S from './Layout.style';
 
 const Layout = () => {
-  const { isAuth } = useSelector((state) => state.user);
+  const { isAuth } = useSelector(state => state.user);
 
   return (
     <>
-      {isAuth && (
-        <>
-          <AppBar />
-          <S.AppContainer>
-            <S.Aside>
-              <SideMenu />
-            </S.Aside>
-            <S.Main>
-              <Outlet />
-            </S.Main>
-          </S.AppContainer>
-          <AppBackground />
-        </>
-      )}
+      <AppBar />
+      <S.AppContainer>
+        <S.Aside>
+          <SideMenu />
+        </S.Aside>
+        <S.Main>
+          <Outlet />
+        </S.Main>
+      </S.AppContainer>
+      <AppBackground />
     </>
   );
 };

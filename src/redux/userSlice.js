@@ -6,7 +6,7 @@ export const signupUser = createAsyncThunk(
   'auth/sign-up',
   async (
     { username, email, password },
-    { rejectWithValue, fulfillWithValue, dispatch }
+    { rejectWithValue, fulfillWithValue, dispatch },
   ) => {
     try {
       dispatch(setIsLoading(true));
@@ -32,14 +32,14 @@ export const signupUser = createAsyncThunk(
       dispatch(setIsLoading(false));
       return rejectWithValue({ message: err.message });
     }
-  }
+  },
 );
 
 export const loginUser = createAsyncThunk(
   'auth/sign-in',
   async (
     { email, password },
-    { dispatch, fulfillWithValue, rejectWithValue }
+    { dispatch, fulfillWithValue, rejectWithValue },
   ) => {
     try {
       dispatch(setIsLoading(true));
@@ -64,7 +64,7 @@ export const loginUser = createAsyncThunk(
       dispatch(setIsLoading(false));
       return rejectWithValue({ message: err.message });
     }
-  }
+  },
 );
 
 export const signOutUser = createAsyncThunk(
@@ -90,7 +90,7 @@ export const signOutUser = createAsyncThunk(
       dispatch(setIsLoading(false));
       return rejectWithValue({ message: err.message });
     }
-  }
+  },
 );
 
 export const getCurrentUser = createAsyncThunk(
@@ -114,7 +114,7 @@ export const getCurrentUser = createAsyncThunk(
     } catch (err) {
       return rejectWithValue({ message: err.message });
     }
-  }
+  },
 );
 
 const initialState = {
@@ -133,7 +133,7 @@ export const userSlice = createSlice({
     },
   },
   extraReducers: {
-    [signupUser.pending]: (state) => {
+    [signupUser.pending]: state => {
       state.error = null;
     },
     [signupUser.fulfilled]: (state, { payload }) => {
@@ -145,7 +145,7 @@ export const userSlice = createSlice({
     [signupUser.rejected]: (state, { payload }) => {
       state.error = payload.message;
     },
-    [loginUser.pending]: (state) => {
+    [loginUser.pending]: state => {
       state.error = null;
     },
     [loginUser.fulfilled]: (state, { payload }) => {
@@ -157,7 +157,7 @@ export const userSlice = createSlice({
     [loginUser.rejected]: (state, { payload }) => {
       state.error = payload.message;
     },
-    [getCurrentUser.pending]: (state) => {
+    [getCurrentUser.pending]: state => {
       state.error = null;
     },
     [getCurrentUser.fulfilled]: (state, { payload }) => {
@@ -170,10 +170,10 @@ export const userSlice = createSlice({
     [signOutUser.rejected]: (state, payload) => {
       state.error = payload.message;
     },
-    [reset]: (state) => initialState,
+    // [reset]: state => initialState,
   },
 });
 
 export const { clearState, updateBalance } = userSlice.actions;
-export const userSelector = (state) => state.user;
+export const userSelector = state => state.user;
 export const userReducer = userSlice.reducer;

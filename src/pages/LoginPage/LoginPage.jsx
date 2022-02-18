@@ -6,6 +6,7 @@ import { Typography } from '@mui/material';
 import LoginForm from 'components/Login/LoginForm/LoginForm';
 
 const LoginPage = (props) => {
+  
   return (
     <div className={s.wrapper}>
       <img src={peach} alt="" className={s.peach} />
