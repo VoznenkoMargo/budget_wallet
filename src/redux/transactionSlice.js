@@ -1,42 +1,48 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { reset } from './globalSlice';
+import { setIsLoading } from './globalSlice';
 
 export const createTransaction = createAsyncThunk(
   'transactions/createTransaction',
-  async (transaction, { rejectWithValue, dispatch }) => {
+  async (
+    transaction,
+    { rejectWithValue, dispatch, getState, fulfillWithValue }
+  ) => {
     try {
+      dispatch(setIsLoading(true));
+      const { token } = getState().user;
       const req = await fetch('https://wallet.goit.ua/api/transactions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization:
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzaWQiOiJlNDM1ZmYzOC0wMzY0LTRkYmItOTk5OS1lNjdmNDliNzQ0NTEiLCJpYXQiOjE2NDUwMTA3MTMsImV4cCI6MTAwMDAwMDE2NDUwMTA3MTJ9.x4Zq1HqY3ZXXtMjy80wlsisyXT0VV2ezyeAEbUp2z3c',
+          Authorization: token,
         },
         body: JSON.stringify(transaction),
       });
 
+      const data = await req.json();
       if (!req.ok) {
-        throw new Error("Can't create a new transaction");
+        throw new Error(data.message);
       }
-
-      const resp = await req.json();
-      dispatch(addTransaction(resp));
-    } catch (error) {
-      console.log(error);
-      return rejectWithValue(error.message);
+      dispatch(setIsLoading(false));
+      return fulfillWithValue(data);
+    } catch (err) {
+      dispatch(setIsLoading(false));
+      return rejectWithValue({ message: err.message });
     }
-  },
+  }
 );
 
 export const getTransactions = createAsyncThunk(
   'transactions/getAllTransactions',
-  async (_, { rejectWithValue, dispatch }) => {
+  async (_, { rejectWithValue, dispatch, getState }) => {
     try {
+      const { token } = getState().user;
       const req = await fetch('https://wallet.goit.ua/api/transactions', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          Authorization:
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzaWQiOiJlNzNkNDNhNS1hYjJmLTRlODgtYmI3Ni0wZjFlMGJjNWNhYjMiLCJpYXQiOjE2NDQxNTczNzgsImV4cCI6MTAwMDAwMDE2NDQxNTczNzh9.e5qXzp0wq7x1xir0unYYGBgHwBEtCxlWNEgBrp-UteU',
+          Authorization: token,
         },
       });
       const resp = await req.json();
@@ -48,7 +54,7 @@ export const getTransactions = createAsyncThunk(
       console.log(error);
       return rejectWithValue(error.message);
     }
-  },
+  }
 );
 
 const initialState = { transactions: null, error: null };
@@ -60,11 +66,20 @@ const transactionSlice = createSlice({
     addTransactions: (state, action) => {
       state.transactions = action.payload;
     },
-    addTransaction: (state, action) => {
-      state.transactions.unshift(action.payload);
+  },
+  extraReducers: {
+    [createTransaction.pending]: (state) => {
+      state.error = null;
     },
+    [createTransaction.fulfilled]: (state, { payload }) => {
+      state.transactions.unshift(payload);
+    },
+    [createTransaction.rejected]: (state, { payload }) => {
+      state.error = payload.message;
+    },
+    [reset]: (state) => initialState,
   },
 });
 
-export const { addTransaction, addTransactions } = transactionSlice.actions;
+export const { addTransactions } = transactionSlice.actions;
 export const transactionsReducer = transactionSlice.reducer;

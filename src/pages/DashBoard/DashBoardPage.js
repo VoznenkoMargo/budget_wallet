@@ -17,7 +17,7 @@ function DashBoardPage() {
     (state) => state.categories.categories,
     shallowEqual
   );
-  const { isModalAddTransactionOpen, isLoading } = useSelector(
+  const { isModalAddTransactionOpen } = useSelector(
     (state) => state.global,
     shallowEqual
   );
@@ -47,7 +47,7 @@ function DashBoardPage() {
 
   return (
     <>
-      {!isLoading && transactions && categories && (
+      {transactions && categories && (
         <>
           <BasicTable transactions={transactions} categories={categories} />
           <ModalAddTransaction

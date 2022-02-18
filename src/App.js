@@ -1,11 +1,12 @@
 import { Route, Routes, Navigate } from 'react-router-dom';
-import { Suspense, lazy } from 'react';
-import { useSelector } from 'react-redux';
+import { Suspense, lazy, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { MoneyExchangeTable } from 'components/SideMenu/MoneyExchangeTable';
 import { useTheme } from '@mui/system';
 import Spinner from 'components/Spinner';
 import { useMediaQuery } from 'react-responsive';
 import { ROUTES } from 'constants/routes';
+import { getCurrentUser } from 'redux/userSlice';
 
 const DashBoardPage = lazy(() =>
   import(
@@ -38,9 +39,17 @@ const LoginPage = lazy(() =>
 );
 
 const App = () => {
-  const { isLoading } = useSelector((state) => state.global);
+  const dispatch = useDispatch();
   const { breakpoints } = useTheme();
+  const { isLoading } = useSelector((state) => state.global);
+  const { token } = useSelector((state) => state.user);
   const isSmallScreen = useMediaQuery({ maxWidth: breakpoints.values.tablet });
+
+  useEffect(() => {
+    if (token) {
+      dispatch(getCurrentUser());
+    }
+  }, [token, dispatch]);
 
   return (
     <div className="App">

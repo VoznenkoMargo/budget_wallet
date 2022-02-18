@@ -2,19 +2,20 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
   basicCategoriesColors,
   generateUniqueColor,
-} from '../components/DiagramTab/categoriesColors';
+} from 'components/DiagramTab/categoriesColors';
+import { reset } from './globalSlice';
 
 const BASIC_URL = 'https://wallet.goit.ua/api';
 
 export const getCategoriesStatistics = createAsyncThunk(
   'statistics/getCategoriesStatistics',
-  async (period, { rejectWithValue }) => {
+  async (period, { rejectWithValue, getState }) => {
+    const { token } = getState().user;
     const options = {
       method: 'GET',
       headers: {
         Accept: 'application/json',
-        Authorization:
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzaWQiOiJlNDM1ZmYzOC0wMzY0LTRkYmItOTk5OS1lNjdmNDliNzQ0NTEiLCJpYXQiOjE2NDUwMTA3MTMsImV4cCI6MTAwMDAwMDE2NDUwMTA3MTJ9.x4Zq1HqY3ZXXtMjy80wlsisyXT0VV2ezyeAEbUp2z3c',
+        Authorization: token,
       },
     };
 
@@ -26,14 +27,14 @@ export const getCategoriesStatistics = createAsyncThunk(
     }
     const response = await fetch(
       `${BASIC_URL}/transactions-summary?${queryString}`,
-      options,
+      options
     );
 
     if (!response.ok) {
       return rejectWithValue(await response.json());
     }
     return await response.json();
-  },
+  }
 );
 
 const initialState = {
@@ -65,7 +66,7 @@ const StatisticsSlice = createSlice({
       state.statistics.periodTotal += transaction.amount;
 
       const stateCategory = state.statistics['categoriesSummary'].find(
-        category => category.name === categoryName,
+        (category) => category.name === categoryName
       );
       if (stateCategory) {
         stateCategory.total += transaction.amount;
@@ -85,12 +86,12 @@ const StatisticsSlice = createSlice({
     builder
       .addCase(getCategoriesStatistics.fulfilled, (state, { payload }) => {
         payload['categoriesSummary'] = payload['categoriesSummary'].map(
-          elem => {
+          (elem) => {
             const color = basicCategoriesColors[elem.name];
             return color
               ? { ...elem, color }
               : { ...elem, color: generateUniqueColor() };
-          },
+          }
         );
         state.statistics = payload;
       })
@@ -103,7 +104,9 @@ const StatisticsSlice = createSlice({
         } else {
           state.error = 'Unknown error';
         }
-      });
+      })
+
+      .addCase(reset, (state) => initialState);
   },
 });
 

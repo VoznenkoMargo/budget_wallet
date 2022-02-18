@@ -1,10 +1,15 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { setIsLoading } from './globalSlice';
+import { reset } from './globalSlice';
 
 export const signupUser = createAsyncThunk(
   'auth/sign-up',
-  async ({ username, email, password }, thunkAPI) => {
+  async (
+    { username, email, password },
+    { rejectWithValue, fulfillWithValue, dispatch }
+  ) => {
     try {
+      dispatch(setIsLoading(true));
       const response = await fetch('https://wallet.goit.ua/api/auth/sign-up', {
         method: 'POST',
         headers: {
@@ -17,33 +22,27 @@ export const signupUser = createAsyncThunk(
           password,
         }),
       });
-      console.log(response);
-      let data = await response.json();
-      console.log('data', data);
-      // console.log('token', data.token);
-      if (response.status === 201) {
-        localStorage.setItem('data', data);
-        localStorage.setItem('token', data.token);
-        //return { ...data, username: username, email: email }
-        return thunkAPI.fulfillWithValue({
-          ...data,
-          username: username,
-          email: email,
-        });
-      } else {
-        return thunkAPI.rejectWithValue(data);
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message);
       }
-    } catch (e) {
-      console.log('Error', e.response.data);
-      return thunkAPI.rejectWithValue(e.response.data);
+      dispatch(setIsLoading(false));
+      return fulfillWithValue(data);
+    } catch (err) {
+      dispatch(setIsLoading(false));
+      return rejectWithValue({ message: err.message });
     }
-  },
+  }
 );
 
 export const loginUser = createAsyncThunk(
   'auth/sign-in',
-  async ({ email, password }, thunkAPI) => {
+  async (
+    { email, password },
+    { dispatch, fulfillWithValue, rejectWithValue }
+  ) => {
     try {
+      dispatch(setIsLoading(true));
       const response = await fetch('https://wallet.goit.ua/api/auth/sign-in', {
         method: 'POST',
         headers: {
@@ -55,27 +54,24 @@ export const loginUser = createAsyncThunk(
           password,
         }),
       });
-      let data = await response.json();
-      console.log('response js56', data.token);
-      if (response.status === 201) {
-        localStorage.setItem('token', data.token);
-
-        //   console.log(token);
-        return thunkAPI.fulfillWithValue(data);
-      } else {
-        return thunkAPI.rejectWithValue(data);
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message);
       }
-    } catch (e) {
-      console.log('Error', e.response.data);
-      thunkAPI.rejectWithValue(e.response.data);
+      dispatch(setIsLoading(false));
+      return fulfillWithValue(data);
+    } catch (err) {
+      dispatch(setIsLoading(false));
+      return rejectWithValue({ message: err.message });
     }
-  },
+  }
 );
 
-export const fetchUserBytoken = createAsyncThunk(
+export const getCurrentUser = createAsyncThunk(
   'users/current',
-  async ({ token }, thunkAPI) => {
+  async (_, { rejectWithValue, fulfillWithValue, getState }) => {
     try {
+      const { token } = getState().user;
       const response = await fetch('https://wallet.goit.ua/api/users/current', {
         method: 'GET',
         headers: {
@@ -84,120 +80,71 @@ export const fetchUserBytoken = createAsyncThunk(
           'Content-Type': 'application/json',
         },
       });
-      let data = await response.json();
-      if (response.status === 200) {
-        return { ...data };
-      } else {
-        return thunkAPI.rejectWithValue(data);
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message);
       }
-    } catch (e) {
-      console.log('Error', e.response.data);
-      return thunkAPI.rejectWithValue(e.response.data);
+      return fulfillWithValue(data);
+    } catch (err) {
+      return rejectWithValue({ message: err.message });
     }
-  },
+  }
 );
+
+const initialState = {
+  isAuth: false,
+  error: null,
+  user: null,
+  token: null,
+};
 
 export const userSlice = createSlice({
   name: 'user',
-  initialState: {
-    username: '',
-    email: '',
-    isFetching: false,
-    isSuccess: false,
-    isError: false,
-    errorMessage: '',
-    token: null,
-    balance: '',
-    isLoggedIn: false,
-  },
+  initialState,
   reducers: {
-    clearState: state => {
-      state.isError = false;
-      state.isSuccess = false;
-      state.isFetching = false;
-
-      return state;
-    },
-
     updateBalance: (state, { payload }) => {
-      state.balance += payload;
+      state.user.balance += payload;
     },
   },
   extraReducers: {
-    [signupUser.fulfilled]: (state, { payload }) => {
-      console.log('payload', payload);
-      state.isFetching = false;
-      state.isSuccess = true;
-      state.email = payload.user.email;
-      state.username = payload.user.username;
-      state.token = payload.token;
-      state.isLoggedIn = true;
+    [signupUser.pending]: (state) => {
+      state.error = null;
     },
-    [signupUser.pending]: state => {
-      state.isFetching = true;
+    [signupUser.fulfilled]: (state, { payload }) => {
+      state.error = null;
+      state.token = payload.token;
+      state.user = payload.user;
+      state.isAuth = true;
     },
     [signupUser.rejected]: (state, { payload }) => {
-      state.isFetching = false;
-      state.isError = true;
-      state.errorMessage = payload.message;
+      state.error = payload.message;
+    },
+    [loginUser.pending]: (state) => {
+      state.error = null;
     },
     [loginUser.fulfilled]: (state, { payload }) => {
-      state.email = payload.user.email;
-      state.username = payload.user.username;
+      state.error = null;
       state.token = payload.token;
-      state.isFetching = false;
-      state.isSuccess = true;
-      state.isLoggedIn = true;
-      console.log(state.token);
-      return state;
+      state.user = payload.user;
+      state.isAuth = true;
     },
     [loginUser.rejected]: (state, { payload }) => {
-      console.log('payload', payload);
-      state.isFetching = false;
-      state.isError = true;
-      state.errorMessage = payload.message;
+      state.error = payload.message;
     },
-    [loginUser.pending]: state => {
-      state.isFetching = true;
+    [getCurrentUser.pending]: (state) => {
+      state.error = null;
     },
-    //  [logoutUser.fulfilled]: (state, { payload }) => {
-    //    state.email = '';
-    //    state.username = '';
-    //    state.token = '';
-    //    state.isFetching = false;
-    //    state.isSuccess = true;
-    //    state.isLoggedIn = false;
-    //    // console.log(state.isLoggedIn);
-    //    console.log(state.token);
-    //    return state;
-    //  },
-    //  [logoutUser.rejected]: (state, { payload }) => {
-    //    console.log('payload', payload);
-    //    state.isFetching = false;
-    //    state.isError = true;
-    //    state.errorMessage = payload.message;
-    //  },
-    //  [logoutUser.pending]: state => {
-    //    state.isFetching = true;
-    //  },
-    [fetchUserBytoken.pending]: state => {
-      state.isFetching = true;
+    [getCurrentUser.fulfilled]: (state, { payload }) => {
+      state.user = payload;
+      state.isAuth = true;
     },
-    [fetchUserBytoken.fulfilled]: (state, { payload }) => {
-      state.isFetching = false;
-      state.isSuccess = true;
-
-      state.email = payload.email;
-      state.username = payload.username;
-      state.balance = payload.balance;
+    [getCurrentUser.rejected]: (state, payload) => {
+      state.error = payload.message;
     },
-    [fetchUserBytoken.rejected]: state => {
-      console.log('fetchUserBytoken');
-      state.isFetching = false;
-      state.isError = true;
-    },
+    [reset]: (state) => initialState,
   },
 });
+
 export const { clearState, updateBalance } = userSlice.actions;
-export const userSelector = state => state.user;
+export const userSelector = (state) => state.user;
 export const userReducer = userSlice.reducer;

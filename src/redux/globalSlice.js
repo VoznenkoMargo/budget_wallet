@@ -1,4 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAction, createSlice } from '@reduxjs/toolkit';
+
+export const reset = createAction('reset');
 
 const initialState = {
   isLoading: false,
@@ -19,6 +21,9 @@ const globalSlice = createSlice({
     setIsModalLogoutOpen: (state, action) => {
       state.isModalLogoutOpen = action.payload;
     },
+  },
+  extraReducers: {
+    [reset]: (state) => initialState,
   },
 });
 

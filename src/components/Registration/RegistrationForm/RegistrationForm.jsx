@@ -1,5 +1,5 @@
 import s from './RegistrationForm.module.css';
-import { signupUser, userSelector, clearState } from 'redux/userSlice';
+import { signupUser } from 'redux/userSlice';
 import { Button, Box } from '@mui/material';
 import InputAdornment from '@mui/material/InputAdornment';
 import EmailIcon from '@mui/icons-material/Email';
@@ -16,17 +16,13 @@ import { ROUTES } from 'constants/routes';
 
 const RegistrationForm = (props) => {
   const dispatch = useDispatch();
-  const { isFetching, isSuccess, isError, errorMessage } =
-    useSelector(userSelector);
+  const navigate = useNavigate();
+  const { error, isAuth } = useSelector((state) => state.user);
   useEffect(() => {
-    if (isSuccess) {
+    if (isAuth) {
       navigate(ROUTES.MAIN);
     }
-    if (isError) {
-      console.error(errorMessage);
-      dispatch(clearState());
-    }
-  }, [isSuccess, isError]);
+  }, [isAuth, navigate]);
 
   const validationSchema = yup.object().shape({
     email: yup.string().email('Invalid email').required('Email is required'),
@@ -51,7 +47,6 @@ const RegistrationForm = (props) => {
     confirm: '',
     username: '',
   };
-  const navigate = useNavigate();
   const handleClickLogIn = () => {
     navigate(ROUTES.LOGIN);
   };
@@ -186,7 +181,6 @@ const RegistrationForm = (props) => {
                   REGISTRATION
                 </Button>
                 <Button
-                  type="submit"
                   fullWidth
                   variant="outlined"
                   onClick={handleClickLogIn}
