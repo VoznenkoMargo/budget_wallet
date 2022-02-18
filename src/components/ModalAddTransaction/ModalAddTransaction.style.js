@@ -1,5 +1,5 @@
 import { Close } from '@mui/icons-material';
-import { Button, Typography, Modal as MuiModal } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import { styled, alpha } from '@mui/system';
 
 export const FilledButton = styled((props) => (
@@ -114,15 +114,6 @@ export const InputsContainer = styled('div')(({ theme }) => {
     [breakpoints.down('mobile')]: {
       flexDirection: 'column',
       rowGap: '40px',
-    },
-  };
-});
-
-export const Modal = styled((props) => <MuiModal {...props} />)(({ theme }) => {
-  const { palette } = theme;
-  return {
-    '& .MuiBackdrop-root': {
-      backgroundColor: alpha(palette.common.black, 0.25),
     },
   };
 });
