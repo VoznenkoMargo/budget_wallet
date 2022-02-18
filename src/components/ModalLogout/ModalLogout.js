@@ -3,17 +3,18 @@ import { Modal } from 'components/common/Modal';
 import { ROUTES } from 'constants/routes';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
-import { reset } from 'redux/globalSlice';
+import { signOutUser } from 'redux/userSlice';
 import * as S from './ModalLogout.style';
 
 const ModalLogout = ({ open, onClose }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const onConfirmHandler = () => {
-    onClose();
-    dispatch(reset());
-    navigate(ROUTES.LOGIN);
+  const onConfirmHandler = async () => {
+    const signOutAction = await dispatch(signOutUser());
+    if (!signOutAction.error) {
+      navigate(ROUTES.LOGIN);
+    }
   };
 
   return (

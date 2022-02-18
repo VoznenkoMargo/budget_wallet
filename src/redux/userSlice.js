@@ -67,6 +67,32 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+export const signOutUser = createAsyncThunk(
+  'auth/sign-out',
+  async (_, { dispatch, rejectWithValue, getState }) => {
+    try {
+      const { token } = getState().user;
+      dispatch(setIsLoading(true));
+      const response = await fetch('https://wallet.goit.ua/api/auth/sign-out', {
+        method: 'DELETE',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: token,
+        },
+      });
+      if (!response.ok) {
+        throw new Error('Something went wrong during log out!');
+      }
+      dispatch(setIsLoading(false));
+      dispatch(reset());
+    } catch (err) {
+      dispatch(setIsLoading(false));
+      return rejectWithValue({ message: err.message });
+    }
+  }
+);
+
 export const getCurrentUser = createAsyncThunk(
   'users/current',
   async (_, { rejectWithValue, fulfillWithValue, getState }) => {
@@ -139,6 +165,9 @@ export const userSlice = createSlice({
       state.isAuth = true;
     },
     [getCurrentUser.rejected]: (state, payload) => {
+      state.error = payload.message;
+    },
+    [signOutUser.rejected]: (state, payload) => {
       state.error = payload.message;
     },
     [reset]: (state) => initialState,
