@@ -1,6 +1,5 @@
-import { Fade } from '@mui/material';
 import { DatePicker } from './DatePicker';
-import { BaseInput } from 'components/common';
+import { BaseInput, Modal } from 'components/common';
 import { Select } from './Select';
 import { Switch } from './Switch';
 import { useFormik } from 'formik';
@@ -133,71 +132,69 @@ const ModalAddTransaction = ({ open, onClose, categories }) => {
   };
 
   return (
-    <S.Modal open={open} onClose={onCloseHandler} closeAfterTransition>
-      <Fade in={open}>
-        <S.Form onSubmit={formik.handleSubmit} autoComplete="off">
-          <S.Title>Add transaction</S.Title>
-          <S.CloseIcon onClick={onCloseHandler} />
-          <Switch
-            labelDefault="Income"
-            labelChecked="Expenses"
-            checked={formik.values.isExpenseMode}
-            onChange={onTypeChangeHandler}
+    <Modal open={open} onClose={onCloseHandler}>
+      <S.Form onSubmit={formik.handleSubmit} autoComplete="off">
+        <S.Title>Add transaction</S.Title>
+        <S.CloseIcon onClick={onCloseHandler} />
+        <Switch
+          labelDefault="Income"
+          labelChecked="Expenses"
+          checked={formik.values.isExpenseMode}
+          onChange={onTypeChangeHandler}
+        />
+        {formik.values.isExpenseMode && (
+          <Select
+            name="categoryId"
+            value={formik.values.categoryId}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            options={expenseCategories}
+            placeholder="Select a category"
+            error={
+              formik.touched.categoryId && Boolean(formik.errors.categoryId)
+            }
+            helperText={formik.touched.categoryId && formik.errors.categoryId}
           />
-          {formik.values.isExpenseMode && (
-            <Select
-              name="categoryId"
-              value={formik.values.categoryId}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              options={expenseCategories}
-              placeholder="Select a category"
-              error={
-                formik.touched.categoryId && Boolean(formik.errors.categoryId)
-              }
-              helperText={formik.touched.categoryId && formik.errors.categoryId}
-            />
-          )}
-          <S.InputsContainer>
-            <BaseInput
-              color="secondary"
-              variant="standard"
-              placeholder="0.00"
-              type="number"
-              name="amount"
-              value={formik.values.amount}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.amount && Boolean(formik.errors.amount)}
-              helperText={formik.touched.amount && formik.errors.amount}
-            />
-            <DatePicker
-              value={formik.values.transactionDate}
-              onChange={onDateChangeHandler}
-            />
-          </S.InputsContainer>
+        )}
+        <S.InputsContainer>
           <BaseInput
-            sx={{
-              '& .MuiInput-input': {
-                textAlign: 'left',
-                padding: '10px 20px 10px 20px',
-              },
-            }}
             color="secondary"
             variant="standard"
-            placeholder="Comments"
-            type="text"
-            name="comment"
-            value={formik.values.comment}
+            placeholder="0.00"
+            type="number"
+            name="amount"
+            value={formik.values.amount}
             onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.amount && Boolean(formik.errors.amount)}
+            helperText={formik.touched.amount && formik.errors.amount}
           />
-          <S.ButtonsContainer>
-            <S.FilledButton type="submit">Add</S.FilledButton>
-            <S.OutlinedButton onClick={onCloseHandler}>Cancel</S.OutlinedButton>
-          </S.ButtonsContainer>
-        </S.Form>
-      </Fade>
-    </S.Modal>
+          <DatePicker
+            value={formik.values.transactionDate}
+            onChange={onDateChangeHandler}
+          />
+        </S.InputsContainer>
+        <BaseInput
+          sx={{
+            '& .MuiInput-input': {
+              textAlign: 'left',
+              padding: '10px 20px 10px 20px',
+            },
+          }}
+          color="secondary"
+          variant="standard"
+          placeholder="Comments"
+          type="text"
+          name="comment"
+          value={formik.values.comment}
+          onChange={formik.handleChange}
+        />
+        <S.ButtonsContainer>
+          <S.FilledButton type="submit">Add</S.FilledButton>
+          <S.OutlinedButton onClick={onCloseHandler}>Cancel</S.OutlinedButton>
+        </S.ButtonsContainer>
+      </S.Form>
+    </Modal>
   );
 };
 
