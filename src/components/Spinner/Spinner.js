@@ -10,8 +10,8 @@ const Spinner = () => {
       <Oval
         color={palette.secondary.main}
         secondaryColor={palette.primary.main}
-        height={85}
-        width={85}
+        height={35}
+        width={35}
         visible={true}
       />
     </div>
