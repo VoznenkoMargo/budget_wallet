@@ -1,20 +1,15 @@
 import { Button } from '@mui/material';
 import { Modal } from 'components/common/Modal';
-import { ROUTES } from 'constants/routes';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
 import { signOutUser } from 'redux/userSlice';
+import { lighten } from '@mui/system';
 import * as S from './ModalLogout.style';
 
 const ModalLogout = ({ open, onClose }) => {
+  const error = useSelector((state) => state.user.error);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const onConfirmHandler = async () => {
-    const signOutAction = await dispatch(signOutUser());
-    if (!signOutAction.error) {
-      navigate(ROUTES.LOGIN);
-    }
+  const onConfirmHandler = () => {
+    dispatch(signOutUser());
   };
 
   return (
@@ -29,6 +24,12 @@ const ModalLogout = ({ open, onClose }) => {
             variant="contained"
             onClick={onConfirmHandler}
             disableElevation
+            sx={{
+              ':hover': {
+                backgroundColor: (theme) =>
+                  lighten(theme.palette.primary.main, 0.4),
+              },
+            }}
           >
             Yes
           </Button>

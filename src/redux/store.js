@@ -4,7 +4,7 @@ import { userReducer } from './userSlice';
 import { categoriesReducer } from './categoriesSlice';
 import { globalReducer } from './globalSlice';
 import { statisticsReducer } from './statisticsSlice';
-import logger from 'redux-logger';
+import { createLogger } from 'redux-logger';
 import {
   persistStore,
   persistReducer,
@@ -22,6 +22,8 @@ const authPersistConfig = {
   storage,
   whitelist: ['token'],
 };
+
+const logger = createLogger({ collapsed: true });
 
 export const store = configureStore({
   reducer: {

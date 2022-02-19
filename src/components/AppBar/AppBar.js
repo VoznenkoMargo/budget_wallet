@@ -6,11 +6,13 @@ import { StyledToolbar, Header, ExitButton, UserName } from './AppBar.styled';
 import { setIsModalLogoutOpen } from 'redux/globalSlice';
 import { ModalLogout } from 'components/ModalLogout';
 
-const StyledAppBar = () => {
+const AppBar = () => {
   const { breakpoints } = useTheme();
   const dispatch = useDispatch();
-  const { isModalLogoutOpen } = useSelector((state) => state.global);
-  const { username } = useSelector((state) => state.user.user);
+  const isModalLogoutOpen = useSelector(
+    (state) => state.global.isModalLogoutOpen
+  );
+  const username = useSelector((state) => state.user.user.username);
 
   const onLogOutClickHandler = () => {
     dispatch(setIsModalLogoutOpen(true));
@@ -48,4 +50,4 @@ const StyledAppBar = () => {
   );
 };
 
-export default StyledAppBar;
+export default AppBar;

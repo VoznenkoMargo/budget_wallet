@@ -1,14 +1,22 @@
 import { useLocation, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { ROUTES } from 'constants/routes';
 
-export default function RequireAuth({ children }) {
+export const PrivateRoute = ({ children }) => {
   const location = useLocation();
-  //   console.log(location.pathname);
+  const isAuth = useSelector((state) => state.user.isAuth);
 
-  const { isAuth } = useSelector(state => state.user);
-  console.log(isAuth);
-  if (!isAuth) {
-    return <Navigate to="/login" state={{ from: location }} />;
-  }
-  return children;
-}
+  return isAuth ? (
+    children
+  ) : (
+    <Navigate to={ROUTES.LOGIN} replace state={{ from: location }} />
+  );
+};
+
+export const PublicRoute = ({ children, restricted = false }) => {
+  const location = useLocation();
+  const isAuth = useSelector((state) => state.user.isAuth);
+  const from = location.state?.from?.pathname || ROUTES.MAIN;
+
+  return isAuth && restricted ? <Navigate to={from} replace /> : children;
+};

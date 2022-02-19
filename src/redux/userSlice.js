@@ -6,7 +6,7 @@ export const signupUser = createAsyncThunk(
   'auth/sign-up',
   async (
     { username, email, password },
-    { rejectWithValue, fulfillWithValue, dispatch },
+    { rejectWithValue, fulfillWithValue, dispatch }
   ) => {
     try {
       dispatch(setIsLoading(true));
@@ -32,14 +32,14 @@ export const signupUser = createAsyncThunk(
       dispatch(setIsLoading(false));
       return rejectWithValue({ message: err.message });
     }
-  },
+  }
 );
 
 export const loginUser = createAsyncThunk(
   'auth/sign-in',
   async (
     { email, password },
-    { dispatch, fulfillWithValue, rejectWithValue },
+    { dispatch, fulfillWithValue, rejectWithValue }
   ) => {
     try {
       dispatch(setIsLoading(true));
@@ -64,7 +64,7 @@ export const loginUser = createAsyncThunk(
       dispatch(setIsLoading(false));
       return rejectWithValue({ message: err.message });
     }
-  },
+  }
 );
 
 export const signOutUser = createAsyncThunk(
@@ -90,14 +90,15 @@ export const signOutUser = createAsyncThunk(
       dispatch(setIsLoading(false));
       return rejectWithValue({ message: err.message });
     }
-  },
+  }
 );
 
 export const getCurrentUser = createAsyncThunk(
   'users/current',
-  async (_, { rejectWithValue, fulfillWithValue, getState }) => {
+  async (_, { rejectWithValue, fulfillWithValue, getState, dispatch }) => {
     try {
       const { token } = getState().user;
+      if (!token) return;
       const response = await fetch('https://wallet.goit.ua/api/users/current', {
         method: 'GET',
         headers: {
@@ -110,11 +111,12 @@ export const getCurrentUser = createAsyncThunk(
       if (!response.ok) {
         throw new Error(data.message);
       }
+      dispatch(setIsAuth(true));
       return fulfillWithValue(data);
     } catch (err) {
       return rejectWithValue({ message: err.message });
     }
-  },
+  }
 );
 
 const initialState = {
@@ -131,9 +133,12 @@ export const userSlice = createSlice({
     updateBalance: (state, { payload }) => {
       state.user.balance += payload;
     },
+    setIsAuth: (state, { payload }) => {
+      state.isAuth = payload;
+    },
   },
   extraReducers: {
-    [signupUser.pending]: state => {
+    [signupUser.pending]: (state) => {
       state.error = null;
     },
     [signupUser.fulfilled]: (state, { payload }) => {
@@ -145,7 +150,7 @@ export const userSlice = createSlice({
     [signupUser.rejected]: (state, { payload }) => {
       state.error = payload.message;
     },
-    [loginUser.pending]: state => {
+    [loginUser.pending]: (state) => {
       state.error = null;
     },
     [loginUser.fulfilled]: (state, { payload }) => {
@@ -156,24 +161,27 @@ export const userSlice = createSlice({
     },
     [loginUser.rejected]: (state, { payload }) => {
       state.error = payload.message;
+      state.isAuth = false;
     },
-    [getCurrentUser.pending]: state => {
+    [getCurrentUser.pending]: (state) => {
       state.error = null;
     },
     [getCurrentUser.fulfilled]: (state, { payload }) => {
       state.user = payload;
-      state.isAuth = true;
     },
     [getCurrentUser.rejected]: (state, payload) => {
       state.error = payload.message;
     },
+    [signOutUser.pending]: (state) => {
+      state.error = null;
+    },
     [signOutUser.rejected]: (state, payload) => {
       state.error = payload.message;
     },
-    // [reset]: state => initialState,
+    [reset]: (state) => initialState,
   },
 });
 
-export const { clearState, updateBalance } = userSlice.actions;
-export const userSelector = state => state.user;
+export const { clearState, updateBalance, setIsAuth } = userSlice.actions;
+export const userSelector = (state) => state.user;
 export const userReducer = userSlice.reducer;

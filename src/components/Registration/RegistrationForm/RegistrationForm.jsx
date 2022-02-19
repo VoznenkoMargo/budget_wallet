@@ -6,7 +6,6 @@ import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import { Logo } from 'components/common';
-import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import CustomInput from './CustomInput';
@@ -17,12 +16,7 @@ import { ROUTES } from 'constants/routes';
 const RegistrationForm = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { error, isAuth } = useSelector((state) => state.user);
-  useEffect(() => {
-    if (isAuth) {
-      navigate(ROUTES.MAIN);
-    }
-  }, [isAuth, navigate]);
+  const error = useSelector((state) => state.user.error);
 
   const validationSchema = yup.object().shape({
     email: yup.string().email('Invalid email').required('Email is required'),
@@ -51,6 +45,10 @@ const RegistrationForm = (props) => {
     navigate(ROUTES.LOGIN);
   };
 
+  const onRegisterHandler = async (values) => {
+    dispatch(signupUser(values));
+  };
+
   return (
     <div className={s.form}>
       <Box
@@ -67,9 +65,7 @@ const RegistrationForm = (props) => {
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={(values) => {
-            dispatch(signupUser(values));
-          }}
+          onSubmit={onRegisterHandler}
         >
           {({ dirty }) => (
             <Form>
