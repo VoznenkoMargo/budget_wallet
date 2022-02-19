@@ -7,7 +7,7 @@ import Spinner from 'components/Spinner';
 import { useMediaQuery } from 'react-responsive';
 import { ROUTES } from 'constants/routes';
 import { getCurrentUser } from 'redux/userSlice';
-import { PublicRoute, PrivateRoute } from 'components/Hoc/RequireAuth';
+import { PublicRoute, PrivateRoute } from 'components/Routes';
 
 const DashBoardPage = lazy(() =>
   import(
