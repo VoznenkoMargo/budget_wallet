@@ -37,6 +37,7 @@ export const getTransactions = createAsyncThunk(
   'transactions/getAllTransactions',
   async (_, { rejectWithValue, dispatch, getState }) => {
     try {
+      dispatch(setIsLoading(true));
       const { token } = getState().user;
       const req = await fetch('https://wallet.goit.ua/api/transactions', {
         method: 'GET',
@@ -46,12 +47,13 @@ export const getTransactions = createAsyncThunk(
         },
       });
       const resp = await req.json();
-      dispatch(addTransactions(resp));
       if (!req.ok) {
-        throw new Error("Can't get all transactions");
+        throw new Error(resp.message);
       }
+      dispatch(addTransactions(resp));
+      dispatch(setIsLoading(false));
     } catch (error) {
-      console.log(error);
+      dispatch(setIsLoading(false));
       return rejectWithValue(error.message);
     }
   }
