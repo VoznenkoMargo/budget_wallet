@@ -4,8 +4,8 @@ import MyTable from 'components/Table';
 import s from './DiagramTab.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { setIsLoading } from '../../redux/globalSlice';
-import { getCategoriesStatistics } from '../../redux/statisticsSlice';
+import { setIsLoading } from 'redux/globalSlice';
+import { getCategoriesStatistics } from 'redux/statisticsSlice';
 
 export default function DiagramTab() {
   const statistics = useSelector((state) => state.statistics.statistics);

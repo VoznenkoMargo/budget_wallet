@@ -4,24 +4,18 @@ import InputAdornment from '@mui/material/InputAdornment';
 import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
 import { Logo } from 'components/common';
-import React, { useEffect } from 'react';
 import { Formik, Form } from 'formik';
 import CustomInput from './CustomInput';
 import * as yup from 'yup';
 import { useSelector, useDispatch } from 'react-redux';
-import { loginUser, userSelector } from 'redux/userSlice';
+import { loginUser } from 'redux/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from 'constants/routes';
 
 const LoginForm = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { error, isAuth } = useSelector(userSelector);
-  useEffect(() => {
-    if (isAuth) {
-      navigate(ROUTES.MAIN);
-    }
-  }, [isAuth, navigate]);
+  const error = useSelector((state) => state.user.error);
 
   const validationSchema = yup.object().shape({
     email: yup.string().email('Invalid email').required('Email is required'),
@@ -36,7 +30,11 @@ const LoginForm = (props) => {
     password: '',
   };
   const handleClickRegistration = () => {
-    navigate('/registration');
+    navigate(ROUTES.REGISTRATION);
+  };
+
+  const onLoginHandler = (values) => {
+    dispatch(loginUser(values));
   };
 
   return (
@@ -55,9 +53,7 @@ const LoginForm = (props) => {
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={(values) => {
-            dispatch(loginUser(values));
-          }}
+          onSubmit={onLoginHandler}
         >
           {({ dirty }) => (
             <Form>

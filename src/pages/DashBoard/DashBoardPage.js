@@ -5,7 +5,7 @@ import { ButtonAddTransaction } from 'components/common';
 import { ModalAddTransaction, BasicTable } from 'components';
 import { getTransactions } from 'redux/transactionSlice';
 import { getTransactionCategories } from 'redux/categoriesSlice';
-import { setIsLoading, setIsModalAddTransactionOpen } from 'redux/globalSlice';
+import { setIsModalAddTransactionOpen } from 'redux/globalSlice';
 
 function DashBoardPage() {
   const dispatch = useDispatch();
@@ -26,15 +26,8 @@ function DashBoardPage() {
     if ((transactions !== null || undefined) && transactions.length > 0) {
       return;
     }
-    (async () => {
-      dispatch(setIsLoading(true));
-      await Promise.all([
-        dispatch(getTransactions()),
-        dispatch(getTransactionCategories()),
-      ]);
-
-      dispatch(setIsLoading(false));
-    })();
+    dispatch(getTransactions());
+    dispatch(getTransactionCategories());
   }, [dispatch, transactions]);
 
   const onModalCloseHandler = () => {

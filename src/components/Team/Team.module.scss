@@ -1,11 +1,10 @@
 .linkItem {
   list-style: none;
-  
 }
 .devTitle {
   display: inline-block;
   padding: 10px;
-  border: 2px solid #fd9498;
+  border: 2px solid #984ae2;
   border-radius: 5px;
 }
 
@@ -36,8 +35,9 @@
 }
 .position {
   text-align: center;
-  color: #4a56e2;
-  font-size: 22px;
+  color: #984ae2;
+  font-weight: 500;
+  font-size: 25px;
 }
 
 .devInfo {
@@ -78,39 +78,26 @@
   display: flex;
   justify-content: center;
   margin-top: 10px;
-  color: #545454;
+  // color: #545454;
   padding-left: 0;
 
   li:not(:last-child) {
     margin-right: 10px;
   }
 
- .link {
+  .link {
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 50%;
     width: 34px;
     height: 34px;
-
-    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
-    transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    color: #000;
   }
 
   .link:hover,
   .link:focus {
-    background-color: #81E1FF;
+    background-color: #ae7fda;
     transform: scale(1.2);
-  }
-
-  
-}
-.cardIcon {
-  margin-right: 8px;
-  fill: green;
-  transition: color, fill, border 250ms cubic-bezier(0.4, 0, 0.2, 1);
-
-  &:hover {
-    fill: blue;
   }
 }
