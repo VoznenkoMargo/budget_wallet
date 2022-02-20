@@ -14,6 +14,7 @@ const OutlinedButton = styled((props) => (
     fontWeight: 400,
     padding: '12px 0',
     border: '1px solid',
+    letterSpacing: '0.1em',
     borderColor: palette.secondary.main,
     color: palette.secondary.main,
     [breakpoints.down('mobile')]: {
