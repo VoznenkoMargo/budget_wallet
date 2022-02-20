@@ -33,12 +33,17 @@ export const store = configureStore({
     statistics: statisticsReducer,
     global: globalReducer,
   },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
+  middleware: getDefaultMiddleware => {
+    const middlewares = getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(logger),
+    });
+    if (process.env.NODE_ENV === 'development') {
+      middlewares.push(logger);
+    }
+    return middlewares;
+  },
   devTools: process.env.NODE_ENV === 'development',
 });
 
