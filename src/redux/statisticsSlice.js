@@ -1,10 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import {
-  basicCategoriesColors,
-} from 'components/DiagramTab/categoriesColors';
+import { basicCategoriesColors } from 'components/DiagramTab/categoriesColors';
 import { reset } from './globalSlice';
-
-const BASIC_URL = 'https://wallet.goit.ua/api';
+import { BASE_URL } from 'constants/api';
 
 export const getCategoriesStatistics = createAsyncThunk(
   'statistics/getCategoriesStatistics',
@@ -25,7 +22,7 @@ export const getCategoriesStatistics = createAsyncThunk(
       queryString = `year=${period.year}`;
     }
     const response = await fetch(
-      `${BASIC_URL}/transactions-summary?${queryString}`,
+      `${BASE_URL}transactions-summary?${queryString}`,
       options
     );
 
@@ -74,9 +71,7 @@ const StatisticsSlice = createSlice({
           name: categoryName,
           type: transaction.type,
           total: transaction.amount,
-          color:
-            basicCategoriesColors[categoryName]
-            || '#000000',
+          color: basicCategoriesColors[categoryName] || '#000000',
         };
         state.statistics['categoriesSummary'].push(category);
       }
@@ -89,7 +84,7 @@ const StatisticsSlice = createSlice({
         payload['categoriesSummary'] = payload['categoriesSummary'].map(
           (elem) => {
             const color = basicCategoriesColors[elem.name];
-            return color ? {...elem, color } : {...elem, color: '#000000'};
+            return color ? { ...elem, color } : { ...elem, color: '#000000' };
           }
         );
         state.statistics = payload;

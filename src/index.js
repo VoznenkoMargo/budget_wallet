@@ -6,6 +6,8 @@ import { Provider } from 'react-redux';
 import { store, persistor } from 'redux/store';
 import ThemeConfig from 'theme';
 import { PersistGate } from 'redux-persist/integration/react';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -14,6 +16,7 @@ ReactDOM.render(
         <BrowserRouter>
           <ThemeConfig>
             <App />
+            <ToastContainer autoClose={2500} />
           </ThemeConfig>
         </BrowserRouter>
       </PersistGate>

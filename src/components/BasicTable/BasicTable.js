@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-globals */
 import React, { useMemo } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -7,7 +6,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import './BasicTable.scss';
-import { useTheme } from '@mui/system';
+import { Box, useTheme } from '@mui/system';
+import { TRANSACTION_TYPES } from 'constants/transactionTypes';
 
 export default function BasicTable(props) {
   const { palette } = useTheme();
@@ -92,7 +92,9 @@ export default function BasicTable(props) {
               ({ date, type, category, comments, amount, balance, id }) => (
                 <TableRow
                   key={id}
-                  className={`${type === 'EXPENSE' ? 'costs' : 'income'}`}
+                  className={`${
+                    type === TRANSACTION_TYPES.EXPENSE ? 'costs' : 'income'
+                  }`}
                   sx={{
                     '& .MuiTableCell-root': {
                       textAlign: 'center',
@@ -101,7 +103,7 @@ export default function BasicTable(props) {
                 >
                   <TableCell data-toggle="Date">{date}</TableCell>
                   <TableCell data-toggle="Type">
-                    {type === 'INCOME' ? '+' : '-'}
+                    {type === TRANSACTION_TYPES.INCOME ? '+' : '-'}
                   </TableCell>
                   <TableCell data-toggle="Category">
                     {getCategoryName(category, categories)}
@@ -111,7 +113,7 @@ export default function BasicTable(props) {
                     data-toggle="Amount"
                     sx={{
                       color:
-                        type === 'EXPENSE'
+                        type === TRANSACTION_TYPES.EXPENSE
                           ? palette.tertiary.main
                           : palette.primary.main,
                     }}
@@ -127,6 +129,11 @@ export default function BasicTable(props) {
           </TableBody>
         </Table>
       </TableContainer>
+      {transactions.length === 0 ? (
+        <Box sx={{ textAlign: 'center', width: '100%', marginTop: '30px' }}>
+          There's no transactions yet
+        </Box>
+      ) : null}
     </>
   );
 }

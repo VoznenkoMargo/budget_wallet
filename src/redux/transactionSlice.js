@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { reset } from './globalSlice';
 import { setIsLoading } from './globalSlice';
+import { BASE_URL } from 'constants/api';
 
 export const createTransaction = createAsyncThunk(
   'transactions/createTransaction',
@@ -11,7 +12,7 @@ export const createTransaction = createAsyncThunk(
     try {
       dispatch(setIsLoading(true));
       const { token } = getState().user;
-      const req = await fetch('https://wallet.goit.ua/api/transactions', {
+      const req = await fetch(`${BASE_URL}transactions`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -39,7 +40,7 @@ export const getTransactions = createAsyncThunk(
     try {
       dispatch(setIsLoading(true));
       const { token } = getState().user;
-      const req = await fetch('https://wallet.goit.ua/api/transactions', {
+      const req = await fetch(`${BASE_URL}transactions`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -59,7 +60,7 @@ export const getTransactions = createAsyncThunk(
   }
 );
 
-const initialState = { transactions: null, error: null };
+const initialState = { transactions: null, error: null, isCreated: null };
 
 const transactionSlice = createSlice({
   name: 'transactions',
@@ -68,6 +69,12 @@ const transactionSlice = createSlice({
     addTransactions: (state, action) => {
       state.transactions = action.payload;
     },
+    resetError: (state) => {
+      state.error = null;
+    },
+    resetIsCreated: (state) => {
+      state.isCreated = null;
+    },
   },
   extraReducers: {
     [createTransaction.pending]: (state) => {
@@ -75,6 +82,7 @@ const transactionSlice = createSlice({
     },
     [createTransaction.fulfilled]: (state, { payload }) => {
       state.transactions.unshift(payload);
+      state.isCreated = true;
     },
     [createTransaction.rejected]: (state, { payload }) => {
       state.error = payload.message;
@@ -83,5 +91,6 @@ const transactionSlice = createSlice({
   },
 });
 
-export const { addTransactions } = transactionSlice.actions;
+export const { addTransactions, resetError, resetIsCreated } =
+  transactionSlice.actions;
 export const transactionsReducer = transactionSlice.reducer;

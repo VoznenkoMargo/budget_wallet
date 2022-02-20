@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { setIsLoading } from './globalSlice';
 import { reset } from './globalSlice';
+import { BASE_URL } from 'constants/api';
 
 export const signupUser = createAsyncThunk(
   'auth/sign-up',
@@ -10,7 +11,7 @@ export const signupUser = createAsyncThunk(
   ) => {
     try {
       dispatch(setIsLoading(true));
-      const response = await fetch('https://wallet.goit.ua/api/auth/sign-up', {
+      const response = await fetch(`${BASE_URL}auth/sign-up`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -43,7 +44,7 @@ export const loginUser = createAsyncThunk(
   ) => {
     try {
       dispatch(setIsLoading(true));
-      const response = await fetch('https://wallet.goit.ua/api/auth/sign-in', {
+      const response = await fetch(`${BASE_URL}auth/sign-in`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -73,7 +74,7 @@ export const signOutUser = createAsyncThunk(
     try {
       const { token } = getState().user;
       dispatch(setIsLoading(true));
-      const response = await fetch('https://wallet.goit.ua/api/auth/sign-out', {
+      const response = await fetch(`${BASE_URL}auth/sign-out`, {
         method: 'DELETE',
         headers: {
           Accept: 'application/json',
@@ -99,7 +100,7 @@ export const getCurrentUser = createAsyncThunk(
     try {
       const { token } = getState().user;
       if (!token) return;
-      const response = await fetch('https://wallet.goit.ua/api/users/current', {
+      const response = await fetch(`${BASE_URL}users/current`, {
         method: 'GET',
         headers: {
           Accept: 'application/json',
@@ -135,6 +136,9 @@ export const userSlice = createSlice({
     },
     setIsAuth: (state, { payload }) => {
       state.isAuth = payload;
+    },
+    resetError: (state) => {
+      state.error = null;
     },
   },
   extraReducers: {
@@ -182,6 +186,7 @@ export const userSlice = createSlice({
   },
 });
 
-export const { clearState, updateBalance, setIsAuth } = userSlice.actions;
+export const { clearState, updateBalance, setIsAuth, resetError } =
+  userSlice.actions;
 export const userSelector = (state) => state.user;
 export const userReducer = userSlice.reducer;

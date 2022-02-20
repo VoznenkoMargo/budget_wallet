@@ -6,13 +6,18 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import * as S from './ModalAddTransaction.style';
 import { useDispatch, useSelector } from 'react-redux';
-import { createTransaction } from 'redux/transactionSlice';
 import moment from 'moment';
 import { addTransactionToStatistics } from 'redux/statisticsSlice';
 import { updateBalance } from 'redux/userSlice';
 import { TRANSACTION_TYPES } from 'constants/transactionTypes';
 import { useEffect } from 'react';
 import { FilledButton, OutlinedButton } from 'components/common';
+import { toast } from 'react-toastify';
+import {
+  createTransaction,
+  resetError,
+  resetIsCreated,
+} from 'redux/transactionSlice';
 
 const fitsStatisticsFilter = (date, month, year) => {
   if (!month && !year) {
@@ -42,28 +47,38 @@ const getCategoriesByType = (categories, type) => {
   return categories.filter((category) => category.type === type);
 };
 
-const transactionTypes = {
-  EXPENSE: 'EXPENSE',
-  INCOME: 'INCOME',
-};
-
 const ModalAddTransaction = ({ open, onClose, categories }) => {
   const statistics = useSelector((state) => state.statistics.statistics);
   const allCategories = useSelector((state) => state.categories.categories);
-  const { error } = useSelector((state) => state.transactions);
+  const error = useSelector((state) => state.transactions.error);
+  const isCreated = useSelector((state) => state.transactions.isCreated);
   const dispatch = useDispatch();
   const expenseCategories = getCategoriesByType(
     categories,
-    transactionTypes.EXPENSE
+    TRANSACTION_TYPES.EXPENSE
   );
   const [incomeCategory] = getCategoriesByType(
     categories,
-    transactionTypes.INCOME
+    TRANSACTION_TYPES.INCOME
   );
 
   useEffect(() => {
-    console.log('ERROR from effect', error);
-  }, [error]);
+    toast.error(error);
+
+    return () => {
+      dispatch(resetError());
+    };
+  }, [error, dispatch]);
+
+  useEffect(() => {
+    if (isCreated) {
+      toast.success('Transacation was created!');
+    }
+
+    return () => {
+      dispatch(resetIsCreated());
+    };
+  }, [error, dispatch, isCreated]);
 
   const formik = useFormik({
     validationSchema: validationSchema,
@@ -93,8 +108,6 @@ const ModalAddTransaction = ({ open, onClose, categories }) => {
         categoryId,
         comment,
       };
-
-      console.log(transaction);
 
       const createAction = await dispatch(createTransaction(transaction));
       if (!createAction.error) {
