@@ -6,12 +6,12 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import { setIsLoading } from '../../redux/globalSlice';
+import { setIsLoading } from 'redux/globalSlice';
 import {
   getCategoriesStatistics,
   setMonth,
   setYear,
-} from '../../redux/statisticsSlice';
+} from 'redux/statisticsSlice';
 import { useDispatch } from 'react-redux';
 
 const colourStyles = {

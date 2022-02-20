@@ -1,11 +1,11 @@
 import { styled } from '@mui/system';
 
 export const ModalContent = styled('div')(({ theme }) => {
-  const { breakpoints } = theme;
+  const { breakpoints, palette } = theme;
 
   return {
     width: '300px',
-    backgroundColor: '#fff',
+    backgroundColor: palette.common.white,
     position: 'fixed',
     top: '50%',
     left: '50%',

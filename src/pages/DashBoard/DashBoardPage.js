@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-globals */
 import { useEffect } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { ButtonAddTransaction } from 'components/common';
