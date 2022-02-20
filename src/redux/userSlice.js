@@ -137,6 +137,9 @@ export const userSlice = createSlice({
     setIsAuth: (state, { payload }) => {
       state.isAuth = payload;
     },
+    resetError: (state) => {
+      state.error = null;
+    },
   },
   extraReducers: {
     [signupUser.pending]: (state) => {
@@ -183,6 +186,7 @@ export const userSlice = createSlice({
   },
 });
 
-export const { clearState, updateBalance, setIsAuth } = userSlice.actions;
+export const { clearState, updateBalance, setIsAuth, resetError } =
+  userSlice.actions;
 export const userSelector = (state) => state.user;
 export const userReducer = userSlice.reducer;

@@ -8,13 +8,12 @@ import { Formik, Form } from 'formik';
 import CustomInput from './CustomInput';
 import * as yup from 'yup';
 import { useSelector, useDispatch } from 'react-redux';
-import { loginUser } from 'redux/userSlice';
+import { loginUser, resetError } from 'redux/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from 'constants/routes';
 import { FilledButton, OutlinedButton } from 'components/common';
-import React, { useEffect } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 const LoginForm = (props) => {
   const navigate = useNavigate();
@@ -23,7 +22,11 @@ const LoginForm = (props) => {
 
   useEffect(() => {
     toast.error(error);
-  }, [error])
+
+    return () => {
+      dispatch(resetError());
+    };
+  }, [error, dispatch]);
 
   const validationSchema = yup.object().shape({
     email: yup.string().email('Invalid email').required('Email is required'),
@@ -121,7 +124,6 @@ const LoginForm = (props) => {
           </Form>
         )}
       </Formik>
-      <ToastContainer />
     </Box>
   );
 };
