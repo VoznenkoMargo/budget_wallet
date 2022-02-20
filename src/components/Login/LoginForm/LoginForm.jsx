@@ -105,7 +105,6 @@ const LoginForm = (props) => {
                 }}
               />
             </div>
-
             <div className={s.buttons}>
               <FilledButton type="submit">Log in</FilledButton>
               <OutlinedButton onClick={handleClickRegistration}>
