@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
   basicCategoriesColors,
-  generateUniqueColor,
 } from 'components/DiagramTab/categoriesColors';
 import { reset } from './globalSlice';
 
@@ -75,7 +74,9 @@ const StatisticsSlice = createSlice({
           name: categoryName,
           type: transaction.type,
           total: transaction.amount,
-          color: basicCategoriesColors[categoryName] || generateUniqueColor(),
+          color:
+            basicCategoriesColors[categoryName]
+            || '#000000',
         };
         state.statistics['categoriesSummary'].push(category);
       }
@@ -88,9 +89,7 @@ const StatisticsSlice = createSlice({
         payload['categoriesSummary'] = payload['categoriesSummary'].map(
           (elem) => {
             const color = basicCategoriesColors[elem.name];
-            return color
-              ? { ...elem, color }
-              : { ...elem, color: generateUniqueColor() };
+            return color ? {...elem, color } : {...elem, color: '#000000'};
           }
         );
         state.statistics = payload;
