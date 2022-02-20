@@ -13,13 +13,9 @@ const CurrentBalance = () => {
     <StyledCurrentBalance>
       <StyledCurrentBalanceText>your balance</StyledCurrentBalanceText>
       <StyledCurrentBalanceTotal>
-        &#8372;{' '}
-        {balance
-          .toLocaleString(undefined, {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-          })
-          .replaceAll(',', '.')}
+        &#8372;&nbsp;{new Intl.NumberFormat('ru-RU', {minimumFractionDigits: 2})
+        .format(balance)
+        .replace(',','.')}
       </StyledCurrentBalanceTotal>
     </StyledCurrentBalance>
   );

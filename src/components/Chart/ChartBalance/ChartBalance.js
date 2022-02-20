@@ -5,9 +5,11 @@ import { useSelector } from 'react-redux';
 export default function Balance({ periodTotal }) {
   const { isLoading } = useSelector((state) => state.global);
 
-  return periodTotal || periodTotal === 0 ? (
-    <p className={s.balance}>&#8372; {Number(periodTotal).toFixed(2)}</p>
-  ) : (
-    !isLoading
+  return (
+    (periodTotal || periodTotal === 0) ?
+    <p className={s.balance}>&#8372;&nbsp;{new Intl.NumberFormat('ru-RU')
+      .format(periodTotal)
+      .replace(',','.')}</p>
+      : !isLoading
   );
 }
