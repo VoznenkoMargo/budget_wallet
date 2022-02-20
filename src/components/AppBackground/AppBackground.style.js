@@ -1,6 +1,6 @@
 import { styled } from '@mui/system';
 
-export const Background = styled('div')(({ theme }) => {
+export const Background = styled((props) => <div {...props} />)(({ theme }) => {
   return {
     position: 'fixed',
     height: '100%',
@@ -8,7 +8,7 @@ export const Background = styled('div')(({ theme }) => {
     backgroundColor: theme.palette.grey[0],
     top: 0,
     left: 0,
-    filter: 'blur(50px)',
+    // filter: 'blur(50px)',
     overflow: 'hidden',
     img: {
       position: 'absolute',
@@ -18,11 +18,7 @@ export const Background = styled('div')(({ theme }) => {
 });
 
 export const Shape = styled('img')(({ theme }) => {
-  const { breakpoints } = theme;
   return {
     maxWidth: '100%',
-    [breakpoints.down('tablet')]: {
-      display: 'none',
-    },
   };
 });

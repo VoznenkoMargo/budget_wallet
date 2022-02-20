@@ -1,7 +1,6 @@
 .tableContainer {
   width: 100%;
   display: block;
-  // border-radius: 10px;
   overflow-x: auto;
   .table {
     width: 100%;
@@ -31,11 +30,41 @@
   .tableContainer {
     max-width: 280px !important;
     display: block;
-    // border-radius: 10px;
     background-color: transparent;
     box-shadow: none !important;
     margin: 0 auto;
     width: 100%;
+
+    .table .tableBody {
+      tr:not(:last-child) {
+        border-bottom: none;
+      }
+      tr {
+        position: relative;
+        overflow: hidden;
+        &::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100%;
+          width: 5px;
+          z-index: 10;
+        }
+        &.income::before {
+          background-color: #24cca7;
+        }
+        &.costs::before {
+          background-color: #ff6596;
+        }
+      }
+      td {
+        padding: 14px 20px;
+        &::before {
+          padding-left: 20px;
+        }
+      }
+    }
 
     .table {
       width: 100%;
@@ -48,23 +77,16 @@
     .table td,
     .table tr {
       display: block;
-      padding: 10px 5px;
     }
     .tableBody tr {
       margin-bottom: 15px !important;
-      box-shadow: 0 0 2px #bbbbbb;
       background-color: #fff;
       border-radius: 10px;
-    }
-    .tableBody tr.income {
-      border-left: 3px solid #24cca7;
-    }
-    .tableBody tr.costs {
-      border-left: 3px solid #ff6596;
     }
     .table td {
       text-align: right;
       padding-left: 50%;
+      padding-right: 15px;
       position: relative;
     }
     .table td:not(:last-child) {

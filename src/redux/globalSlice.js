@@ -1,4 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAction, createSlice } from '@reduxjs/toolkit';
+
+export const reset = createAction('reset');
 
 const initialState = {
   isLoading: false,
@@ -6,7 +8,7 @@ const initialState = {
   isModalLogoutOpen: false,
 };
 
-const transactionSlice = createSlice({
+const globalSlice = createSlice({
   name: 'global',
   initialState,
   reducers: {
@@ -20,11 +22,14 @@ const transactionSlice = createSlice({
       state.isModalLogoutOpen = action.payload;
     },
   },
+  extraReducers: {
+    [reset]: (state) => initialState,
+  },
 });
 
 export const {
   setIsLoading,
   setIsModalAddTransactionOpen,
   setIsModalLogoutOpen,
-} = transactionSlice.actions;
-export const globalReducer = transactionSlice.reducer;
+} = globalSlice.actions;
+export const globalReducer = globalSlice.reducer;

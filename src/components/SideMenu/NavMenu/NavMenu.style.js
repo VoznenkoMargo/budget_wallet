@@ -1,6 +1,5 @@
 import { styled } from '@mui/material/styles';
 import { List, ListItem } from '@mui/material';
-import { useMatch } from 'react-router-dom';
 
 export const StyledNavMenu = styled((props) => <List {...props} />)(
   ({ theme }) => {
@@ -26,14 +25,26 @@ export const StyledNavMenu = styled((props) => <List {...props} />)(
 );
 
 export const StyledListItem = styled((props) => <ListItem {...props} />)(
-  ({ theme, path }) => {
+  ({ theme }) => {
     const { breakpoints, typography, palette } = theme;
-    const match = useMatch(path);
 
     return {
       width: 'auto',
       padding: '0',
       cursor: 'pointer',
+      borderRadius: '10px',
+      '& a.active': {
+        '& .MuiListItemIcon-root': {
+          backgroundColor: palette.common.white,
+          filter: 'drop-shadow(0px 3px 10px rgba(74, 86, 226, 0.5))',
+        },
+        '& .MuiSvgIcon-root': {
+          fill: palette.secondary.main,
+        },
+        '& .MuiTypography-root': {
+          fontWeight: typography.fontWeightBold,
+        },
+      },
 
       ':not(:first-of-type)': {
         marginTop: '10px',
@@ -57,15 +68,11 @@ export const StyledListItem = styled((props) => <ListItem {...props} />)(
       '.MuiListItemIcon-root': {
         minWidth: 'auto',
         borderRadius: '10px',
-        filter: match
-          ? 'drop-shadow(0px 3px 10px rgba(74, 86, 226, 0.5))'
-          : 'none',
-        backgroundColor: match ? palette.common.white : 'none',
 
         '& .MuiSvgIcon-root': {
           width: '24px',
           height: '24px',
-          fill: match ? palette.secondary.main : palette.secondary.light,
+          fill: palette.secondary.light,
 
           [breakpoints.down('tablet')]: {
             width: '38px',
@@ -80,9 +87,7 @@ export const StyledListItem = styled((props) => <ListItem {...props} />)(
         '& .MuiTypography-root': {
           fontFamily: typography.fontFamily.primary,
           fontSize: '18px',
-          fontWeight: match
-            ? typography.fontWeightBold
-            : typography.fontWeightRegular,
+          fontWeight: typography.fontWeightRegular,
           lineHeight: '1.5',
         },
 

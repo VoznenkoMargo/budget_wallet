@@ -1,6 +1,14 @@
 .Loader {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  bottom: 3%;
+  left: 2%;
+  background-color: #fff;
+  padding: 7px;
+  border-radius: 50%;
+  z-index: 10000;
+
+  @media only screen and (max-width: 600px) {
+    bottom: 3%;
+    left: 5%;
+  }
 }

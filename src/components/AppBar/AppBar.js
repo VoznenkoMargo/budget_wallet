@@ -1,25 +1,26 @@
 import { Box, Divider } from '@mui/material';
 import { useTheme } from '@mui/system';
-import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Container, Logo } from 'components/common';
-import { userSelector, clearState } from 'redux/userSlice';
-import { useNavigate } from 'react-router-dom';
 import { StyledToolbar, Header, ExitButton, UserName } from './AppBar.styled';
+import { setIsModalLogoutOpen } from 'redux/globalSlice';
+import { ModalLogout } from 'components/ModalLogout';
 
-const StyledAppBar = () => {
-  const navigate = useNavigate();
+const AppBar = () => {
   const { breakpoints } = useTheme();
-
   const dispatch = useDispatch();
+  const isModalLogoutOpen = useSelector(
+    (state) => state.global.isModalLogoutOpen
+  );
+  const username = useSelector((state) => state.user.user.username);
 
-  const { username } = useSelector(userSelector);
+  const onLogOutClickHandler = () => {
+    dispatch(setIsModalLogoutOpen(true));
+  };
 
-  const onLogOut = () => {
-    localStorage.removeItem("token")
-    dispatch(clearState())
-    navigate("/login")
-  }
+  const onModalCloseHandler = () => {
+    dispatch(setIsModalLogoutOpen(false));
+  };
 
   return (
     <Header>
@@ -38,14 +39,15 @@ const StyledAppBar = () => {
           >
             <UserName>{username}</UserName>
             <Divider orientation="vertical" flexItem />
-            <ExitButton onClick={onLogOut}>
+            <ExitButton onClick={onLogOutClickHandler}>
               <div>Exit</div>
             </ExitButton>
           </Box>
         </StyledToolbar>
       </Container>
+      <ModalLogout open={isModalLogoutOpen} onClose={onModalCloseHandler} />
     </Header>
   );
 };
 
-export default StyledAppBar;
+export default AppBar;

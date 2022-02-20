@@ -1,30 +1,10 @@
 import { AppBar, AppBackground, SideMenu } from 'components';
 import { Outlet } from 'react-router-dom';
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { userSelector, clearState } from 'redux/userSlice';
-import { Container } from 'components/common';
-import { Box } from '@mui/system';
-import { useNavigate } from 'react-router-dom';
-import { fetchUserBytoken } from 'redux/userSlice';
 import * as S from './Layout.style';
+import { useSelector } from 'react-redux';
 
 const Layout = () => {
-  const dispatch = useDispatch()
-  const navigate = useNavigate();
-  const { isFetching, isSuccess, isError } = useSelector(userSelector)
-
-  useEffect(() => {
-    if (isError) {
-      dispatch(clearState())
-      navigate("/login")
-    }
-  }, [isError])
-
-  useEffect(() => {
-    dispatch(fetchUserBytoken({ token: localStorage.getItem("token") }))
-  }, [])
-
+  const { isAuth } = useSelector((state) => state.user);
 
   return (
     <>
@@ -37,7 +17,7 @@ const Layout = () => {
           <Outlet />
         </S.Main>
       </S.AppContainer>
-      <AppBackground />
+      <AppBackground blured />
     </>
   );
 };

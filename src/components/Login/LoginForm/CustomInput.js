@@ -1,32 +1,29 @@
-import React from 'react';
-
 import { TextField } from '@mui/material';
+import { BaseInput } from 'components/common';
 import { useField } from 'formik';
 import s from './LoginForm.module.css';
 
 const CustomInput = (props) => {
   const [field, meta] = useField(props);
   const { type, placeholder, InputProps } = props;
-  const isError = meta.touched && meta.error;
+
   return (
     <>
-      <TextField
+      <BaseInput
         {...field}
         type={type}
         placeholder={placeholder}
-        className={s.input}
         variant="standard"
-        fullWidth
-        color={isError ? 'error' : 'primary'}
         sx={{
-          mt: '35px',
-          '.MuiInput-underline:before': {
-            borderColor: '#E0E0E0',
+          '& .MuiInput-input': {
+            textAlign: 'left',
+            fontFamily: 'Abel',
           },
         }}
+        error={meta.touched && Boolean(meta.error)}
+        helperText={meta.touched && meta.error}
         InputProps={InputProps}
       />
-      <span className={s.error}>{isError ? meta.error : ''}</span>
     </>
   );
 };

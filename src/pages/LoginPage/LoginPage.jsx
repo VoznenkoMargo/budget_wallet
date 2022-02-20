@@ -1,15 +1,13 @@
 import s from './LoginPage.module.css';
 import finance from 'assets/images/finance-login.png';
-import purple from 'assets/images/ellipse-purple.png';
-import peach from 'assets/images/ellipse-peach.png';
 import { Typography } from '@mui/material';
 import LoginForm from 'components/Login/LoginForm/LoginForm';
+import { AppBackground } from 'components';
 
 const LoginPage = (props) => {
   return (
-    <div className={s.wrapper}>
-      <img src={peach} alt="" className={s.peach} />
-      <div className={s.wrapper__body}>
+    <>
+      <div className={s.wrapper}>
         <div className={s.left}>
           <img src={finance} alt="finance-app" className={s.image} />
           <Typography
@@ -29,8 +27,8 @@ const LoginPage = (props) => {
           <LoginForm />
         </div>
       </div>
-      <img src={purple} alt="" className={s.purple} />
-    </div>
+      <AppBackground />
+    </>
   );
 };
 
