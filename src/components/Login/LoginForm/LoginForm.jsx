@@ -12,11 +12,18 @@ import { loginUser } from 'redux/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from 'constants/routes';
 import { FilledButton, OutlinedButton } from 'components/common';
+import React, { useEffect } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const LoginForm = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const error = useSelector((state) => state.user.error);
+
+  useEffect(() => {
+    toast.error(error);
+  }, [error])
 
   const validationSchema = yup.object().shape({
     email: yup.string().email('Invalid email').required('Email is required'),
@@ -114,6 +121,7 @@ const LoginForm = (props) => {
           </Form>
         )}
       </Formik>
+      <ToastContainer />
     </Box>
   );
 };
