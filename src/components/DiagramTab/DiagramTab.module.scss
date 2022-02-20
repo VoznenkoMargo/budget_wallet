@@ -1,0 +1,21 @@
+.statisticsTitle {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 1.5;
+  color: #000000;
+  text-align: start;
+}
+
+.containerStats {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  @media screen and (min-width: 768px) {
+    display: flex;
+    flex-direction: row;
+  }
+  @media screen and (max-width: 1160px) {
+    justify-content: space-evenly;
+  }
+}

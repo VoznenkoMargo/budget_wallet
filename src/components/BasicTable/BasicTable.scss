@@ -1,0 +1,104 @@
+.tableContainer {
+  width: 100%;
+  display: block;
+  overflow-x: auto;
+  .table {
+    width: 100%;
+    .tableHead {
+      background-color: rgb(248, 248, 248);
+      width: 100%;
+      th {
+        font-size: 18px;
+      }
+    }
+
+    .tableBody {
+      background-color: rgba(248, 248, 248, 0);
+      tr:not(:last-child) {
+        border-bottom: 1px solid #dcdcdf;
+      }
+    }
+
+    .tableBody td {
+      font-size: 16px;
+      border-bottom: none;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .tableContainer {
+    max-width: 280px !important;
+    display: block;
+    background-color: transparent;
+    box-shadow: none !important;
+    margin: 0 auto;
+    width: 100%;
+
+    .table .tableBody {
+      tr:not(:last-child) {
+        border-bottom: none;
+      }
+      tr {
+        position: relative;
+        overflow: hidden;
+        &::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100%;
+          width: 5px;
+          z-index: 10;
+        }
+        &.income::before {
+          background-color: #24cca7;
+        }
+        &.costs::before {
+          background-color: #ff6596;
+        }
+      }
+      td {
+        padding: 14px 20px;
+        &::before {
+          padding-left: 20px;
+        }
+      }
+    }
+
+    .table {
+      width: 100%;
+      background-color: transparent;
+    }
+    .table .tableHead {
+      display: none;
+    }
+    .tableBody,
+    .table td,
+    .table tr {
+      display: block;
+    }
+    .tableBody tr {
+      margin-bottom: 15px !important;
+      background-color: #fff;
+      border-radius: 10px;
+    }
+    .table td {
+      text-align: right;
+      padding-left: 50%;
+      padding-right: 15px;
+      position: relative;
+    }
+    .table td:not(:last-child) {
+      border-bottom: 1px solid #dcdcdf;
+    }
+    .table td::before {
+      content: attr(data-toggle);
+      position: absolute;
+      left: 0;
+      padding-left: 15px;
+      font-size: 16px;
+      color: #000;
+    }
+  }
+}
