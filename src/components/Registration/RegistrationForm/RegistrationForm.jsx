@@ -30,9 +30,14 @@ const RegistrationForm = (props) => {
   }, [error, dispatch]);
 
   const validationSchema = yup.object().shape({
-    email: yup.string().email('Invalid email').required('Email is required'),
+    email: yup
+      .string()
+      .trim()
+      .email('Invalid email')
+      .required('Email is required'),
     password: yup
       .string()
+      .trim()
       .min(6, 'Must be at least 6 symbols')
       .max(12, 'Must be no more than 12 symbols')
       .required('Password is required'),
@@ -42,6 +47,7 @@ const RegistrationForm = (props) => {
       .oneOf([yup.ref('password')], 'Passwords does not match'),
     username: yup
       .string()
+      .trim()
       .min(1, 'Must be at least 1 symbols')
       .max(12, 'Must be no more than 12 symbols')
       .required('Name is required'),
