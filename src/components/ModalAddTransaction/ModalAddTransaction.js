@@ -42,23 +42,18 @@ const getCategoriesByType = (categories, type) => {
   return categories.filter((category) => category.type === type);
 };
 
-const transactionTypes = {
-  EXPENSE: 'EXPENSE',
-  INCOME: 'INCOME',
-};
-
 const ModalAddTransaction = ({ open, onClose, categories }) => {
   const statistics = useSelector((state) => state.statistics.statistics);
   const allCategories = useSelector((state) => state.categories.categories);
-  const { error } = useSelector((state) => state.transactions);
+  const error = useSelector((state) => state.transactions.error);
   const dispatch = useDispatch();
   const expenseCategories = getCategoriesByType(
     categories,
-    transactionTypes.EXPENSE
+    TRANSACTION_TYPES.EXPENSE
   );
   const [incomeCategory] = getCategoriesByType(
     categories,
-    transactionTypes.INCOME
+    TRANSACTION_TYPES.INCOME
   );
 
   useEffect(() => {
@@ -93,8 +88,6 @@ const ModalAddTransaction = ({ open, onClose, categories }) => {
         categoryId,
         comment,
       };
-
-      console.log(transaction);
 
       const createAction = await dispatch(createTransaction(transaction));
       if (!createAction.error) {

@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { reset } from './globalSlice';
 import { setIsLoading } from './globalSlice';
+import { BASE_URL } from 'constants/api';
 
 export const createTransaction = createAsyncThunk(
   'transactions/createTransaction',
@@ -11,7 +12,7 @@ export const createTransaction = createAsyncThunk(
     try {
       dispatch(setIsLoading(true));
       const { token } = getState().user;
-      const req = await fetch('https://wallet.goit.ua/api/transactions', {
+      const req = await fetch(`${BASE_URL}transactions`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -39,7 +40,7 @@ export const getTransactions = createAsyncThunk(
     try {
       dispatch(setIsLoading(true));
       const { token } = getState().user;
-      const req = await fetch('https://wallet.goit.ua/api/transactions', {
+      const req = await fetch(`${BASE_URL}transactions`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
