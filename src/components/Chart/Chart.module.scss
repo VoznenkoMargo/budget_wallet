@@ -1,0 +1,19 @@
+.doughnut canvas {
+  min-width: 100px;
+  min-height: 100px;
+}
+
+.containerChart {
+  position: relative;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.doughnut {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 280px;
+  height: 280px;
+  margin: 0 auto;
+}

@@ -1,0 +1,14 @@
+.balance {
+  font-family: 'Abel', 'Poppins';
+  font-size: 18px;
+  line-height: 27px;
+  z-index: 999;
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #000000;
+  display: flex;
+  align-items: center;
+}
