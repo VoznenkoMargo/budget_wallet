@@ -1,15 +1,15 @@
 import s from './LoginPage.module.css';
-import finance from 'assets/images/finance-login.png';
 import { Typography } from '@mui/material';
 import LoginForm from 'components/Login/LoginForm/LoginForm';
 import { AppBackground } from 'components';
+import { ReactComponent as LoginImage } from 'assets/images/finance-login.svg';
 
 const LoginPage = (props) => {
   return (
     <>
       <div className={s.wrapper}>
         <div className={s.left}>
-          <img src={finance} alt="finance-app" className={s.image} />
+          <LoginImage className={s.image} />
           <Typography
             variant="h3"
             component="div"

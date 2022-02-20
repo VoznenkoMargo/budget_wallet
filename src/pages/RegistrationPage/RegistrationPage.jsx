@@ -1,7 +1,7 @@
 import s from './RegistrationPage.module.css';
-import finance from 'assets//images/finance-registration.png';
 import { Typography } from '@mui/material';
 import RegistrationForm from 'components/Registration/RegistrationForm/RegistrationForm';
+import { ReactComponent as RegisterImage } from 'assets/images/finance-registration.svg';
 import { AppBackground } from 'components';
 
 const RegistrationPage = (props) => {
@@ -9,7 +9,7 @@ const RegistrationPage = (props) => {
     <>
       <div className={s.wrapper}>
         <div className={s.left}>
-          <img src={finance} alt="finance-app" className={s.image} />
+          <RegisterImage className={s.image} />
           <Typography
             variant="h3"
             component="div"
