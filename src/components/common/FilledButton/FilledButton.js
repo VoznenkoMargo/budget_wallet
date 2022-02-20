@@ -14,6 +14,7 @@ const FilledButton = styled((props) => (
     padding: '13px 0',
     fontWeight: 400,
     fontFamily: 'inherit',
+    letterSpacing: '0.1em',
     '&:hover': {
       backgroundColor: alpha(palette.primary.main, 0.5),
     },

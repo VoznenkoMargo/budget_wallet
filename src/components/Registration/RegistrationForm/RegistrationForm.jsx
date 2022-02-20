@@ -1,4 +1,5 @@
 import s from './RegistrationForm.module.css';
+import React, { useEffect } from 'react';
 import { signupUser } from 'redux/userSlice';
 import { Box } from '@mui/material';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -13,11 +14,17 @@ import { useSelector, useDispatch } from 'react-redux';
 import { ROUTES } from 'constants/routes';
 import { OutlinedButton, FilledButton } from 'components/common';
 import CustomInput from 'components/Login/LoginForm/CustomInput';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const RegistrationForm = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const error = useSelector((state) => state.user.error);
+
+  useEffect(() => {
+    toast.error(error);
+  }, [error])
 
   const validationSchema = yup.object().shape({
     email: yup.string().email('Invalid email').required('Email is required'),
@@ -170,6 +177,7 @@ const RegistrationForm = (props) => {
           </Form>
         )}
       </Formik>
+      <ToastContainer />
     </Box>
   );
 };
