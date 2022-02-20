@@ -17,7 +17,7 @@ const Layout = () => {
           <Outlet />
         </S.Main>
       </S.AppContainer>
-      <AppBackground />
+      <AppBackground blured />
     </>
   );
 };

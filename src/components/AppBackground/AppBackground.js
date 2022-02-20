@@ -4,12 +4,12 @@ import { Background, Shape } from './AppBackground.style';
 import { useMediaQuery } from 'react-responsive';
 import { useTheme } from '@mui/system';
 
-const AppBackground = () => {
+const AppBackground = ({ blured }) => {
   const { breakpoints } = useTheme();
   const isMobileScreen = useMediaQuery({ maxWidth: breakpoints.values.mobile });
 
   return (
-    <Background>
+    <Background sx={{ filter: blured ? 'blur(50px)' : 'blur(0px)' }}>
       {!isMobileScreen ? (
         <>
           <Shape
@@ -17,8 +17,8 @@ const AppBackground = () => {
             alt="background shape"
             draggable="false"
             sx={{
-              bottom: '-150px',
-              left: '-55px',
+              bottom: '-160px',
+              left: '-70px',
             }}
           />
           <Shape

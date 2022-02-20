@@ -12,6 +12,7 @@ import { addTransactionToStatistics } from 'redux/statisticsSlice';
 import { updateBalance } from 'redux/userSlice';
 import { TRANSACTION_TYPES } from 'constants/transactionTypes';
 import { useEffect } from 'react';
+import { FilledButton, OutlinedButton } from 'components/common';
 
 const fitsStatisticsFilter = (date, month, year) => {
   if (!month && !year) {
@@ -190,8 +191,8 @@ const ModalAddTransaction = ({ open, onClose, categories }) => {
           onChange={formik.handleChange}
         />
         <S.ButtonsContainer>
-          <S.FilledButton type="submit">Add</S.FilledButton>
-          <S.OutlinedButton onClick={onCloseHandler}>Cancel</S.OutlinedButton>
+          <FilledButton type="submit">Add</FilledButton>
+          <OutlinedButton onClick={onCloseHandler}>Cancel</OutlinedButton>
         </S.ButtonsContainer>
       </S.Form>
     </Modal>

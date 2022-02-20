@@ -1,5 +1,5 @@
 import s from './LoginForm.module.css';
-import { Button, Box } from '@mui/material';
+import { Box } from '@mui/material';
 import InputAdornment from '@mui/material/InputAdornment';
 import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
@@ -11,6 +11,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { loginUser } from 'redux/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from 'constants/routes';
+import { FilledButton, OutlinedButton } from 'components/common';
 
 const LoginForm = (props) => {
   const navigate = useNavigate();
@@ -38,25 +39,32 @@ const LoginForm = (props) => {
   };
 
   return (
-    <div className={s.form}>
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        width: '100%',
+        maxWidth: '540px',
+        background: '#fff',
+        borderRadius: '20px',
+        padding: '40px 65px 60px 65px',
+        '@media (max-width: 600px)': {
+          padding: '0 20px',
+        },
+      }}
+    >
+      <div className={s.logo__body}>
+        <Logo />
+      </div>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={onLoginHandler}
       >
-        <div className={s.logo__body}>
-          <Logo />
-        </div>
-        {/* <Box component="form"> */}
-        <Formik
-          initialValues={initialValues}
-          validationSchema={validationSchema}
-          onSubmit={onLoginHandler}
-        >
-          {({ dirty }) => (
-            <Form>
+        {({ dirty }) => (
+          <Form style={{ width: '100%' }}>
+            <div className={s.inputs}>
               <CustomInput
                 name="email"
                 label="email"
@@ -96,54 +104,18 @@ const LoginForm = (props) => {
                   ),
                 }}
               />
+            </div>
 
-              <div className={s.buttons}>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  sx={{
-                    mt: '20px',
-                    mb: '20px',
-                    background: '#24CCA7',
-                    borderRadius: '20px',
-                    width: '300px',
-                    '&:hover': {
-                      background: '#1da386',
-                    },
-                    fontSize: '18px',
-                    lineHeight: '23px',
-                    letterSpacing: '0.1em',
-                    padding: '12px 55px',
-                    fontFamily: 'Abel',
-                  }}
-                >
-                  LOG IN
-                </Button>
-                <Button
-                  fullWidth
-                  variant="outlined"
-                  onClick={handleClickRegistration}
-                  sx={{
-                    borderRadius: '20px',
-                    borderColor: '#4A56E2',
-                    color: '#4A56E2',
-                    width: '300px',
-                    fontSize: '18px',
-                    lineHeight: '23px',
-                    letterSpacing: '0.1em',
-                    padding: '12px 65px',
-                    fontFamily: 'Abel',
-                  }}
-                >
-                  REGISTRATION
-                </Button>
-              </div>
-            </Form>
-          )}
-        </Formik>
-      </Box>
-      {/* </Box> */}
-    </div>
+            <div className={s.buttons}>
+              <FilledButton type="submit">Log in</FilledButton>
+              <OutlinedButton onClick={handleClickRegistration}>
+                Registration
+              </OutlinedButton>
+            </div>
+          </Form>
+        )}
+      </Formik>
+    </Box>
   );
 };
 
