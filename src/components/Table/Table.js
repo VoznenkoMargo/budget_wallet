@@ -44,6 +44,10 @@ const colourStyles = {
       background: '#c2c2c2',
       borderRadius: '10px',
     },
+    '::-webkit-scrollbar-track': {
+      marginTop: '20px',
+      marginBottom: '20px',
+    },
   }),
   indicatorSeparator: (provided) => ({
     ...provided,
