@@ -36,7 +36,7 @@ export default function Team() {
     },
 
     {
-      img: 'https://picua.org/images/2021/09/06/79fd3016aadfbbee93809e662e729c6a.jpg',
+      img: 'https://picua.org/images/2022/02/21/ef271deae5e5ef97ec9e0353a8e817c9.jpg',
       name: 'DMITRIY GLEBOV',
       position: 'Developer',
       githubLink: 'https://github.com/CommanderCoolDev',
