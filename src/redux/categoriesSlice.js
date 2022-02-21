@@ -2,10 +2,11 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { reset } from './globalSlice';
 import { setIsLoading } from './globalSlice';
 import { BASE_URL } from 'constants/api';
+import transalateCategories from 'utils/translateCategories';
 
 export const getTransactionCategories = createAsyncThunk(
   'categories/getTransactionCategory',
-  async (_, { rejectWithValue, dispatch, getState }) => {
+  async (_, { rejectWithValue, fulfillWithValue, dispatch, getState }) => {
     try {
       dispatch(setIsLoading(true));
       const { token } = getState().user;
@@ -20,7 +21,8 @@ export const getTransactionCategories = createAsyncThunk(
       if (!req.ok) {
         throw new Error(resp.message);
       }
-      dispatch(addCategories(resp));
+      const transaltedCategories = transalateCategories(resp);
+      return fulfillWithValue(transaltedCategories);
     } catch (error) {
       dispatch(setIsLoading(false));
       return rejectWithValue(error.message);
@@ -39,6 +41,9 @@ const categoriesSlice = createSlice({
     },
   },
   extraReducers: {
+    [getTransactionCategories.fulfilled]: (state, { payload }) => {
+      state.categories = payload;
+    },
     [reset]: (state) => initialState,
   },
 });

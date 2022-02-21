@@ -14,6 +14,19 @@ const selectMenuProps = {
       left: '50% !important',
       transform: 'translate(-50%) !important',
     },
+    maxHeight: '350px',
+    '::-webkit-scrollbar-track': {
+      marginTop: '20px',
+      marginBottom: '20px',
+    },
+    '::-webkit-scrollbar': {
+      width: '4px',
+      height: '10px',
+    },
+    '::-webkit-scrollbar-thumb': {
+      background: '#c2c2c2',
+      borderRadius: '10px',
+    },
   },
   disableScrollLock: true,
 };

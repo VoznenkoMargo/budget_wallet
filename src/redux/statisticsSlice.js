@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { basicCategoriesColors } from 'components/DiagramTab/categoriesColors';
 import { reset } from './globalSlice';
 import { BASE_URL } from 'constants/api';
+import transalateCategories from '../utils/translateCategories';
 
 export const getCategoriesStatistics = createAsyncThunk(
   'statistics/getCategoriesStatistics',
@@ -81,6 +82,7 @@ const StatisticsSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(getCategoriesStatistics.fulfilled, (state, { payload }) => {
+        payload['categoriesSummary'] = transalateCategories(payload['categoriesSummary']);
         payload['categoriesSummary'] = payload['categoriesSummary'].map(
           (elem) => {
             const color = basicCategoriesColors[elem.name];
