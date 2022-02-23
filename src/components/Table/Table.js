@@ -186,6 +186,7 @@ function MyTable({ statistics }) {
           options={month}
           placeholder={month[statistics?.month]?.label || 'All period'}
           onChange={selectMonth}
+          isSearchable={false}
         />
         <Select
           name="year"
@@ -193,6 +194,7 @@ function MyTable({ statistics }) {
           options={year}
           placeholder={statistics?.year || 'All years'}
           onChange={selectYear}
+          isSearchable={false}
         />
       </div>
 

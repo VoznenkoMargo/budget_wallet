@@ -27,7 +27,7 @@ const TERTIARY = {
 
 const CHART_COLORS = {
   violet: ['#4A56E2', '#6E78E8', '#C5BAFF'],
-  blue: ['#81E1FF'],
+  blue: ['#81E1FF', '#3498db'],
   green: ['#00AD84', '#24CCA7'],
   yellow: ['#ffff00', '#FED057'],
   red: ['#FD9498', '#FFD8D0'],
